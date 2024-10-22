@@ -13,11 +13,12 @@ export interface StickerObject {
     content: string
 }
 
-export function createText(text: string = "Hello world"): StickerObject{
+export function createText(text: string = "Hello"): StickerObject{
     return {
         x: 10,
         y: 10,
-        fontSize: 48,
+        fontSize: 32,
+        rotation: 20,
         fill: 'red',
         format: "text",
         id: uuid(),

@@ -1,39 +1,41 @@
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput } from "@mantine/core";
+import { useEffect, useRef, useState } from "react";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
-import { useEffect, useState } from "react";
 import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconChevronRight, IconMessage } from "@tabler/icons-react";
+import { IconChevronRight, IconImageInPicture, IconMessage, IconTrash } from "@tabler/icons-react";
 import { StickerObject, createImages, createText } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
 import { uuid } from "../../utils/uuids";
+import { downloadFile } from "../../utils/downloadUtils";
 
 const initialSticker: StickerObject[] = [
     {
+        x: 28,
+        y: 40,
+        width: 230,
+        height: 230,
+        format: "image",
+        content: 'img/emu/Emu_13.png',
+        id: uuid(),
+    },
+    {
         x: 10,
         y: 10,
-        fontSize: 48,
+        fontSize: 32,
         rotation: 20,
         fill: '#FF66BB',
         format: "text",
         id: uuid(),
         content: "Wonderhoy!"
     },
-    {
-        x: 70,
-        y: 150,
-        width: 250,
-        height: 250,
-        format: "image",
-        content: 'img/emu/Emu_13.png',
-        id: uuid(),
-    },
 ];
 
 function CanvasBoard() {
 
+    const stageRef = useRef<any>(null);
     const [opened, { toggle }] = useDisclosure();
 
     const [stickerContent, stickerContentHandlers] = useListState(initialSticker);
@@ -54,14 +56,7 @@ function CanvasBoard() {
     };
 
     function selectIndexHelper(id: string) {
-        // const items = stickerContent.slice();
-        // const item = items.find((v) => v.id === id);
         const index = stickerContent.findIndex((v) => v.id === id);
-        // items.splice(index, 1);
-        // items.push(item!);
-
-        // stickerContentHandlers.setState(items);
-
         stickerContentHandlers.reorder({ from: index, to: stickerContent.length - 1 })
 
         setSelectedId(id);
@@ -126,6 +121,7 @@ function CanvasBoard() {
                             <Box style={{ height: 300, width: 300 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder>
                                     <Stage
+                                        ref={stageRef}
                                         width={300}
                                         height={300}
                                         onMouseDown={checkDeselect}
@@ -146,7 +142,8 @@ function CanvasBoard() {
                                                             }}
                                                             onChange={(newAttrs: any) => onChangeHelper(newAttrs, i)}
                                                             url={sticker.content}
-                                                        />)
+                                                        />
+                                                    )
                                                 }
 
                                                 return (
@@ -171,16 +168,29 @@ function CanvasBoard() {
                             </Box>
                         </Group>
 
+                        <Group justify="center" mt={60}>
+                            <Button
+                                variant="light"
+                                leftSection={<IconImageInPicture size={16} />}
+                                onClick={() => {
+                                    const uri = stageRef.current!.toDataURL();
+                                    downloadFile(uri, 'stage.png');
+                                }}
+                            >
+                                Download Png
+                            </Button>
+                        </Group>
+
                         <Box>
                             {selectedShape !== undefined && (
-                                <Card shadow="sm" padding="lg" radius="md" withBorder mt={60}>
-                                    <Text>Modify Elements</Text>
+                                <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
+                                    <Text c="dimmed">
+                                        Modify Elements
+                                    </Text>
 
                                     {selectedShape.format === "image" && (
                                         <>
-                                            <Text fw={400} c="dimmed" fz={16} mt={12}>
-                                                Change New Charactor
-                                            </Text>
+                                            <Space h="md" />
                                             <SelectCharactor
                                                 openComp="Button"
                                                 title="Change Charactor"
@@ -218,6 +228,29 @@ function CanvasBoard() {
                                             />
                                         </>
                                     )}
+
+                                    <Group justify="flex-end" mt={18}>
+                                        <Tooltip label="Delete This">
+                                            <ActionIcon
+                                                variant="light"
+                                                color="red"
+                                                aria-label="Trash"
+                                                onClick={() => {
+                                                    setSelectedId(null);
+
+                                                    stickerContentHandlers.remove(
+                                                        stickerContent.findIndex(v => v.id === selectedId)
+                                                    );
+
+                                                }}
+                                            >
+                                                <IconTrash
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
+                                    </Group>
 
 
                                 </Card>
