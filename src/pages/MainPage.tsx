@@ -1,18 +1,16 @@
-import { Container } from "@mantine/core";
+import { Box, Card, Container, Group } from "@mantine/core";
 
 import { Stage, Layer } from 'react-konva';
-import CanvasImages from "../components/main/CanvasImages";
+
 import AdjustableText from "../components/main/AdjustableText";
 import { useState } from "react";
 import CanvasTransImage from "../components/main/CanvasTransImage";
-
 
 const initialRectangles = [
     {
         x: 10,
         y: 10,
-        width: 100,
-        height: 100,
+        fontSize: 48,
         fill: 'red',
         format: "text",
         id: 'rect1',
@@ -50,70 +48,81 @@ function MainPage() {
         }
     };
 
+    function selectIndexHelper(id: string) {
+        const items = rectangles.slice();
+        const item = items.find((v) => v.id === id);
+        const index = items.findIndex((v) => v.id === id);
+        items.splice(index, 1);
+        items.push(item!);
+        setRectangles(items);
+
+        selectShape(id);
+    }
+
     return (
         <Container fluid>
             <h1>Hello MainPage</h1>
+            <Group justify="center">
 
-            <Stage
-                width={window.innerWidth}
-                height={window.innerHeight}
-                onMouseDown={checkDeselect}
-                onTouchStart={checkDeselect}
+                <Box style={{ height: 500, width: 500 }} >
+                <Card shadow="sm" padding="lg" radius="md" withBorder>
+                    <Stage
+                        width={500}
+                        height={500}
+                        onMouseDown={checkDeselect}
+                        onTouchStart={checkDeselect}
+                        
+                    >
+                        <Layer>
 
-            >
-                <Layer>
+                            {rectangles.map((rect, i) => {
+                                if (rect.format === "images") {
+                                    return (<CanvasTransImage
+                                        key={i}
+                                        shapeProps={rect}
+                                        isSelected={rect.id === selectedId}
+                                        onSelect={() => {
+                                            selectIndexHelper(rect.id);
+                                        }}
+                                        onChange={(newAttrs: any) => {
+                                            const rects = rectangles.slice();
+                                            rects[i] = newAttrs;
+                                            setRectangles(rects);
 
-                    {/* <Text text="Some text on canvas" fontSize={15} fontFamily="YurukaStd"  /> */}
+                                            console.log("END");
+                                        }}
+                                        url={'https://konvajs.github.io/assets/yoda.jpg'}
+                                    />)
+                                }
 
-                    {/* <CanvasImages url={'https://konvajs.github.io/assets/yoda.jpg'} draggable /> */}
+                                return (
+                                    <AdjustableText
+                                        key={i}
+                                        shapeProps={rect}
+                                        isSelected={rect.id === selectedId}
+                                        onSelect={() => {
+                                            selectIndexHelper(rect.id);
+                                        }}
+                                        onChange={(newAttrs: any) => {
+                                            const rects = rectangles.slice();
+                                            rects[i] = newAttrs;
+                                            setRectangles(rects);
 
-                    {/* <CanvasImages url={'/img/an/An_01.png'} draggable /> */}
-
-                    {/* <AdjustableText
-                        content={"Hello world"}
-                    /> */}
-
-                    {rectangles.map((rect, i) => {
-                        if (rect.format === "images") {
-                            return (<CanvasTransImage
-                                key={i}
-                                shapeProps={rect}
-                                isSelected={rect.id === selectedId}
-                                onSelect={() => {
-                                    selectShape(rect.id);
-                                }}
-                                onChange={(newAttrs: any) => {
-                                    const rects = rectangles.slice();
-                                    rects[i] = newAttrs;
-                                    setRectangles(rects);
-                                }}
-                                url={'https://konvajs.github.io/assets/yoda.jpg'}
-                            />)
-                        }
-
-                        return (
-                            <AdjustableText
-                                key={i}
-                                shapeProps={rect}
-                                isSelected={rect.id === selectedId}
-                                onSelect={() => {
-                                    selectShape(rect.id);
-                                }}
-                                onChange={(newAttrs: any) => {
-                                    const rects = rectangles.slice();
-                                    rects[i] = newAttrs;
-                                    setRectangles(rects);
-                                }}
-                                content={'Hello'}
-                            />
-                        )
-                    })}
+                                            console.log("END");
+                                        }}
+                                        content={'Hello'}
+                                    />
+                                )
+                            })}
 
 
 
-                </Layer>
+                        </Layer>
 
-            </Stage>
+                    </Stage>
+                </Card>
+                </Box>
+            </Group>
         </Container>
     )
 }

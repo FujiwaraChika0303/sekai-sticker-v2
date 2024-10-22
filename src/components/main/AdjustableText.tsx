@@ -29,12 +29,13 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
             <Text
                 fillStyle="black"
                 text={content}
-                fontSize={48}
+                wrap={false}
+                
                 fontFamily="YurukaStd"
                 strokeWidth={2}
                 stroke={"white"}
                 draggable
-                
+
                 onClick={onSelect}
                 onTap={onSelect}
                 ref={shapeRef}
@@ -59,6 +60,9 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
                         ...shapeProps,
                         x: node.x(),
                         y: node.y(),
+                        // fontSize: shapeProps.fontSize * scaleX,
+                        fontSize: shapeProps.fontSize * scaleY,
+
                         width: Math.max(5, node.width() * scaleX),
                         height: Math.max(node.height() * scaleY),
                     });
