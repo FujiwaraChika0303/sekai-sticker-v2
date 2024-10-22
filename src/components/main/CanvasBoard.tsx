@@ -1,4 +1,4 @@
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import { useEffect, useState } from "react";
 import { useListState, useDisclosure } from '@mantine/hooks';
@@ -123,11 +123,11 @@ function CanvasBoard() {
                     <Container fluid>
 
                         <Group justify="center" mb={12}>
-                            <Box style={{ height: 400, width: 400 }} >
+                            <Box style={{ height: 300, width: 300 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder>
                                     <Stage
-                                        width={400}
-                                        height={400}
+                                        width={300}
+                                        height={300}
                                         onMouseDown={checkDeselect}
                                         onTouchStart={checkDeselect}
 
@@ -172,27 +172,56 @@ function CanvasBoard() {
                         </Group>
 
                         <Box>
-                        {selectedShape !== undefined && (
-                            <Card shadow="sm" padding="lg" radius="md" withBorder mt={60}>
-                                <Text>Modify Elements</Text>
+                            {selectedShape !== undefined && (
+                                <Card shadow="sm" padding="lg" radius="md" withBorder mt={60}>
+                                    <Text>Modify Elements</Text>
 
-                                {selectedShape.format === "text" && (
-                                    <TextInput
-                                        label="Text content"
-                                        placeholder="Input placeholder"
-                                        value={selectedShape.content}
-                                        onChange={(event) => {
-                                            const newText = event.currentTarget.value;
-                                            const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                            stickerContentHandlers.setItemProp(ind, "content", newText);
-                                        }}
+                                    {selectedShape.format === "image" && (
+                                        <>
+                                            <Text fw={400} c="dimmed" fz={16} mt={12}>
+                                                Change New Charactor
+                                            </Text>
+                                            <SelectCharactor
+                                                openComp="Button"
+                                                title="Change Charactor"
+                                                addStickerCb={(v) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "content", v.img);
+                                                }}
+                                            />
+                                        </>
+                                    )}
 
-                                    />
-                                )}
+                                    {selectedShape.format === "text" && (
+                                        <>
+                                            <TextInput
+                                                mt={12}
+                                                label="Text content"
+                                                placeholder="Input placeholder"
+                                                value={selectedShape.content}
+                                                onChange={(event) => {
+                                                    const newText = event.currentTarget.value;
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "content", newText);
+                                                }}
+                                            />
+
+                                            <ColorInput
+                                                mt={12}
+                                                label="Color"
+                                                placeholder="Input placeholder"
+                                                value={selectedShape.fill}
+                                                onChange={(colorStr) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "fill", colorStr);
+                                                }}
+                                            />
+                                        </>
+                                    )}
 
 
-                            </Card>
-                        )}
+                                </Card>
+                            )}
                         </Box>
                     </Container>
                 </AppShell.Main>

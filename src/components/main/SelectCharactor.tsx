@@ -1,16 +1,21 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea } from '@mantine/core';
+import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button } from '@mantine/core';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { IconChevronRight, IconMessage, IconSearch } from '@tabler/icons-react';
+import { IconAdjustments, IconChevronRight, IconMessage, IconSearch } from '@tabler/icons-react';
 import { StickerChatactor, chatactorList } from '../../data/characters';
 import { useEffect, useState } from 'react';
 
 interface SelectCharactorProps {
     title?: string
+    openComp?: "NavLink" | "Button" 
     addStickerCb: (sticker: StickerChatactor) => void
 }
 
-function SelectCharactor({ title = "Add Charactor", addStickerCb }: SelectCharactorProps) {
+function SelectCharactor({ 
+    title = "Add Charactor",
+    openComp = "NavLink",
+    addStickerCb
+}: SelectCharactorProps) {
 
     const [filledList, setFilledList] = useState<StickerChatactor[]>(chatactorList);
     const [searchString, setSearchString] = useState<string>("");
@@ -68,17 +73,25 @@ function SelectCharactor({ title = "Add Charactor", addStickerCb }: SelectCharac
                 </ScrollArea>
             </Drawer>
 
-            <NavLink
-                label={title}
-                leftSection={<IconMessage size="1rem" />}
-                rightSection={
-                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
-                }
-                onClick={(e) => {
-                    e.preventDefault()
-                    open()
-                }}
-            />
+            { openComp === "NavLink" && (
+                <NavLink
+                    label={title}
+                    leftSection={<IconMessage size="1rem" />}
+                    rightSection={
+                        <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    }
+                    onClick={(e) => {
+                        e.preventDefault()
+                        open()
+                    }}
+                />
+            )}      
+
+            { openComp === "Button" && (
+                <Button leftSection={<IconAdjustments />} variant="light" onClick={() => open()}>
+                    Change Charactor
+                </Button>
+            )}                
         </>
     )
 }
