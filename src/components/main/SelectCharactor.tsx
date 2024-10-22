@@ -6,10 +6,11 @@ import { StickerChatactor, chatactorList } from '../../data/characters';
 import { useEffect, useState } from 'react';
 
 interface SelectCharactorProps {
+    title?: string
     addStickerCb: (sticker: StickerChatactor) => void
 }
 
-function SelectCharactor({ addStickerCb }: SelectCharactorProps) {
+function SelectCharactor({ title = "Add Charactor", addStickerCb }: SelectCharactorProps) {
 
     const [filledList, setFilledList] = useState<StickerChatactor[]>(chatactorList);
     const [searchString, setSearchString] = useState<string>("");
@@ -39,7 +40,7 @@ function SelectCharactor({ addStickerCb }: SelectCharactorProps) {
                 radius="md"
                 opened={opened}
                 onClose={close}
-                title="Select Charactor"
+                title={title}
                 position="bottom"
             >
                 <TextInput
@@ -65,11 +66,10 @@ function SelectCharactor({ addStickerCb }: SelectCharactorProps) {
                         )}
                     </Grid>
                 </ScrollArea>
-
             </Drawer>
 
             <NavLink
-                label={"Add Sticker"}
+                label={title}
                 leftSection={<IconMessage size="1rem" />}
                 rightSection={
                     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
