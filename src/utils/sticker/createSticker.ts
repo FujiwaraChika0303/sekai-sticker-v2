@@ -3,6 +3,7 @@ import { uuid } from "../uuids"
 export interface StickerObject {
     x: number
     y: number
+    rotation?: number
     fill?: string
     fontSize?: number
     width?: number
@@ -28,9 +29,9 @@ export function createImages(src: string = 'https://konvajs.github.io/assets/yod
     return {
         x: 150,
         y: 150,
-        width: 100,
-        height: 100,
-        fill: 'green',
+        width: 250,
+        height: 250,
+
         format: "image",
         content: src,
         id: uuid(),

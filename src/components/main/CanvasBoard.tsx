@@ -1,42 +1,34 @@
 import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
 import { IconChevronRight, IconMessage } from "@tabler/icons-react";
 import { StickerObject, createImages, createText } from "../../utils/sticker/createSticker";
+import SelectCharactor from "./SelectCharactor";
+import { uuid } from "../../utils/uuids";
 
 const initialSticker: StickerObject[] = [
     {
         x: 10,
         y: 10,
         fontSize: 48,
-        fill: 'red',
+        rotation: 20,
+        fill: '#FF66BB',
         format: "text",
-        id: 'rect1',
-        content: "Hello world"
+        id: uuid(),
+        content: "Wonderhoy!"
     },
     {
-        x: 150,
+        x: 70,
         y: 150,
-        width: 100,
-        height: 100,
-        fill: 'green',
+        width: 250,
+        height: 250,
         format: "image",
-        content: 'https://konvajs.github.io/assets/yoda.jpg',
-        id: 'rect2',
-    },
-    {
-        x: 150,
-        y: 150,
-        width: 100,
-        height: 100,
-        fill: 'green',
-        format: "image",
-        content: 'https://konvajs.github.io/assets/yoda.jpg',
-        id: 'rect3',
+        content: 'img/emu/Emu_13.png',
+        id: uuid(),
     },
 ];
 
@@ -46,6 +38,11 @@ function CanvasBoard() {
 
     const [stickerContent, setStickerContent] = useState(initialSticker);
     const [selectedId, selectShape] = useState<string | null>(null);
+
+
+    useEffect(() => {
+        console.log(stickerContent);
+    }, [stickerContent]);
 
     const checkDeselect = (e: any) => {
         // deselect when clicked on empty area
@@ -108,15 +105,10 @@ function CanvasBoard() {
                             }}
                         />
 
-                        <NavLink
-                            label={"Add Sticker"}
-                            leftSection={<IconMessage size="1rem" />}
-                            rightSection={
-                                <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
-                            }
-                            onClick={(e) => {
-                                e.preventDefault()
-                                setStickerContent([...stickerContent, createImages()])
+                        <SelectCharactor
+                            addStickerCb={(v) => {
+                                console.log(v)
+                                setStickerContent([...stickerContent, createImages(v.img)])
                             }}
                         />
                     </Group>
@@ -126,7 +118,6 @@ function CanvasBoard() {
                 <AppShell.Main>
                     <Container fluid>
                         <Group justify="center">
-
                             <Box style={{ height: 500, width: 500 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder>
                                     <Stage
@@ -166,7 +157,6 @@ function CanvasBoard() {
                                                     />
                                                 )
                                             })}
-
 
 
                                         </Layer>
