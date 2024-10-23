@@ -7,7 +7,7 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
 import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
-import { createExternalImages, createImages, createText, duplicateNewObject, StickerObject } from "../../utils/sticker/createSticker";
+import { createExternalImages, createImages, createText, duplicateNewObject, StickerObject } from "../../utils/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
 import { dataURLToBlob, downloadFile } from "../../utils/downloadUtils";
@@ -99,8 +99,9 @@ function CanvasBoard() {
                         </Group>
 
                         <Box>
+
                             <Text c="dimmed" fz={14} fw={400} mb={6}>
-                                Utils
+                                Text
                             </Text>
 
                             <Divider my="md" />
@@ -130,6 +131,12 @@ function CanvasBoard() {
                                 }}
                             />
 
+                            <Text c="dimmed" fz={14} fw={400} mb={6}>
+                                Images
+                            </Text>
+
+                            <Divider my="md" />
+
                             <SelectCharactor
                                 openComp="NavLink"
                                 title="Add Character"
@@ -139,10 +146,10 @@ function CanvasBoard() {
                                 }}
                             />
 
-                            <CreateExternalImages
-                                title="Add External Image"
+                            <CreateLocalImages
+                                title="Upload local Image"
                                 callBackImageURL={async (imageURL: string) => {
-                                    try{
+                                    try {
                                         stickerContentHandlers.append(await createExternalImages(imageURL))
                                         close();
                                         notifications.show({
@@ -150,7 +157,7 @@ function CanvasBoard() {
                                             message: "Success to import images"
                                         })
                                     }
-                                    catch(error: any){
+                                    catch (error: any) {
                                         console.log(error);
                                         notifications.show({
                                             title: "Failed to Import",
@@ -160,10 +167,10 @@ function CanvasBoard() {
                                 }}
                             />
 
-                            <CreateLocalImages
-                                title="Add local Image"
+                            <CreateExternalImages
+                                title="Upload External Image"
                                 callBackImageURL={async (imageURL: string) => {
-                                    try{
+                                    try {
                                         stickerContentHandlers.append(await createExternalImages(imageURL))
                                         close();
                                         notifications.show({
@@ -171,7 +178,7 @@ function CanvasBoard() {
                                             message: "Success to import images"
                                         })
                                     }
-                                    catch(error: any){
+                                    catch (error: any) {
                                         console.log(error);
                                         notifications.show({
                                             title: "Failed to Import",
@@ -180,6 +187,8 @@ function CanvasBoard() {
                                     }
                                 }}
                             />
+
+
                         </Box>
                     </AppShell.Section>
 
@@ -192,7 +201,6 @@ function CanvasBoard() {
                             <LearnMore />
                         </Group>
                     </AppShell.Section>
-
 
                 </AppShell.Navbar>
 
@@ -470,10 +478,6 @@ function CanvasBoard() {
                         </Box>
                     </Container>
                 </AppShell.Main>
-
-                {/* <AppShell.Aside p="md">
-                    Aside
-                </AppShell.Aside> */}
 
             </AppShell >
 

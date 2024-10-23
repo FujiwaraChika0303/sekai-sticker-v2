@@ -1,14 +1,7 @@
-import { IconLink, IconChevronRight, IconSend } from "@tabler/icons-react"
-import { NavLink, Button, Modal, Group, FileInput } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { useForm } from "@mantine/form";
-import { zodResolver } from 'mantine-form-zod-resolver';
-import { z } from 'zod';
+import { IconChevronRight, IconImageInPicture } from "@tabler/icons-react"
+import { NavLink, FileButton } from '@mantine/core';
 
-const formSchema = z.object({
-    imageFile: z.instanceof(File).nullable()
-});
-type FormSchema = z.infer<typeof formSchema>;
+import { useEffect, useRef, useState } from "react";
 
 type CreateLocalImagesProps = {
     title?: string
@@ -22,60 +15,48 @@ function CreateLocalImages({
     callBackImageURL
 }: CreateLocalImagesProps) {
 
-    const [opened, { open, close }] = useDisclosure(false);
+    const [files, setFiles] = useState<File[] >([]);
+    const resetRef = useRef<() => void>(null);
 
-    const form = useForm<FormSchema>({
-        mode: 'uncontrolled',
-        initialValues: {
-            imageFile: null,
-        },
-        validate: zodResolver(formSchema),
-    });
+    useEffect( () => {
+        ( async () => {
+            if(files.length >= 1){
+                for(let f of files){
+                    try {
+                        await submitForm(f)
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+    
+                setFiles([]);
+                resetRef.current?.();
+            }
+        })()
+    },[files])
 
-    async function submitForm(values: FormSchema) {
-        const arrayBuffer = await values.imageFile!.arrayBuffer()
+    async function submitForm(imageFile: File) {
+        const arrayBuffer = await imageFile!.arrayBuffer()
         const fileUrl = URL.createObjectURL(new Blob([arrayBuffer]));
         callBackImageURL(fileUrl);
-        close();
     }
 
     return (
         <>
-            <Modal opened={opened} onClose={close} title={title}>
-                <form onSubmit={form.onSubmit((values) => submitForm(values))}>
-
-                    <FileInput
-                        withAsterisk
-                        label="Image File"
-                        accept="image/png,image/jpeg"
-                        key={form.key('imageFile')}
-                        {...form.getInputProps('imageFile')}
-                    />
-
-                    <Group justify="flex-end" mt="md">
-                        <Button
-                            type="submit"
-                            variant="light"
-                            leftSection={<IconSend size={16} />}>
-                            Submit
-                        </Button>
-                    </Group>
-
-                </form>
-            </Modal>
-
             {openComp === "NavLink" && (
-                <NavLink
-                    label={title}
-                    leftSection={<IconLink size="1rem" />}
-                    rightSection={
-                        <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                <FileButton onChange={setFiles} accept="image/png,image/jpeg" multiple resetRef={resetRef}>
+                    {(props) =>
+                        <NavLink
+                            label={title}
+                            leftSection={<IconImageInPicture size="1rem" />}
+                            rightSection={
+                                <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                            }
+
+                            {...props}
+                        />
                     }
-                    onClick={(e) => {
-                        e.preventDefault()
-                        open()
-                    }}
-                />
+                </FileButton>
             )}
         </>
     )

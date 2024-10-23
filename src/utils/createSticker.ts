@@ -1,4 +1,5 @@
-import { uuid } from "../uuids"
+import { getImagesWidthAndHeight } from "./imagesUtils"
+import { uuid } from "./uuids"
 
 export interface StickerObject {
     x: number
@@ -16,7 +17,11 @@ export interface StickerObject {
     content: string
 }
 
-export function createText(text: string = "Hello", color: string = "red"): StickerObject{
+export function createText(
+    text: string = "Hello",
+    color: string = "red"
+): StickerObject {
+
     return {
         x: 10,
         y: 10,
@@ -32,19 +37,24 @@ export function createText(text: string = "Hello", color: string = "red"): Stick
     }
 }
 
-export async function createExternalImages(src: string = 'img/Ichika/Ichika_09.png'): Promise<StickerObject>{
+// URL images or Local images
+export async function createExternalImages(
+    src: string = 'img/Ichika/Ichika_09.png'
+): Promise<StickerObject> {
+    await fetch(src);
 
-    const res = await fetch(src);
-    console.log(res.headers);
-    console.log(res.status);
+    let { w, h } = await getImagesWidthAndHeight(src);
 
-    
+    while(w >= 300 || h >= 300){
+        w = w / 3
+        h = h / 3
+    }
 
     return {
         x: 28,
         y: 40,
-        width: 220,
-        height: 220,
+        width: w,
+        height: h,
 
         format: "externalImage",
         content: src,
@@ -52,12 +62,17 @@ export async function createExternalImages(src: string = 'img/Ichika/Ichika_09.p
     }
 }
 
-export function createImages(src: string = 'img/Ichika/Ichika_09.png'): StickerObject{
+// Sticker
+export function createImages(
+    src: string = 'img/Ichika/Ichika_09.png',
+    width: number = 220,
+    height: number = 220,
+): StickerObject {
     return {
         x: 28,
         y: 40,
-        width: 220,
-        height: 220,
+        width: width,
+        height: height,
 
         format: "image",
         content: src,
@@ -65,7 +80,9 @@ export function createImages(src: string = 'img/Ichika/Ichika_09.png'): StickerO
     }
 }
 
-export function duplicateNewObject(sticker: StickerObject): StickerObject{
+export function duplicateNewObject(
+    sticker: StickerObject
+): StickerObject {
     return {
         ...sticker,
         x: sticker.x - 10,

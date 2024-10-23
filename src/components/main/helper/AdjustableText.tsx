@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Text, Transformer } from 'react-konva';
 import Konva from "konva";
-import { StickerObject } from '../../../utils/sticker/createSticker';
+import { StickerObject } from '../../../utils/createSticker';
 
 type AdjustableTextProps = {
     content: string;

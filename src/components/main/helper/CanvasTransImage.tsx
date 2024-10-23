@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import Konva from "konva";
 import { Image, Transformer } from 'react-konva';
 import useImage from 'use-image';
-import { StickerObject } from '../../../utils/sticker/createSticker';
+import { StickerObject } from '../../../utils/createSticker';
 
 type CanvasTransImageProps = {
     url: string
