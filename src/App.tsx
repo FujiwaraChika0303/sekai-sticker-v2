@@ -1,8 +1,11 @@
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Suspense, lazy } from "react";
 
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+
 import {
     createBrowserRouter,
     RouterProvider,
@@ -23,6 +26,7 @@ function App() {
     return (
         <MantineProvider>
             <Suspense fallback={<LoadingPage />}>
+                <Notifications />
                 <RouterProvider router={router} />
             </Suspense>
         </MantineProvider>

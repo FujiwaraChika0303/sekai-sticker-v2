@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider, Divider } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
@@ -6,7 +6,7 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconChevronRight, IconCopy, IconImageInPicture, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
+import { IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
 import { createImages, createText, duplicateNewObject, StickerObject } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
@@ -15,9 +15,9 @@ import { initialSticker } from "../../data/sticker";
 import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
 import ColorToggleBtn from "../common/ColorToggleBtn";
+import { notifications } from "@mantine/notifications";
 
-const LOCAL_STORAGE_KEY = 'sekaiObject'
-
+export const LOCAL_STORAGE_KEY = 'sekaiObject'
 
 function CanvasBoard() {
 
@@ -25,32 +25,32 @@ function CanvasBoard() {
     const [opened, { toggle, close }] = useDisclosure();
 
     const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(initialSticker);
-    const [ isInit, setIsInit ] = useState<boolean>(true);
+    // const [ isInit, setIsInit ] = useState<boolean>(true);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
 
-    useEffect(() => {
-        const storedValue = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (storedValue) {
-            try {
-                stickerContentHandlers.setState(
-                    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)!)
-                );
+    // useEffect(() => {
+    //     const storedValue = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    //     if (storedValue) {
+    //         try {
+    //             stickerContentHandlers.setState(
+    //                 JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)!)
+    //             );
 
-                setIsInit(false);
-            } 
-            catch (e) {
-                console.log('Failed to parse stored value');
-            }
-        }
-    }, []);
+    //             setIsInit(false);
+    //         } 
+    //         catch (e) {
+    //             console.log('Failed to parse stored value');
+    //         }
+    //     }
+    // }, []);
 
-    useEffect(() => {
-        if(!isInit){
-            window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stickerContent))
-        }
-    }, [stickerContent]);
+    // useEffect(() => {
+    //     if(!isInit){
+    //         window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stickerContent))
+    //     }
+    // }, [stickerContent]);
 
     // Check deselect click
     function checkDeselect(e: Konva.KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent, any>) {
@@ -202,10 +202,39 @@ function CanvasBoard() {
                                 leftSection={<IconImageInPicture size={16} />}
                                 onClick={() => {
                                     const uri = stageRef.current!.toDataURL();
+                                    console.log(uri);
                                     downloadFile(uri, 'stage.png');
                                 }}
                             >
-                                Download Png
+                                Download PNG
+                            </Button>
+
+                            <Button
+                                variant="light"
+                                onClick={() => {
+                                    fetch(stageRef.current!.toDataURL())
+                                        .then(res => res.blob())
+                                        .then((blob) => {
+                                            try {
+                                                navigator.clipboard.write([
+                                                    new ClipboardItem({
+                                                        'image/png': blob
+                                                    })
+                                                ]);
+
+                                                notifications.show({
+                                                    title: "Success",
+                                                    message: "Image copied to your clipboard."
+                                                })
+                                            }
+                                            catch (error) {
+                                                console.error(error);
+                                            }
+                                        })
+                                }}
+                                leftSection={<IconPictureInPictureOn size={16} />}
+                            >
+                                Copy PNG
                             </Button>
                         </Group>
 
