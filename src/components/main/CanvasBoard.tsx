@@ -19,6 +19,7 @@ import { copyImages } from "../../utils/copyUtils";
 import LearnMore from "../about/LearnMore";
 import CreateExternalImages from "./helper/CreateExternalImages";
 import { notifications } from "@mantine/notifications";
+import CreateLocalImages from "./helper/CreateLocalImages";
 
 export const LOCAL_STORAGE_KEY = 'sekaiObject'
 
@@ -140,6 +141,27 @@ function CanvasBoard() {
 
                             <CreateExternalImages
                                 title="Add External Image"
+                                callBackImageURL={async (imageURL: string) => {
+                                    try{
+                                        stickerContentHandlers.append(await createExternalImages(imageURL))
+                                        close();
+                                        notifications.show({
+                                            title: "Success",
+                                            message: "Success to import images"
+                                        })
+                                    }
+                                    catch(error: any){
+                                        console.log(error);
+                                        notifications.show({
+                                            title: "Failed to Import",
+                                            message: error.message
+                                        })
+                                    }
+                                }}
+                            />
+
+                            <CreateLocalImages
+                                title="Add local Image"
                                 callBackImageURL={async (imageURL: string) => {
                                     try{
                                         stickerContentHandlers.append(await createExternalImages(imageURL))
