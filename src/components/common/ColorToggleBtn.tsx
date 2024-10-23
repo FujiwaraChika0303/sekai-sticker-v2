@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Switch, Tooltip, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { ActionIcon, Box, Switch, Tooltip, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
 
 interface ColorToggleBtnProps {
@@ -12,7 +12,7 @@ export default function ColorToggleBtn({ mode = "Switch" }: ColorToggleBtnProps)
     return (
         <>
             {mode === "Switch" && (
-                <Group justify="center" my={25} ml={4}>
+                <Box>
                     <Switch
                         checked={colorScheme === 'dark'}
                         onChange={() => toggleColorScheme()}
@@ -20,7 +20,7 @@ export default function ColorToggleBtn({ mode = "Switch" }: ColorToggleBtnProps)
                         onLabel={<IconSun color={theme.white} size="1.25rem" stroke={1.5} />}
                         offLabel={<IconMoonStars color={theme.colors.gray[6]} size="1.25rem" stroke={1.5} />}
                     />
-                </Group>
+                </Box>
             )}
 
             {mode === "Button" && (

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider, Divider } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
 import { useListState, useDisclosure } from '@mantine/hooks';
@@ -14,6 +14,9 @@ import { downloadFile } from "../../utils/downloadUtils";
 import { initialSticker } from "../../data/sticker";
 import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
+import ColorToggleBtn from "../common/ColorToggleBtn";
+
+const LOCAL_STORAGE_KEY = 'sekaiObject'
 
 
 function CanvasBoard() {
@@ -22,12 +25,31 @@ function CanvasBoard() {
     const [opened, { toggle, close }] = useDisclosure();
 
     const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(initialSticker);
+    const [ isInit, setIsInit ] = useState<boolean>(true);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
 
     useEffect(() => {
-        console.log(stickerContent);
+        const storedValue = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedValue) {
+            try {
+                stickerContentHandlers.setState(
+                    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)!)
+                );
+
+                setIsInit(false);
+            } 
+            catch (e) {
+                console.log('Failed to parse stored value');
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if(!isInit){
+            window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stickerContent))
+        }
     }, [stickerContent]);
 
     // Check deselect click
@@ -59,19 +81,24 @@ function CanvasBoard() {
                 padding="md"
             >
                 <AppShell.Header>
-
                     <Group h="100%" px="md">
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-
                     </Group>
                 </AppShell.Header>
 
                 <AppShell.Navbar p="md">
-                    <Group>
+
+                    <Group justify="space-between" mb={14}>
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                        <Text>
+                        <ColorToggleBtn />
+                    </Group>
+
+                    <Box>
+                        <Text c="dimmed" fz={14} fw={400} mb={6}>
                             Utils
                         </Text>
+
+                        <Divider my="md" />
 
                         <NavLink
                             label={"Add Text"}
@@ -104,7 +131,8 @@ function CanvasBoard() {
                                 close();
                             }}
                         />
-                    </Group>
+                    </Box>
+
 
                 </AppShell.Navbar>
                 <AppShell.Main>
@@ -115,7 +143,7 @@ function CanvasBoard() {
                         </Text>
 
                         <Text c="dimmed" mb={16} ta="center">
-                            Sekai Sticker Canvas
+                            Generate your sticker in a better way!
                         </Text>
 
                         <Group justify="center" mb={12}>

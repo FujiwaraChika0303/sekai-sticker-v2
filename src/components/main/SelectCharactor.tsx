@@ -1,5 +1,5 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button, Box, ActionIcon, Tooltip } from '@mantine/core';
+import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button, Box, ActionIcon, Tooltip, Text } from '@mantine/core';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { IconAdjustments, IconChevronRight, IconX, IconSearch, IconSticker } from '@tabler/icons-react';
 import { StickerChatactor, chatactorList } from '../../data/characters';
@@ -71,10 +71,13 @@ function SelectCharactor({
 
                 <Grid>
                     <Grid.Col span={2}>
-                        <ScrollArea h={350}>
+                        <ScrollArea h={320}>
                             {uniqueBy(chatactorList, prop("character")).map(v =>
                                 <Box key={v.img}>
-                                    <UnstyledButton onClick={() => setSearchString(v.character)} >
+                                    <UnstyledButton onClick={() => setSearchString(v.character)} mb={14}>
+                                        <Text c="dimmed" fz={14}>
+                                            {v.character}
+                                        </Text>
                                         <LazyLoadImage
                                             src={`${v.img}`}
                                             width="100%"
@@ -88,10 +91,11 @@ function SelectCharactor({
                     </Grid.Col>
 
                     <Grid.Col span={10}>
-                        <ScrollArea h={350}>
+                        <ScrollArea h={320}>
                             <Grid>
                                 {filledList.map(v =>
-                                    <Grid.Col span={{ base: 6, md: 4, lg: 2 }} key={v.img}>
+                                    <Grid.Col span={{ base: 3, md: 2, lg: 1 }} key={v.img}>
+                                        <Tooltip label={v.name}>
                                         <UnstyledButton onClick={() => selectAndClose(v)}>
                                             <LazyLoadImage
                                                 src={`${v.img}`}
@@ -99,6 +103,7 @@ function SelectCharactor({
                                                 effect="blur"
                                             />
                                         </UnstyledButton>
+                                        </Tooltip>
                                     </Grid.Col>
                                 )}
                             </Grid>
