@@ -6,3 +6,8 @@ export function downloadFile(uri: string, name: string) {
     link.click();
     document.body.removeChild(link);
 }
+
+export async function dataURLToBlob(uri: string){
+    const res = await fetch(uri);
+    return await res.blob()
+}

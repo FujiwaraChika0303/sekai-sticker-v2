@@ -6,16 +6,16 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
+import { IconArrowDown, IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
 import { createImages, createText, duplicateNewObject, StickerObject } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
-import { downloadFile } from "../../utils/downloadUtils";
+import { dataURLToBlob, downloadFile } from "../../utils/downloadUtils";
 import { initialSticker } from "../../data/sticker";
 import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
 import ColorToggleBtn from "../common/ColorToggleBtn";
-import { notifications } from "@mantine/notifications";
+import { copyImages } from "../../utils/copyUtils";
 
 export const LOCAL_STORAGE_KEY = 'sekaiObject'
 
@@ -162,13 +162,13 @@ function CanvasBoard() {
                                                 if (sticker.format === "image") {
                                                     return (
                                                         <CanvasTransImage
-                                                            key={i}
+                                                            key={sticker.id}
                                                             shapeProps={sticker}
                                                             isSelected={sticker.id === selectedId}
                                                             onSelect={() => {
                                                                 selectIndexHelper(sticker.id);
                                                             }}
-                                                            onChange={(newAttrs: any) => onChangeHelper(newAttrs, i)}
+                                                            onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
                                                             url={sticker.content}
                                                         />
                                                     )
@@ -176,13 +176,13 @@ function CanvasBoard() {
 
                                                 return (
                                                     <AdjustableText
-                                                        key={i}
+                                                        key={sticker.id}
                                                         shapeProps={sticker}
                                                         isSelected={sticker.id === selectedId}
                                                         onSelect={() => {
                                                             selectIndexHelper(sticker.id);
                                                         }}
-                                                        onChange={(newAttrs: any) => onChangeHelper(newAttrs, i)}
+                                                        onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
                                                         content={sticker.content}
                                                     />
                                                 )
@@ -211,26 +211,11 @@ function CanvasBoard() {
 
                             <Button
                                 variant="light"
-                                onClick={() => {
-                                    fetch(stageRef.current!.toDataURL())
-                                        .then(res => res.blob())
-                                        .then((blob) => {
-                                            try {
-                                                navigator.clipboard.write([
-                                                    new ClipboardItem({
-                                                        'image/png': blob
-                                                    })
-                                                ]);
-
-                                                notifications.show({
-                                                    title: "Success",
-                                                    message: "Image copied to your clipboard."
-                                                })
-                                            }
-                                            catch (error) {
-                                                console.error(error);
-                                            }
-                                        })
+                                onClick={async () => {
+                                    const blobImage = await dataURLToBlob(
+                                        stageRef.current!.toDataURL()
+                                    )
+                                    copyImages(blobImage, "image/png")
                                 }}
                                 leftSection={<IconPictureInPictureOn size={16} />}
                             >
@@ -316,42 +301,71 @@ function CanvasBoard() {
                                         </>
                                     )}
 
-                                    <Group justify="flex-end" mt={18}>
-                                        <Tooltip label="Duplicate">
+                                    <Group justify="space-between" mt={18}>
+                                        <Tooltip label="Up Layer">
                                             <ActionIcon
                                                 variant="light"
                                                 color="blue"
-                                                aria-label="Duplicate"
+                                                aria-label="Down Layer"
                                                 onClick={() => {
-                                                    const newSticker = duplicateNewObject(selectedShape);
-                                                    stickerContentHandlers.append(newSticker)
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+
+                                                    if(ind <= -1){
+                                                        return 
+                                                    }
+
+                                                    stickerContentHandlers.reorder({ 
+                                                        from: ind,
+                                                        to: Math.max(ind - 1, 0) 
+                                                    })
                                                 }}
                                             >
-                                                <IconCopy
+                                                <IconArrowDown
                                                     style={{ width: '70%', height: '70%' }}
                                                     stroke={1.5}
                                                 />
                                             </ActionIcon>
                                         </Tooltip>
 
-                                        <Tooltip label="Delete This">
-                                            <ActionIcon
-                                                variant="light"
-                                                color="red"
-                                                aria-label="Trash"
-                                                onClick={() => {
-                                                    setSelectedId(null);
-                                                    stickerContentHandlers.remove(
-                                                        stickerContent.findIndex(v => v.id === selectedId)
-                                                    );
-                                                }}
-                                            >
-                                                <IconTrash
-                                                    style={{ width: '70%', height: '70%' }}
-                                                    stroke={1.5}
-                                                />
-                                            </ActionIcon>
-                                        </Tooltip>
+                                        <Group>
+
+                                            <Tooltip label="Duplicate">
+                                                <ActionIcon
+                                                    variant="light"
+                                                    color="blue"
+                                                    aria-label="Duplicate"
+                                                    onClick={() => {
+                                                        const newSticker = duplicateNewObject(selectedShape);
+                                                        stickerContentHandlers.append(newSticker)
+                                                    }}
+                                                >
+                                                    <IconCopy
+                                                        style={{ width: '70%', height: '70%' }}
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
+                                            </Tooltip>
+
+                                            <Tooltip label="Delete This">
+                                                <ActionIcon
+                                                    variant="light"
+                                                    color="red"
+                                                    aria-label="Trash"
+                                                    onClick={() => {
+                                                        setSelectedId(null);
+                                                        stickerContentHandlers.remove(
+                                                            stickerContent.findIndex(v => v.id === selectedId)
+                                                        );
+                                                    }}
+                                                >
+                                                    <IconTrash
+                                                        style={{ width: '70%', height: '70%' }}
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
+                                            </Tooltip>
+                                        </Group>
+
                                     </Group>
 
 
