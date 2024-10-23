@@ -91,7 +91,7 @@ function SelectCharactor({
                         <ScrollArea h={350}>
                             <Grid>
                                 {filledList.map(v =>
-                                    <Grid.Col span={{ base: 6, md: 6, lg: 2 }} key={v.img}>
+                                    <Grid.Col span={{ base: 6, md: 4, lg: 2 }} key={v.img}>
                                         <UnstyledButton onClick={() => selectAndClose(v)}>
                                             <LazyLoadImage
                                                 src={`${v.img}`}
