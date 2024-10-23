@@ -11,7 +11,7 @@ export interface StickerObject {
     height?: number
     strokeWidth?: number
     letterSpacing?: number
-    format: "text" | "image"
+    format: "text" | "image" | "externalImage"
     id: string
     content: string
 }
@@ -29,6 +29,26 @@ export function createText(text: string = "Hello", color: string = "red"): Stick
         format: "text",
         id: uuid(),
         content: text
+    }
+}
+
+export async function createExternalImages(src: string = 'img/Ichika/Ichika_09.png'): Promise<StickerObject>{
+
+    const res = await fetch(src);
+    console.log(res.headers);
+    console.log(res.status);
+
+    
+
+    return {
+        x: 28,
+        y: 40,
+        width: 220,
+        height: 220,
+
+        format: "externalImage",
+        content: src,
+        id: uuid(),
     }
 }
 
