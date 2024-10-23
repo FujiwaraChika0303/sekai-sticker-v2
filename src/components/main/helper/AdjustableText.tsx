@@ -54,10 +54,9 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
 
                 onTransformEnd={(_) => {
                     const node = textRef.current;
+                    
                     const scaleX = node!.scaleX();
                     const scaleY = node!.scaleY();
-
-                    console.log("node", node);
 
                     node!.scaleX(1);
                     node!.scaleY(1);

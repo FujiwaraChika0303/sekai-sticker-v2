@@ -21,40 +21,15 @@ import CreateExternalImages from "./helper/CreateExternalImages";
 import { notifications } from "@mantine/notifications";
 import CreateLocalImages from "./helper/CreateLocalImages";
 
-export const LOCAL_STORAGE_KEY = 'sekaiObject'
-
 function CanvasBoard() {
 
     const stageRef = useRef<any>(null);
     const [opened, { toggle, close }] = useDisclosure();
 
     const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(initialSticker);
-    // const [ isInit, setIsInit ] = useState<boolean>(true);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
-
-    // useEffect(() => {
-    //     const storedValue = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    //     if (storedValue) {
-    //         try {
-    //             stickerContentHandlers.setState(
-    //                 JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)!)
-    //             );
-
-    //             setIsInit(false);
-    //         } 
-    //         catch (e) {
-    //             console.log('Failed to parse stored value');
-    //         }
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //     if(!isInit){
-    //         window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stickerContent))
-    //     }
-    // }, [stickerContent]);
 
     // Check deselect click
     function checkDeselect(e: Konva.KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent, any>) {
@@ -64,16 +39,27 @@ function CanvasBoard() {
         }
     };
 
-    // Move layer to front
-    // function selectIndexHelper(id: string) {
-    //     const index = stickerContent.findIndex((v) => v.id === id);
-    //     stickerContentHandlers.reorder({ from: index, to: stickerContent.length - 1 })
-    //     setSelectedId(id);
-    // }
-
     // Add new attributes to specific list item
     function onChangeHelper(newAttrs: StickerObject, ind: number) {
         stickerContentHandlers.setItem(ind, newAttrs);
+    }
+
+    async function callBackImageURL(imageURL: string) {
+        try {
+            stickerContentHandlers.append(await createExternalImages(imageURL))
+            close();
+            notifications.show({
+                title: "Success",
+                message: "Success to import images"
+            })
+        }
+        catch (error: any) {
+            console.log(error);
+            notifications.show({
+                title: "Failed to Import",
+                message: error.message
+            })
+        }
     }
 
     return (
@@ -86,20 +72,24 @@ function CanvasBoard() {
             >
                 <AppShell.Header>
                     <Group h="100%" px="md">
-                        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" mt={12} mb={12} />
                     </Group>
                 </AppShell.Header>
 
                 <AppShell.Navbar p="md">
 
                     <AppShell.Section grow my="md" component={ScrollArea}>
-                        <Group justify="space-between" mb={14}>
-                            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                            <ColorToggleBtn />
+                       
+
+                        <Group justify="space-between" >
+                            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" mb={14}/>
                         </Group>
 
-                        <Box>
+                        <Text fz={14} fw={600} mb={12} ta="center">
+                            🔧 Functions
+                        </Text>
 
+                        <Box>
                             <Text c="dimmed" fz={14} fw={400} mb={6}>
                                 Text
                             </Text>
@@ -131,7 +121,7 @@ function CanvasBoard() {
                                 }}
                             />
 
-                            <Text c="dimmed" fz={14} fw={400} mb={6}>
+                            <Text c="dimmed" fz={14} fw={400} mb={6} mt={12}>
                                 Images
                             </Text>
 
@@ -139,66 +129,41 @@ function CanvasBoard() {
 
                             <SelectCharactor
                                 openComp="NavLink"
-                                title="Add Character"
+                                title="Add Sticker"
                                 addStickerCb={async (v) => {
-                                    stickerContentHandlers.append(await  createImages(v.img))
+                                    stickerContentHandlers.append(await createImages(v.img))
                                     close();
                                 }}
                             />
 
                             <CreateLocalImages
                                 title="Upload local Image"
-                                callBackImageURL={async (imageURL: string) => {
-                                    try {
-                                        stickerContentHandlers.append(await createExternalImages(imageURL))
-                                        close();
-                                        notifications.show({
-                                            title: "Success",
-                                            message: "Success to import images"
-                                        })
-                                    }
-                                    catch (error: any) {
-                                        console.log(error);
-                                        notifications.show({
-                                            title: "Failed to Import",
-                                            message: error.message
-                                        })
-                                    }
+                                callBackImageURL={(imageURL: string) => {
+                                    callBackImageURL(imageURL)
                                 }}
                             />
 
                             <CreateExternalImages
-                                title="Upload External Image"
-                                callBackImageURL={async (imageURL: string) => {
-                                    try {
-                                        stickerContentHandlers.append(await createExternalImages(imageURL))
-                                        close();
-                                        notifications.show({
-                                            title: "Success",
-                                            message: "Success to import images"
-                                        })
-                                    }
-                                    catch (error: any) {
-                                        console.log(error);
-                                        notifications.show({
-                                            title: "Failed to Import",
-                                            message: error.message
-                                        })
-                                    }
+                                title="Upload URL Image"
+                                callBackImageURL={(imageURL: string) => {
+                                    callBackImageURL(imageURL)
                                 }}
                             />
-
 
                         </Box>
                     </AppShell.Section>
 
                     <AppShell.Section>
                         <Group justify="space-between">
-                            <Text c="dimmed" fz={12}>
-                                📊 Version: 0.1.0
-                            </Text>
+                            <ColorToggleBtn />
 
-                            <LearnMore />
+                            <Group>
+                                <Text c="dimmed" fz={12}>
+                                    📊 v0.1.0
+                                </Text>
+
+                                <LearnMore />
+                            </Group>
                         </Group>
                     </AppShell.Section>
 
@@ -207,7 +172,7 @@ function CanvasBoard() {
                 <AppShell.Main>
                     <Container fluid>
 
-                        <Text fw={600} fz={32} ta="center" mt={18}>
+                        <Text fw={600} fz={32} ta="center" mt={48}>
                             <IconSticker /> Sekai Sticker V2
                         </Text>
 
@@ -216,7 +181,7 @@ function CanvasBoard() {
                         </Text>
 
                         <Group justify="center" mb={12}>
-                            <Box style={{ height: 320, width: 320 }} >
+                            <Box style={{ height: 360, width: 360 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder>
                                     <Stage
                                         ref={stageRef}
@@ -274,8 +239,8 @@ function CanvasBoard() {
                                 leftSection={<IconImageInPicture size={16} />}
                                 onClick={() => {
                                     const uri = stageRef.current!.toDataURL();
-                                    console.log(uri);
-                                    downloadFile(uri, 'stage.png');
+                                    // console.log(uri);
+                                    downloadFile(uri, `${new Date().getTime()}_stage.png`);
                                 }}
                             >
                                 Download PNG
@@ -429,10 +394,11 @@ function CanvasBoard() {
                                                 }}
                                             />
 
-                                            <Text fw={500} fz={14} mt={12}>
+                                            <Text fw={500} fz={14} mt={20}>
                                                 Letter Spacing
                                             </Text>
                                             <Slider
+                                                mt={2}
                                                 color="blue"
                                                 value={selectedShape.letterSpacing}
                                                 step={0.1}
@@ -444,10 +410,11 @@ function CanvasBoard() {
                                                 }}
                                             />
 
-                                            <Text fw={500} fz={14} mt={12}>
+                                            <Text fw={500} fz={14} mt={20}>
                                                 Stroke Width
                                             </Text>
                                             <Slider
+                                                mt={2}
                                                 color="blue"
                                                 value={selectedShape.strokeWidth}
                                                 step={0.1}
