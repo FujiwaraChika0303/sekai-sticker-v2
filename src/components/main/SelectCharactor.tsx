@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button } from '@mantine/core';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { IconAdjustments, IconChevronRight, IconMessage, IconSearch } from '@tabler/icons-react';
+import { IconAdjustments, IconChevronRight, IconSearch, IconSticker } from '@tabler/icons-react';
 import { StickerChatactor, chatactorList } from '../../data/characters';
 import { useEffect, useState } from 'react';
 
@@ -76,7 +76,7 @@ function SelectCharactor({
             { openComp === "NavLink" && (
                 <NavLink
                     label={title}
-                    leftSection={<IconMessage size="1rem" />}
+                    leftSection={<IconSticker size="1rem" />}
                     rightSection={
                         <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
                     }

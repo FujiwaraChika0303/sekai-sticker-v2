@@ -1,7 +1,6 @@
 import '@mantine/core/styles.css';
-// import '@mantine/notifications/styles.css';
-// import '@mantine/dropzone/styles.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Suspense, lazy } from "react";
 
 import { MantineProvider } from '@mantine/core';
 import {
@@ -9,7 +8,9 @@ import {
     RouterProvider,
 } from "react-router-dom";
 
-import MainPage from './pages/MainPage';
+import LoadingPage from './components/common/LoadingPage';
+
+const MainPage = lazy(() => import('./pages/MainPage'));
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,9 @@ const router = createBrowserRouter([
 function App() {
     return (
         <MantineProvider>
-            <RouterProvider router={router} />
+            <Suspense fallback={<LoadingPage />}>
+                <RouterProvider router={router} />
+            </Suspense>
         </MantineProvider>
     )
 }
