@@ -13,6 +13,7 @@ import SelectCharactor from "./SelectCharactor";
 import { downloadFile } from "../../utils/downloadUtils";
 import { initialSticker } from "../../data/sticker";
 import { KonvaEventObject } from "konva/lib/Node";
+import { chatactorList } from "../../data/characters";
 
 
 function CanvasBoard() {
@@ -78,8 +79,18 @@ function CanvasBoard() {
                                 <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
                             }
                             onClick={(e) => {
-                                e.preventDefault()
-                                stickerContentHandlers.append(createText())
+                                e.preventDefault();
+
+                                const currentSticker = stickerContent.filter( v => v.format === "image");
+                                let [ defaultText, textColor ] = [ "Hello", "red" ];
+
+                                if(currentSticker[0]){
+                                    const stickerInfo = chatactorList.find( v => v.img === currentSticker[0].content);
+                                    defaultText = stickerInfo? stickerInfo?.defaultText.text : "Hello"
+                                    textColor = stickerInfo? stickerInfo?.color : "red"
+                                }
+
+                                stickerContentHandlers.append(createText(defaultText, textColor))
                             }}
                         />
 
@@ -91,7 +102,6 @@ function CanvasBoard() {
                             }}
                         />
                     </Group>
-
 
                 </AppShell.Navbar>
                 <AppShell.Main>
@@ -106,7 +116,6 @@ function CanvasBoard() {
                                         height={300}
                                         onMouseDown={checkDeselect}
                                         onTouchStart={checkDeselect}
-
                                     >
                                         <Layer>
 
