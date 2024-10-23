@@ -19,7 +19,7 @@ export const initialSticker: StickerObject[] = [
         fill: '#FF66BB',
         format: "text",
         letterSpacing: 0,
-        strokeWidth: 2,
+        strokeWidth: 5,
         stroke: "#ffffff",
         id: uuid(),
         content: "Wonderhoy!"

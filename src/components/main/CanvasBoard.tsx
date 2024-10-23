@@ -6,7 +6,7 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconChevronRight, IconCopy, IconImageInPicture, IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconChevronRight, IconCopy, IconImageInPicture, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
 import { createImages, createText, duplicateNewObject, StickerObject } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
@@ -56,7 +56,7 @@ function CanvasBoard() {
                 layout="alt"
 
                 navbar={{ width: 230, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-                aside={{ width: 150, breakpoint: '1', collapsed: { desktop: false, mobile: true } }}
+                // aside={{ width: 150, breakpoint: '1', collapsed: { desktop: false, mobile: true } }}
                 padding="md"
             >
                 <AppShell.Header>
@@ -70,7 +70,9 @@ function CanvasBoard() {
                 <AppShell.Navbar p="md">
                     <Group>
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                        <Text>Navbar</Text>
+                        <Text>
+                            Utils
+                        </Text>
 
                         <NavLink
                             label={"Add Text"}
@@ -81,13 +83,13 @@ function CanvasBoard() {
                             onClick={(e) => {
                                 e.preventDefault();
 
-                                const currentSticker = stickerContent.filter( v => v.format === "image");
-                                let [ defaultText, textColor ] = [ "Hello", "red" ];
+                                const currentSticker = stickerContent.filter(v => v.format === "image");
+                                let [defaultText, textColor] = ["Hello", "red"];
 
-                                if(currentSticker[0]){
-                                    const stickerInfo = chatactorList.find( v => v.img === currentSticker[0].content);
-                                    defaultText = stickerInfo? stickerInfo?.defaultText.text : "Hello"
-                                    textColor = stickerInfo? stickerInfo?.color : "red"
+                                if (currentSticker[0]) {
+                                    const stickerInfo = chatactorList.find(v => v.img === currentSticker[0].content);
+                                    defaultText = stickerInfo ? stickerInfo?.defaultText.text : "Hello"
+                                    textColor = stickerInfo ? stickerInfo?.color : "red"
                                 }
 
                                 stickerContentHandlers.append(createText(defaultText, textColor))
@@ -106,6 +108,14 @@ function CanvasBoard() {
                 </AppShell.Navbar>
                 <AppShell.Main>
                     <Container fluid>
+
+                        <Text fw={600} fz={32} ta="center" mt={6}>
+                            <IconSticker /> Sekai Sticker V2
+                        </Text>
+
+                        <Text c="dimmed" mb={16} ta="center">
+                            Sekai Sticker Canvas
+                        </Text>
 
                         <Group justify="center" mb={12}>
                             <Box style={{ height: 300, width: 300 }} >
@@ -293,9 +303,9 @@ function CanvasBoard() {
                     </Container>
                 </AppShell.Main>
 
-                <AppShell.Aside p="md">
+                {/* <AppShell.Aside p="md">
                     Aside
-                </AppShell.Aside>
+                </AppShell.Aside> */}
 
             </AppShell>
 
