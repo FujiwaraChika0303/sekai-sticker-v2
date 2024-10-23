@@ -1,17 +1,19 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button } from '@mantine/core';
+import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button, Box, ActionIcon, Tooltip } from '@mantine/core';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { IconAdjustments, IconChevronRight, IconSearch, IconSticker } from '@tabler/icons-react';
+import { IconAdjustments, IconChevronRight, IconX, IconSearch, IconSticker } from '@tabler/icons-react';
 import { StickerChatactor, chatactorList } from '../../data/characters';
 import { useEffect, useState } from 'react';
 
+import { uniqueBy, prop } from "remeda"
+
 interface SelectCharactorProps {
     title?: string
-    openComp?: "NavLink" | "Button" 
+    openComp?: "NavLink" | "Button"
     addStickerCb: (sticker: StickerChatactor) => void
 }
 
-function SelectCharactor({ 
+function SelectCharactor({
     title = "Add Charactor",
     openComp = "NavLink",
     addStickerCb
@@ -50,30 +52,63 @@ function SelectCharactor({
             >
                 <TextInput
                     leftSection={<IconSearch size={16} />}
+                    rightSection={
+                        <Tooltip label="Clear Search">
+                        <ActionIcon
+                            variant="subtle"
+                            aria-label="Clear Search"
+                            onClick={() => setSearchString("")}
+                        >
+                            <IconX style={{ width: '70%', height: '70%' }} stroke={1.5} />
+                        </ActionIcon>
+                        </Tooltip>
+                    }
                     placeholder="Search Charactor"
                     value={searchString}
                     onChange={(event) => setSearchString(event.currentTarget.value)}
                     mb={12}
                 />
 
-                <ScrollArea h={350}>
-                    <Grid>
-                        {filledList.map(v =>
-                            <Grid.Col span={{ base: 12, md: 6, lg: 2 }} key={v.img}>
-                                <UnstyledButton onClick={() => selectAndClose(v)}>
-                                    <LazyLoadImage
-                                        src={`${v.img}`}                           
-                                        width="100%"
-                                        effect="blur"
-                                    />
-                                </UnstyledButton>
-                            </Grid.Col>
-                        )}
-                    </Grid>
-                </ScrollArea>
+                <Grid>
+                    <Grid.Col span={2}>
+                        <ScrollArea h={350}>
+                            {uniqueBy(chatactorList, prop("character")).map(v =>
+                                <Box key={v.img}>
+                                    <UnstyledButton onClick={() => setSearchString(v.character)} >
+                                        <LazyLoadImage
+                                            src={`${v.img}`}
+                                            width="100%"
+                                            height="100%"
+                                            effect="blur"
+                                        />
+                                    </UnstyledButton>
+                                </Box>
+                            )}
+                        </ScrollArea>
+                    </Grid.Col>
+
+                    <Grid.Col span={10}>
+                        <ScrollArea h={350}>
+                            <Grid>
+                                {filledList.map(v =>
+                                    <Grid.Col span={{ base: 6, md: 6, lg: 2 }} key={v.img}>
+                                        <UnstyledButton onClick={() => selectAndClose(v)}>
+                                            <LazyLoadImage
+                                                src={`${v.img}`}
+                                                width="100%"
+                                                effect="blur"
+                                            />
+                                        </UnstyledButton>
+                                    </Grid.Col>
+                                )}
+                            </Grid>
+                        </ScrollArea>
+                    </Grid.Col>
+                </Grid>
+
             </Drawer>
 
-            { openComp === "NavLink" && (
+            {openComp === "NavLink" && (
                 <NavLink
                     label={title}
                     leftSection={<IconSticker size="1rem" />}
@@ -85,13 +120,13 @@ function SelectCharactor({
                         open()
                     }}
                 />
-            )}      
+            )}
 
-            { openComp === "Button" && (
+            {openComp === "Button" && (
                 <Button leftSection={<IconAdjustments />} variant="light" onClick={() => open()}>
                     Change Charactor
                 </Button>
-            )}                
+            )}
         </>
     )
 }

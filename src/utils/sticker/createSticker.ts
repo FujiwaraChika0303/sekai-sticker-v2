@@ -34,10 +34,10 @@ export function createText(text: string = "Hello", color: string = "red"): Stick
 
 export function createImages(src: string = 'img/emu/Emu_13.png'): StickerObject{
     return {
-        x: 150,
-        y: 150,
-        width: 250,
-        height: 250,
+        x: 28,
+        y: 40,
+        width: 230,
+        height: 230,
 
         format: "image",
         content: src,

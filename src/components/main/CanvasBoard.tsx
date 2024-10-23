@@ -19,7 +19,7 @@ import { chatactorList } from "../../data/characters";
 function CanvasBoard() {
 
     const stageRef = useRef<any>(null);
-    const [opened, { toggle }] = useDisclosure();
+    const [opened, { toggle, close }] = useDisclosure();
 
     const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(initialSticker);
     const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -54,7 +54,6 @@ function CanvasBoard() {
         <>
             <AppShell
                 layout="alt"
-
                 navbar={{ width: 230, breakpoint: 'sm', collapsed: { mobile: !opened } }}
                 // aside={{ width: 150, breakpoint: '1', collapsed: { desktop: false, mobile: true } }}
                 padding="md"
@@ -93,6 +92,7 @@ function CanvasBoard() {
                                 }
 
                                 stickerContentHandlers.append(createText(defaultText, textColor))
+                                close();
                             }}
                         />
 
@@ -101,6 +101,7 @@ function CanvasBoard() {
                             title="Add Charactor"
                             addStickerCb={(v) => {
                                 stickerContentHandlers.append(createImages(v.img))
+                                close();
                             }}
                         />
                     </Group>
@@ -109,7 +110,7 @@ function CanvasBoard() {
                 <AppShell.Main>
                     <Container fluid>
 
-                        <Text fw={600} fz={32} ta="center" mt={6}>
+                        <Text fw={600} fz={32} ta="center" mt={18}>
                             <IconSticker /> Sekai Sticker V2
                         </Text>
 
