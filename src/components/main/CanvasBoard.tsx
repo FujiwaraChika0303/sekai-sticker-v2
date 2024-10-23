@@ -65,11 +65,11 @@ function CanvasBoard() {
     };
 
     // Move layer to front
-    function selectIndexHelper(id: string) {
-        const index = stickerContent.findIndex((v) => v.id === id);
-        stickerContentHandlers.reorder({ from: index, to: stickerContent.length - 1 })
-        setSelectedId(id);
-    }
+    // function selectIndexHelper(id: string) {
+    //     const index = stickerContent.findIndex((v) => v.id === id);
+    //     stickerContentHandlers.reorder({ from: index, to: stickerContent.length - 1 })
+    //     setSelectedId(id);
+    // }
 
     // Add new attributes to specific list item
     function onChangeHelper(newAttrs: StickerObject, ind: number) {
@@ -140,8 +140,8 @@ function CanvasBoard() {
                             <SelectCharactor
                                 openComp="NavLink"
                                 title="Add Character"
-                                addStickerCb={(v) => {
-                                    stickerContentHandlers.append(createImages(v.img))
+                                addStickerCb={async (v) => {
+                                    stickerContentHandlers.append(await  createImages(v.img))
                                     close();
                                 }}
                             />
@@ -216,12 +216,12 @@ function CanvasBoard() {
                         </Text>
 
                         <Group justify="center" mb={12}>
-                            <Box style={{ height: 300, width: 300 }} >
+                            <Box style={{ height: 320, width: 320 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder>
                                     <Stage
                                         ref={stageRef}
-                                        width={300}
-                                        height={300}
+                                        width={320}
+                                        height={320}
                                         onMouseDown={checkDeselect}
                                         onTouchStart={checkDeselect}
                                     >
@@ -238,7 +238,7 @@ function CanvasBoard() {
                                                             shapeProps={sticker}
                                                             isSelected={sticker.id === selectedId}
                                                             onSelect={() => {
-                                                                selectIndexHelper(sticker.id);
+                                                                setSelectedId(sticker.id);
                                                             }}
                                                             onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
                                                             url={sticker.content}
@@ -252,7 +252,7 @@ function CanvasBoard() {
                                                         shapeProps={sticker}
                                                         isSelected={sticker.id === selectedId}
                                                         onSelect={() => {
-                                                            selectIndexHelper(sticker.id);
+                                                            setSelectedId(sticker.id);
                                                         }}
                                                         onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
                                                         content={sticker.content}

@@ -19,7 +19,7 @@ export interface StickerObject {
 
 export function createText(
     text: string = "Hello",
-    color: string = "red"
+    color: string = "#50668f"
 ): StickerObject {
 
     return {
@@ -63,16 +63,19 @@ export async function createExternalImages(
 }
 
 // Sticker
-export function createImages(
+export async function createImages(
     src: string = 'img/Ichika/Ichika_09.png',
-    width: number = 220,
-    height: number = 220,
-): StickerObject {
+    // width: number = 220,
+    // height: number = 220,
+): Promise<StickerObject> {
+
+    let { w, h } = await getImagesWidthAndHeight(src);
+
     return {
         x: 28,
         y: 40,
-        width: width,
-        height: height,
+        width: w,
+        height: h,
 
         format: "image",
         content: src,
