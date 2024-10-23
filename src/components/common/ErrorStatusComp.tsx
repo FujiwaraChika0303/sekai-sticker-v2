@@ -1,10 +1,10 @@
 import { Box, Button, Group, Text } from '@mantine/core';
 import { IconMoodSad } from '@tabler/icons-react';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 function ErrorStatusComp(){
 
-    const router = useRouter();
+    const navigate = useNavigate();
     
     return (
         <>
@@ -25,7 +25,7 @@ function ErrorStatusComp(){
                 <Group justify="center" mt={32}>
                     <Button 
                         variant="default"
-                        onClick={() => router.push("/")}
+                        onClick={() => navigate(-1)}
                         size="lg"
                     >
                         Back Home
