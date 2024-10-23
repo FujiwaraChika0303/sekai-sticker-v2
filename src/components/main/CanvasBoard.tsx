@@ -6,8 +6,8 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconChevronRight, IconImageInPicture, IconPlus, IconTrash } from "@tabler/icons-react";
-import { createImages, createText, StickerObject } from "../../utils/sticker/createSticker";
+import { IconChevronRight, IconCopy, IconImageInPicture, IconPlus, IconTrash } from "@tabler/icons-react";
+import { createImages, createText, duplicateNewObject, StickerObject } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
 import { downloadFile } from "../../utils/downloadUtils";
@@ -234,6 +234,27 @@ function CanvasBoard() {
                                     )}
 
                                     <Group justify="flex-end" mt={18}>
+                                        <Tooltip label="Duplicate">
+                                            <ActionIcon
+                                                variant="light"
+                                                color="blue"
+                                                aria-label="Duplicate"
+                                                onClick={() => {
+                                                    const newSticker = duplicateNewObject(selectedShape);
+                                                    stickerContentHandlers.append(newSticker)
+                                                    // setSelectedId(null);
+                                                    // stickerContentHandlers.remove(
+                                                    //     stickerContent.findIndex(v => v.id === selectedId)
+                                                    // );
+                                                }}
+                                            >
+                                                <IconCopy
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
+
                                         <Tooltip label="Delete This">
                                             <ActionIcon
                                                 variant="light"

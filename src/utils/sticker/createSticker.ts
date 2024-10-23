@@ -22,7 +22,7 @@ export function createText(text: string = "Hello", color: string = "red"): Stick
         rotation: 20,
         fill: color,
         format: "text",
-        letterSpacing: 0,
+        letterSpacing: -2,
         id: uuid(),
         content: text
     }
@@ -37,6 +37,15 @@ export function createImages(src: string = 'img/emu/Emu_13.png'): StickerObject{
 
         format: "image",
         content: src,
+        id: uuid(),
+    }
+}
+
+export function duplicateNewObject(sticker: StickerObject): StickerObject{
+    return {
+        ...sticker,
+        x: sticker.x - 10,
+        y: sticker.y - 10,
         id: uuid(),
     }
 }
