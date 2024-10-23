@@ -6,7 +6,7 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconArrowDown, IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
+import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
 import { createImages, createText, duplicateNewObject, StickerObject } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
@@ -302,33 +302,59 @@ function CanvasBoard() {
                                     )}
 
                                     <Group justify="space-between" mt={18}>
-                                        <Tooltip label="Up Layer">
-                                            <ActionIcon
-                                                variant="light"
-                                                color="blue"
-                                                aria-label="Down Layer"
-                                                onClick={() => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                        <Group>
+                                            <Tooltip label="Up Layer">
+                                                <ActionIcon
+                                                    variant="light"
+                                                    color="blue"
+                                                    aria-label="Up Layer"
+                                                    onClick={() => {
+                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
 
-                                                    if(ind <= -1){
-                                                        return 
-                                                    }
+                                                        if (ind <= -1) {
+                                                            return
+                                                        }
 
-                                                    stickerContentHandlers.reorder({ 
-                                                        from: ind,
-                                                        to: Math.max(ind - 1, 0) 
-                                                    })
-                                                }}
-                                            >
-                                                <IconArrowDown
-                                                    style={{ width: '70%', height: '70%' }}
-                                                    stroke={1.5}
-                                                />
-                                            </ActionIcon>
-                                        </Tooltip>
+                                                        stickerContentHandlers.reorder({
+                                                            from: ind,
+                                                            to: Math.min(ind + 1, stickerContent.length - 1)
+                                                        })
+                                                    }}
+                                                >
+                                                    <IconArrowUp
+                                                        style={{ width: '70%', height: '70%' }}
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
+                                            </Tooltip>
+
+                                            <Tooltip label="Down Layer">
+                                                <ActionIcon
+                                                    variant="light"
+                                                    color="blue"
+                                                    aria-label="Down Layer"
+                                                    onClick={() => {
+                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
+
+                                                        if (ind <= -1) {
+                                                            return
+                                                        }
+
+                                                        stickerContentHandlers.reorder({
+                                                            from: ind,
+                                                            to: Math.max(ind - 1, 0)
+                                                        })
+                                                    }}
+                                                >
+                                                    <IconArrowDown
+                                                        style={{ width: '70%', height: '70%' }}
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
+                                            </Tooltip>
+                                        </Group>
 
                                         <Group>
-
                                             <Tooltip label="Duplicate">
                                                 <ActionIcon
                                                     variant="light"
