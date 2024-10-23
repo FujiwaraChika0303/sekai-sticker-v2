@@ -1,44 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
+import Konva from "konva";
 import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconChevronRight, IconImageInPicture, IconMessage, IconTrash } from "@tabler/icons-react";
-import { StickerObject, createImages, createText } from "../../utils/sticker/createSticker";
+import { IconChevronRight, IconImageInPicture, IconPlus, IconTrash } from "@tabler/icons-react";
+import { createImages, createText, StickerObject } from "../../utils/sticker/createSticker";
 import SelectCharactor from "./SelectCharactor";
-import { uuid } from "../../utils/uuids";
-import { downloadFile } from "../../utils/downloadUtils";
 
-const initialSticker: StickerObject[] = [
-    {
-        x: 28,
-        y: 40,
-        width: 230,
-        height: 230,
-        format: "image",
-        content: 'img/emu/Emu_13.png',
-        id: uuid(),
-    },
-    {
-        x: 10,
-        y: 10,
-        fontSize: 32,
-        rotation: 20,
-        fill: '#FF66BB',
-        format: "text",
-        id: uuid(),
-        content: "Wonderhoy!"
-    },
-];
+import { downloadFile } from "../../utils/downloadUtils";
+import { initialSticker } from "../../data/sticker";
+import { KonvaEventObject } from "konva/lib/Node";
+
 
 function CanvasBoard() {
 
     const stageRef = useRef<any>(null);
     const [opened, { toggle }] = useDisclosure();
 
-    const [stickerContent, stickerContentHandlers] = useListState(initialSticker);
+    const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(initialSticker);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
@@ -47,31 +29,28 @@ function CanvasBoard() {
         console.log(stickerContent);
     }, [stickerContent]);
 
-    const checkDeselect = (e: any) => {
-        // deselect when clicked on empty area
-        const clickedOnEmpty = e.target === e.target.getStage();
-        if (clickedOnEmpty) {
+    // Check deselect click
+    function checkDeselect(e: Konva.KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent, any>) {
+        // clicked On Empty
+        if (e.target === e.target.getStage()) {
             setSelectedId(null);
         }
     };
 
+    // Move layer to front
     function selectIndexHelper(id: string) {
         const index = stickerContent.findIndex((v) => v.id === id);
         stickerContentHandlers.reorder({ from: index, to: stickerContent.length - 1 })
-
         setSelectedId(id);
     }
 
-    function onChangeHelper(newAttrs: any, ind: number) {
-        const rects = stickerContent.slice();
-        rects[ind] = newAttrs;
-        stickerContentHandlers.setState(rects);
-        console.log("END");
+    // Add new attributes to specific list item
+    function onChangeHelper(newAttrs: StickerObject, ind: number) {
+        stickerContentHandlers.setItem(ind, newAttrs);
     }
 
     return (
         <>
-
             <AppShell
                 layout="alt"
 
@@ -94,7 +73,7 @@ function CanvasBoard() {
 
                         <NavLink
                             label={"Add Text"}
-                            leftSection={<IconMessage size="1rem" />}
+                            leftSection={<IconPlus size="1rem" />}
                             rightSection={
                                 <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
                             }
@@ -105,8 +84,9 @@ function CanvasBoard() {
                         />
 
                         <SelectCharactor
+                            openComp="NavLink"
+                            title="Add Charactor"
                             addStickerCb={(v) => {
-                                console.log(v)
                                 stickerContentHandlers.append(createImages(v.img))
                             }}
                         />
@@ -237,11 +217,9 @@ function CanvasBoard() {
                                                 aria-label="Trash"
                                                 onClick={() => {
                                                     setSelectedId(null);
-
                                                     stickerContentHandlers.remove(
                                                         stickerContent.findIndex(v => v.id === selectedId)
                                                     );
-
                                                 }}
                                             >
                                                 <IconTrash

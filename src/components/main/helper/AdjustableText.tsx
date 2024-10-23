@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { Text, Transformer } from 'react-konva';
+import Konva from "konva";
+import { StickerObject } from '../../../utils/sticker/createSticker';
 
 type AdjustableTextProps = {
     content: string;
 
-    shapeProps: any
+    shapeProps: StickerObject
     isSelected: boolean
     onSelect: Function
     onChange: Function
@@ -12,14 +14,14 @@ type AdjustableTextProps = {
 
 function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = "Some text on canvas" }: AdjustableTextProps) {
 
-    const shapeRef = useRef<any>();
-    const trRef = useRef<any>();
+    const textRef = useRef<Konva.Text>(null);
+    const transformRef = useRef<Konva.Transformer>(null);
 
     useEffect(() => {
         if (isSelected) {
             // we need to attach transformer manually
-            trRef.current.nodes([shapeRef.current]);
-            trRef.current.getLayer().batchDraw();
+            transformRef.current!.nodes([textRef.current!]);
+            transformRef.current!.getLayer()!.batchDraw();
         }
     }, [isSelected]);
 
@@ -29,16 +31,16 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
             <Text
                 fillStyle="black"
                 text={content}
-                wrap={false}
+                wrap={"false"}
                 
                 fontFamily="YurukaStd"
                 strokeWidth={2}
                 stroke={"white"}
                 draggable
 
-                onClick={onSelect}
-                onTap={onSelect}
-                ref={shapeRef}
+                onClick={onSelect as any}
+                onTap={onSelect as any}
+                ref={textRef}
                 {...shapeProps}
 
                 onDragEnd={(e) => {
@@ -50,30 +52,30 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
                 }}
 
                 onTransformEnd={(_) => {
-                    const node = shapeRef.current;
-                    const scaleX = node.scaleX();
-                    const scaleY = node.scaleY();
+                    const node = textRef.current;
+                    const scaleX = node!.scaleX();
+                    const scaleY = node!.scaleY();
 
                     console.log("node", node);
 
-                    node.scaleX(1);
-                    node.scaleY(1);
+                    node!.scaleX(1);
+                    node!.scaleY(1);
                     onChange({
                         ...shapeProps,
-                        x: node.x(),
-                        y: node.y(),
+                        x: node!.x(),
+                        y: node!.y(),
                         // fontSize: shapeProps.fontSize * scaleX,
-                        fontSize: shapeProps.fontSize * scaleY,
+                        fontSize: shapeProps.fontSize ? shapeProps.fontSize * scaleY : 18 * scaleY,
 
-                        width: Math.max(5, node.width() * scaleX),
-                        height: Math.max(node.height() * scaleY),
+                        width: Math.max(5, node!.width() * scaleX),
+                        height: Math.max(node!.height() * scaleY),
                     });
                 }}
             />
 
             {isSelected && (
                 <Transformer
-                    ref={trRef}
+                    ref={transformRef}
                     flipEnabled={false}
                     boundBoxFunc={(oldBox, newBox) => {
 

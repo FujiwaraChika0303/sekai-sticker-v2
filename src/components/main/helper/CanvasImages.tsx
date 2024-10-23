@@ -7,7 +7,7 @@ type CanvasImagesProps = {
     [val: string]: any;
 }
 
-function CanvasImages( props: any, ref: any){
+function CanvasImages(props: any, ref: any){
     const { url, ...otherProps }: CanvasImagesProps = props;
     const [image] = useImage(url);
 
@@ -15,7 +15,5 @@ function CanvasImages( props: any, ref: any){
         <Image image={image} ref={ref} {...otherProps} />
     )
 }
-
-const CanvasImagesResult = forwardRef(CanvasImages)
     
-export default CanvasImagesResult
+export default forwardRef(CanvasImages)
