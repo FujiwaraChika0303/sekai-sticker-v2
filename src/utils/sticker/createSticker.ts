@@ -24,20 +24,20 @@ export function createText(text: string = "Hello", color: string = "red"): Stick
         rotation: 20,
         fill: color,
         stroke: "#ffffff",
-        strokeWidth: 2,
+        letterSpacing: 0,
+        strokeWidth: 6,
         format: "text",
-        letterSpacing: -2,
         id: uuid(),
         content: text
     }
 }
 
-export function createImages(src: string = 'img/emu/Emu_13.png'): StickerObject{
+export function createImages(src: string = 'img/Ichika/Ichika_09.png'): StickerObject{
     return {
         x: 28,
         y: 40,
-        width: 230,
-        height: 230,
+        width: 220,
+        height: 220,
 
         format: "image",
         content: src,

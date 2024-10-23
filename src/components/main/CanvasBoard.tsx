@@ -112,8 +112,10 @@ function CanvasBoard() {
                                 const currentSticker = stickerContent.filter(v => v.format === "image");
                                 let [defaultText, textColor] = ["Hello", "red"];
 
-                                if (currentSticker[0]) {
-                                    const stickerInfo = chatactorList.find(v => v.img === currentSticker[0].content);
+                                if (currentSticker.length >= 1) {
+                                    const targetStickerInd = currentSticker.length - 1;
+
+                                    const stickerInfo = chatactorList.find(v => v.img === currentSticker[targetStickerInd].content);
                                     defaultText = stickerInfo ? stickerInfo?.defaultText.text : "Hello"
                                     textColor = stickerInfo ? stickerInfo?.color : "red"
                                 }
@@ -230,78 +232,7 @@ function CanvasBoard() {
                                         Modify Elements
                                     </Text>
 
-                                    {selectedShape.format === "image" && (
-                                        <>
-                                            <Space h="md" />
-                                            <SelectCharactor
-                                                openComp="Button"
-                                                title="Change Charactor"
-                                                addStickerCb={(v) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "content", v.img);
-                                                }}
-                                            />
-                                        </>
-                                    )}
-
-                                    {selectedShape.format === "text" && (
-                                        <>
-                                            <TextInput
-                                                mt={12}
-                                                label="Text content"
-                                                placeholder="Input placeholder"
-                                                value={selectedShape.content}
-                                                onChange={(event) => {
-                                                    const newText = event.currentTarget.value;
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "content", newText);
-                                                }}
-                                            />
-
-                                            <Text fw={500} fz={14} mt={12}>
-                                                Letter Spacing
-                                            </Text>
-                                            <Slider
-                                                color="blue"
-                                                value={selectedShape.letterSpacing}
-                                                step={0.1}
-                                                max={10}
-                                                min={-10}
-                                                onChange={(value) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "letterSpacing", value);
-                                                }}
-                                            />
-
-                                            <Text fw={500} fz={14} mt={12}>
-                                                Stroke Width
-                                            </Text>
-                                            <Slider
-                                                color="blue"
-                                                value={selectedShape.strokeWidth}
-                                                step={0.1}
-                                                max={30}
-                                                min={-30}
-                                                onChange={(value) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "strokeWidth", value);
-                                                }}
-                                            />
-
-                                            <ColorInput
-                                                mt={12}
-                                                label="Color"
-                                                placeholder="Input placeholder"
-                                                value={selectedShape.fill}
-                                                onChange={(colorStr) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "fill", colorStr);
-                                                }}
-                                            />
-                                        </>
-                                    )}
-
-                                    <Group justify="space-between" mt={18}>
+                                    <Group justify="space-between" mt={8}>
                                         <Group>
                                             <Tooltip label="Up Layer">
                                                 <ActionIcon
@@ -393,6 +324,83 @@ function CanvasBoard() {
                                         </Group>
 
                                     </Group>
+
+                                    {selectedShape.format === "image" && (
+                                        <>
+                                            <Space h="md" />
+                                            <SelectCharactor
+                                                openComp="Button"
+                                                title="Change Charactor"
+                                                addStickerCb={(v) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "content", v.img);
+
+                                                    for(let i = 0; i < stickerContent.length; i ++){
+                                                        if(stickerContent[i].format === "text"){
+                                                            stickerContentHandlers.setItemProp(i, "fill", v.color);
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </>
+                                    )}
+
+                                    {selectedShape.format === "text" && (
+                                        <>
+                                            <TextInput
+                                                mt={12}
+                                                label="Text content"
+                                                placeholder="Input placeholder"
+                                                value={selectedShape.content}
+                                                onChange={(event) => {
+                                                    const newText = event.currentTarget.value;
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "content", newText);
+                                                }}
+                                            />
+
+                                            <Text fw={500} fz={14} mt={12}>
+                                                Letter Spacing
+                                            </Text>
+                                            <Slider
+                                                color="blue"
+                                                value={selectedShape.letterSpacing}
+                                                step={0.1}
+                                                max={10}
+                                                min={-10}
+                                                onChange={(value) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "letterSpacing", value);
+                                                }}
+                                            />
+
+                                            <Text fw={500} fz={14} mt={12}>
+                                                Stroke Width
+                                            </Text>
+                                            <Slider
+                                                color="blue"
+                                                value={selectedShape.strokeWidth}
+                                                step={0.1}
+                                                max={30}
+                                                min={-30}
+                                                onChange={(value) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "strokeWidth", value);
+                                                }}
+                                            />
+
+                                            <ColorInput
+                                                mt={12}
+                                                label="Color"
+                                                placeholder="Input placeholder"
+                                                value={selectedShape.fill}
+                                                onChange={(colorStr) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "fill", colorStr);
+                                                }}
+                                            />
+                                        </>
+                                    )}
 
 
                                 </Card>
