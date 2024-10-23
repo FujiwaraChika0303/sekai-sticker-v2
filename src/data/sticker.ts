@@ -1,6 +1,6 @@
-import { createImages, createText, StickerObject } from "../utils/createSticker";
+import { createImagesInit, createText, StickerObject } from "../utils/createSticker";
 
 export const initialSticker: StickerObject[] = [
-    await createImages('img/Ichika/Ichika_09.png'),
+    createImagesInit('img/Ichika/Ichika_09.png', 275, 256),
     createText("Wonderhoy", "#50668f"),
 ];

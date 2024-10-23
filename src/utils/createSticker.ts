@@ -65,11 +65,28 @@ export async function createExternalImages(
 // Sticker
 export async function createImages(
     src: string = 'img/Ichika/Ichika_09.png',
-    // width: number = 220,
-    // height: number = 220,
 ): Promise<StickerObject> {
 
     let { w, h } = await getImagesWidthAndHeight(src);
+
+    return {
+        x: 28,
+        y: 40,
+        width: w,
+        height: h,
+
+        format: "image",
+        content: src,
+        id: uuid(),
+    }
+}
+
+// Sticker
+export function createImagesInit(
+    src: string = 'img/Ichika/Ichika_09.png',
+    w: number,
+    h: number
+): StickerObject {
 
     return {
         x: 28,
