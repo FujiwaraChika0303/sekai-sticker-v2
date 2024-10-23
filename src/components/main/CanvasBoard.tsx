@@ -220,6 +220,21 @@ function CanvasBoard() {
                                                 }}
                                             />
 
+                                            <Text fw={500} fz={14} mt={12}>
+                                                Stroke Width
+                                            </Text>
+                                            <Slider
+                                                color="blue"
+                                                value={selectedShape.strokeWidth}
+                                                step={0.1}
+                                                max={30}
+                                                min={-30}
+                                                onChange={(value) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "strokeWidth", value);
+                                                }}
+                                            />
+
                                             <ColorInput
                                                 mt={12}
                                                 label="Color"
@@ -242,10 +257,6 @@ function CanvasBoard() {
                                                 onClick={() => {
                                                     const newSticker = duplicateNewObject(selectedShape);
                                                     stickerContentHandlers.append(newSticker)
-                                                    // setSelectedId(null);
-                                                    // stickerContentHandlers.remove(
-                                                    //     stickerContent.findIndex(v => v.id === selectedId)
-                                                    // );
                                                 }}
                                             >
                                                 <IconCopy

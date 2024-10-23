@@ -4,10 +4,12 @@ export interface StickerObject {
     x: number
     y: number
     rotation?: number
-    fill?: string  // color
+    fill?: string    // color
+    stroke?: string  // color
     fontSize?: number
     width?: number
     height?: number
+    strokeWidth?: number
     letterSpacing?: number
     format: "text" | "image"
     id: string
@@ -21,6 +23,8 @@ export function createText(text: string = "Hello", color: string = "red"): Stick
         fontSize: 32,
         rotation: 20,
         fill: color,
+        stroke: "#ffffff",
+        strokeWidth: 2,
         format: "text",
         letterSpacing: -2,
         id: uuid(),

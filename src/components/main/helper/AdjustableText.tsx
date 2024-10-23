@@ -31,18 +31,16 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
             <Text
                 fillStyle="black"
                 text={content}
-                wrap={"false"}
+                wrap={"none"}
                 
                 fontFamily="YurukaStd"
-                strokeWidth={2}
-                stroke={"white"}
+                
+                fillAfterStrokeEnabled={true}
                 draggable
 
                 onClick={onSelect as any}
                 onTap={onSelect as any}
                 ref={textRef}
-
-                // letterSpacing={-10}
 
                 {...shapeProps}
 
