@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider, Divider } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
 import { useListState, useDisclosure } from '@mantine/hooks';
@@ -16,6 +16,7 @@ import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
 import ColorToggleBtn from "../common/ColorToggleBtn";
 import { copyImages } from "../../utils/copyUtils";
+import LearnMore from "../about/LearnMore";
 
 export const LOCAL_STORAGE_KEY = 'sekaiObject'
 
@@ -88,6 +89,7 @@ function CanvasBoard() {
 
                 <AppShell.Navbar p="md">
 
+                <AppShell.Section grow my="md" component={ScrollArea}>
                     <Group justify="space-between" mb={14}>
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                         <ColorToggleBtn />
@@ -134,50 +136,48 @@ function CanvasBoard() {
                             }}
                         />
                     </Box>
+                </AppShell.Section>
 
-
-                </AppShell.Navbar>
-                <AppShell.Main>
-                    <Container fluid>
-
-                        <Text fw={600} fz={32} ta="center" mt={18}>
-                            <IconSticker /> Sekai Sticker V2
+                <AppShell.Section>
+                    <Group justify="space-between">
+                        <Text c="dimmed" fz={12}>
+                            📊 Version: 0.1.0
                         </Text>
 
-                        <Text c="dimmed" mb={16} ta="center">
-                            Generate your sticker in a better way!
-                        </Text>
+                        <LearnMore />
+                    </Group>
+                </AppShell.Section>
 
-                        <Group justify="center" mb={12}>
-                            <Box style={{ height: 300, width: 300 }} >
-                                <Card shadow="sm" padding="lg" radius="md" withBorder>
-                                    <Stage
-                                        ref={stageRef}
-                                        width={300}
-                                        height={300}
-                                        onMouseDown={checkDeselect}
-                                        onTouchStart={checkDeselect}
-                                    >
-                                        <Layer>
 
-                                            {stickerContent.map((sticker, i) => {
-                                                if (sticker.format === "image") {
-                                                    return (
-                                                        <CanvasTransImage
-                                                            key={sticker.id}
-                                                            shapeProps={sticker}
-                                                            isSelected={sticker.id === selectedId}
-                                                            onSelect={() => {
-                                                                selectIndexHelper(sticker.id);
-                                                            }}
-                                                            onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
-                                                            url={sticker.content}
-                                                        />
-                                                    )
-                                                }
+            </AppShell.Navbar>
 
+            <AppShell.Main>
+                <Container fluid>
+
+                    <Text fw={600} fz={32} ta="center" mt={18}>
+                        <IconSticker /> Sekai Sticker V2
+                    </Text>
+
+                    <Text c="dimmed" mb={16} ta="center">
+                        Generate your sticker in a better way!
+                    </Text>
+
+                    <Group justify="center" mb={12}>
+                        <Box style={{ height: 300, width: 300 }} >
+                            <Card shadow="sm" padding="lg" radius="md" withBorder>
+                                <Stage
+                                    ref={stageRef}
+                                    width={300}
+                                    height={300}
+                                    onMouseDown={checkDeselect}
+                                    onTouchStart={checkDeselect}
+                                >
+                                    <Layer>
+
+                                        {stickerContent.map((sticker, i) => {
+                                            if (sticker.format === "image") {
                                                 return (
-                                                    <AdjustableText
+                                                    <CanvasTransImage
                                                         key={sticker.id}
                                                         shapeProps={sticker}
                                                         isSelected={sticker.id === selectedId}
@@ -185,235 +185,249 @@ function CanvasBoard() {
                                                             selectIndexHelper(sticker.id);
                                                         }}
                                                         onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
-                                                        content={sticker.content}
+                                                        url={sticker.content}
                                                     />
                                                 )
-                                            })}
+                                            }
 
-
-                                        </Layer>
-
-                                    </Stage>
-                                </Card>
-                            </Box>
-                        </Group>
-
-                        <Group justify="center" mt={60}>
-                            <Button
-                                variant="light"
-                                leftSection={<IconImageInPicture size={16} />}
-                                onClick={() => {
-                                    const uri = stageRef.current!.toDataURL();
-                                    console.log(uri);
-                                    downloadFile(uri, 'stage.png');
-                                }}
-                            >
-                                Download PNG
-                            </Button>
-
-                            <Button
-                                variant="light"
-                                onClick={async () => {
-                                    const blobImage = await dataURLToBlob(
-                                        stageRef.current!.toDataURL()
-                                    )
-                                    copyImages(blobImage, "image/png")
-                                }}
-                                leftSection={<IconPictureInPictureOn size={16} />}
-                            >
-                                Copy PNG
-                            </Button>
-                        </Group>
-
-                        <Box>
-                            {selectedShape !== undefined && (
-                                <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
-                                    <Text c="dimmed">
-                                        Modify Elements
-                                    </Text>
-
-                                    <Group justify="space-between" mt={8}>
-                                        <Group>
-                                            <Tooltip label="Up Layer">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    color="blue"
-                                                    aria-label="Up Layer"
-                                                    onClick={() => {
-                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
-
-                                                        if (ind <= -1) {
-                                                            return
-                                                        }
-
-                                                        stickerContentHandlers.reorder({
-                                                            from: ind,
-                                                            to: Math.min(ind + 1, stickerContent.length - 1)
-                                                        })
+                                            return (
+                                                <AdjustableText
+                                                    key={sticker.id}
+                                                    shapeProps={sticker}
+                                                    isSelected={sticker.id === selectedId}
+                                                    onSelect={() => {
+                                                        selectIndexHelper(sticker.id);
                                                     }}
-                                                >
-                                                    <IconArrowUp
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
+                                                    onChange={(newAttrs: StickerObject) => onChangeHelper(newAttrs, i)}
+                                                    content={sticker.content}
+                                                />
+                                            )
+                                        })}
 
-                                            <Tooltip label="Down Layer">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    color="blue"
-                                                    aria-label="Down Layer"
-                                                    onClick={() => {
-                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
 
-                                                        if (ind <= -1) {
-                                                            return
-                                                        }
+                                    </Layer>
 
-                                                        stickerContentHandlers.reorder({
-                                                            from: ind,
-                                                            to: Math.max(ind - 1, 0)
-                                                        })
-                                                    }}
-                                                >
-                                                    <IconArrowDown
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
-                                        </Group>
+                                </Stage>
+                            </Card>
+                        </Box>
+                    </Group>
 
-                                        <Group>
-                                            <Tooltip label="Duplicate">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    color="blue"
-                                                    aria-label="Duplicate"
-                                                    onClick={() => {
-                                                        const newSticker = duplicateNewObject(selectedShape);
-                                                        stickerContentHandlers.append(newSticker)
-                                                    }}
-                                                >
-                                                    <IconCopy
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
+                    <Group justify="center" mt={60}>
+                        <Button
+                            variant="light"
+                            leftSection={<IconImageInPicture size={16} />}
+                            onClick={() => {
+                                const uri = stageRef.current!.toDataURL();
+                                console.log(uri);
+                                downloadFile(uri, 'stage.png');
+                            }}
+                        >
+                            Download PNG
+                        </Button>
 
-                                            <Tooltip label="Delete This">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    color="red"
-                                                    aria-label="Trash"
-                                                    onClick={() => {
-                                                        setSelectedId(null);
-                                                        stickerContentHandlers.remove(
-                                                            stickerContent.findIndex(v => v.id === selectedId)
-                                                        );
-                                                    }}
-                                                >
-                                                    <IconTrash
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
-                                        </Group>
+                        <Button
+                            variant="light"
+                            onClick={async () => {
+                                const blobImage = await dataURLToBlob(
+                                    stageRef.current!.toDataURL()
+                                )
+                                copyImages(blobImage, "image/png")
+                            }}
+                            leftSection={<IconPictureInPictureOn size={16} />}
+                        >
+                            Copy PNG
+                        </Button>
+                    </Group>
 
+                    <Box>
+                        {selectedShape !== undefined && (
+                            <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
+                                <Text c="dimmed">
+                                    Modify Elements
+                                </Text>
+
+                                <Group justify="space-between" mt={8}>
+                                    <Group>
+                                        <Tooltip label="Up Layer">
+                                            <ActionIcon
+                                                variant="light"
+                                                color="blue"
+                                                aria-label="Up Layer"
+                                                onClick={() => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+
+                                                    if (ind <= -1) {
+                                                        return
+                                                    }
+
+                                                    stickerContentHandlers.reorder({
+                                                        from: ind,
+                                                        to: Math.min(ind + 1, stickerContent.length - 1)
+                                                    })
+                                                }}
+                                            >
+                                                <IconArrowUp
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
+
+                                        <Tooltip label="Down Layer">
+                                            <ActionIcon
+                                                variant="light"
+                                                color="blue"
+                                                aria-label="Down Layer"
+                                                onClick={() => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+
+                                                    if (ind <= -1) {
+                                                        return
+                                                    }
+
+                                                    stickerContentHandlers.reorder({
+                                                        from: ind,
+                                                        to: Math.max(ind - 1, 0)
+                                                    })
+                                                }}
+                                            >
+                                                <IconArrowDown
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
                                     </Group>
 
-                                    {selectedShape.format === "image" && (
-                                        <>
-                                            <Space h="md" />
-                                            <SelectCharactor
-                                                openComp="Button"
-                                                title="Change Charactor"
-                                                addStickerCb={(v) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "content", v.img);
+                                    <Group>
+                                        <Tooltip label="Duplicate">
+                                            <ActionIcon
+                                                variant="light"
+                                                color="blue"
+                                                aria-label="Duplicate"
+                                                onClick={() => {
+                                                    const newSticker = duplicateNewObject(selectedShape);
+                                                    stickerContentHandlers.append(newSticker)
+                                                }}
+                                            >
+                                                <IconCopy
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
 
-                                                    for(let i = 0; i < stickerContent.length; i ++){
-                                                        if(stickerContent[i].format === "text"){
-                                                            stickerContentHandlers.setItemProp(i, "fill", v.color);
-                                                        }
+                                        <Tooltip label="Delete This">
+                                            <ActionIcon
+                                                variant="light"
+                                                color="red"
+                                                aria-label="Trash"
+                                                onClick={() => {
+                                                    setSelectedId(null);
+                                                    stickerContentHandlers.remove(
+                                                        stickerContent.findIndex(v => v.id === selectedId)
+                                                    );
+                                                }}
+                                            >
+                                                <IconTrash
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
+                                    </Group>
+
+                                </Group>
+
+                                {selectedShape.format === "image" && (
+                                    <>
+                                        <Space h="md" />
+                                        <SelectCharactor
+                                            openComp="Button"
+                                            title="Change Charactor"
+                                            addStickerCb={(v) => {
+                                                const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                stickerContentHandlers.setItemProp(ind, "content", v.img);
+
+                                                for (let i = 0; i < stickerContent.length; i++) {
+                                                    if (stickerContent[i].format === "text") {
+                                                        stickerContentHandlers.setItemProp(i, "fill", v.color);
                                                     }
-                                                }}
-                                            />
-                                        </>
-                                    )}
+                                                }
+                                            }}
+                                        />
+                                    </>
+                                )}
 
-                                    {selectedShape.format === "text" && (
-                                        <>
-                                            <TextInput
-                                                mt={12}
-                                                label="Text content"
-                                                placeholder="Input placeholder"
-                                                value={selectedShape.content}
-                                                onChange={(event) => {
-                                                    const newText = event.currentTarget.value;
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "content", newText);
-                                                }}
-                                            />
+                                {selectedShape.format === "text" && (
+                                    <>
+                                        <TextInput
+                                            mt={12}
+                                            label="Text content"
+                                            placeholder="Input placeholder"
+                                            value={selectedShape.content}
+                                            onChange={(event) => {
+                                                const newText = event.currentTarget.value;
+                                                const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                stickerContentHandlers.setItemProp(ind, "content", newText);
+                                            }}
+                                        />
 
-                                            <Text fw={500} fz={14} mt={12}>
-                                                Letter Spacing
-                                            </Text>
-                                            <Slider
-                                                color="blue"
-                                                value={selectedShape.letterSpacing}
-                                                step={0.1}
-                                                max={10}
-                                                min={-10}
-                                                onChange={(value) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "letterSpacing", value);
-                                                }}
-                                            />
+                                        <Text fw={500} fz={14} mt={12}>
+                                            Letter Spacing
+                                        </Text>
+                                        <Slider
+                                            color="blue"
+                                            value={selectedShape.letterSpacing}
+                                            step={0.1}
+                                            max={10}
+                                            min={-10}
+                                            onChange={(value) => {
+                                                const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                stickerContentHandlers.setItemProp(ind, "letterSpacing", value);
+                                            }}
+                                        />
 
-                                            <Text fw={500} fz={14} mt={12}>
-                                                Stroke Width
-                                            </Text>
-                                            <Slider
-                                                color="blue"
-                                                value={selectedShape.strokeWidth}
-                                                step={0.1}
-                                                max={30}
-                                                min={-30}
-                                                onChange={(value) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "strokeWidth", value);
-                                                }}
-                                            />
+                                        <Text fw={500} fz={14} mt={12}>
+                                            Stroke Width
+                                        </Text>
+                                        <Slider
+                                            color="blue"
+                                            value={selectedShape.strokeWidth}
+                                            step={0.1}
+                                            max={30}
+                                            min={-30}
+                                            onChange={(value) => {
+                                                const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                stickerContentHandlers.setItemProp(ind, "strokeWidth", value);
+                                            }}
+                                        />
 
-                                            <ColorInput
-                                                mt={12}
-                                                label="Color"
-                                                placeholder="Input placeholder"
-                                                value={selectedShape.fill}
-                                                onChange={(colorStr) => {
-                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                    stickerContentHandlers.setItemProp(ind, "fill", colorStr);
-                                                }}
-                                            />
-                                        </>
-                                    )}
+                                        <ColorInput
+                                            mt={12}
+                                            label="Color"
+                                            placeholder="Input placeholder"
+                                            value={selectedShape.fill}
+                                            onChange={(colorStr) => {
+                                                const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                stickerContentHandlers.setItemProp(ind, "fill", colorStr);
+                                            }}
+                                        />
+                                    </>
+                                )}
 
 
-                                </Card>
-                            )}
-                        </Box>
-                    </Container>
-                </AppShell.Main>
+                            </Card>
+                        )}
+                    </Box>
+                </Container>
+            </AppShell.Main>
 
-                {/* <AppShell.Aside p="md">
+            {/* <AppShell.Aside p="md">
                     Aside
                 </AppShell.Aside> */}
 
-            </AppShell>
+        </AppShell >
 
         </>
     )
