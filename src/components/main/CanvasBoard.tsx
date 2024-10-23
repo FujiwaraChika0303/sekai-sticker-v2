@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
 import { useListState, useDisclosure } from '@mantine/hooks';
@@ -193,6 +193,21 @@ function CanvasBoard() {
                                                     const newText = event.currentTarget.value;
                                                     const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                     stickerContentHandlers.setItemProp(ind, "content", newText);
+                                                }}
+                                            />
+
+                                            <Text fw={500} fz={14} mt={12}>
+                                                Letter Spacing
+                                            </Text>
+                                            <Slider
+                                                color="blue"
+                                                value={selectedShape.letterSpacing}
+                                                step={0.1}
+                                                max={10}
+                                                min={-10}
+                                                onChange={(value) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "letterSpacing", value);
                                                 }}
                                             />
 

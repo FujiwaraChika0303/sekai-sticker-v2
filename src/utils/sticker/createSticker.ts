@@ -4,10 +4,11 @@ export interface StickerObject {
     x: number
     y: number
     rotation?: number
-    fill?: string
+    fill?: string  // color
     fontSize?: number
     width?: number
     height?: number
+    letterSpacing?: number
     format: "text" | "image"
     id: string
     content: string
@@ -21,12 +22,13 @@ export function createText(text: string = "Hello"): StickerObject{
         rotation: 20,
         fill: 'red',
         format: "text",
+        letterSpacing: 0,
         id: uuid(),
         content: text
     }
 }
 
-export function createImages(src: string = 'https://konvajs.github.io/assets/yoda.jpg'): StickerObject{
+export function createImages(src: string = 'img/emu/Emu_13.png'): StickerObject{
     return {
         x: 150,
         y: 150,

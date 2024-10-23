@@ -18,6 +18,7 @@ export const initialSticker: StickerObject[] = [
         rotation: 20,
         fill: '#FF66BB',
         format: "text",
+        letterSpacing: 0,
         id: uuid(),
         content: "Wonderhoy!"
     },

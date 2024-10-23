@@ -41,6 +41,9 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
                 onClick={onSelect as any}
                 onTap={onSelect as any}
                 ref={textRef}
+
+                // letterSpacing={-10}
+
                 {...shapeProps}
 
                 onDragEnd={(e) => {
