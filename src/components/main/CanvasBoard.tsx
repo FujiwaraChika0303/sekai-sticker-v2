@@ -6,7 +6,7 @@ import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
+import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconDeselect, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
 import { CONFIGS, createExternalImages, createImages, createText, duplicateNewObject, StickerObject } from "../../utils/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
@@ -318,6 +318,23 @@ function CanvasBoard() {
                                             </Tooltip>
                                         </Group>
 
+                                        <Tooltip label="Deselect">
+                                                <ActionIcon
+                                                    variant="light"
+                                                    color="blue"
+                                                    aria-label="Deselect"
+                                                    disabled={selectedShape === undefined}
+                                                    onClick={() => {
+                                                        setSelectedId(null)
+                                                    }}
+                                                >
+                                                    <IconDeselect
+                                                        style={{ width: '70%', height: '70%' }}
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
+                                            </Tooltip>
+
                                         <Group>
                                             <Tooltip label="Duplicate">
                                                 <ActionIcon
@@ -394,6 +411,38 @@ function CanvasBoard() {
                                                     />
                                                 </>
                                             )}
+
+                                            <Text fw={500} fz={14} mt={20}>
+                                                Position X
+                                            </Text>
+                                            <Slider
+                                                mt={2}
+                                                color="blue"
+                                                value={selectedShape.x}
+                                                step={1}
+                                                max={250}
+                                                min={-250}
+                                                onChange={(value) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "x", value);
+                                                }}
+                                            />
+
+                                            <Text fw={500} fz={14} mt={20}>
+                                                Position Y
+                                            </Text>
+                                            <Slider
+                                                mt={2}
+                                                color="blue"
+                                                value={selectedShape.y}
+                                                step={1}
+                                                max={250}
+                                                min={-250}
+                                                onChange={(value) => {
+                                                    const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                    stickerContentHandlers.setItemProp(ind, "y", value);
+                                                }}
+                                            />
 
                                             {selectedShape.format === "text" && (
                                                 <>
