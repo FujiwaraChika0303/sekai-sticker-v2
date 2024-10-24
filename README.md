@@ -16,15 +16,18 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Layer support 
 - ✅ Better Searching  
 - ✅ Copy Layer
+- ✅ Layer handle
 - ✅ Save and copy PNG
 - ✅ Respondsive UI
 - ✅ Night / Sky Theme
+- ✅ Traditional Chinese / Chinese display friendly 
 
 ## 📝 Todo
 - ✅ External image file input 
 - ✅ Internal (local) image file input 
 - ⬜️ More input items 
 - ⬜️ More images adjustment 
+- ⬜️ Save creations 
 
 ## ❤ Original Repo
 Special thanks for the sources  

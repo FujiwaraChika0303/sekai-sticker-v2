@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid, Select } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
 import { useListState, useDisclosure, useHotkeys } from '@mantine/hooks';
@@ -500,6 +500,29 @@ function CanvasBoard() {
                                                                         const newText = event.currentTarget.value;
                                                                         const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                                         stickerContentHandlers.setItemProp(ind, "content", newText);
+                                                                    }}
+                                                                />
+
+                                                                <Select
+                                                                    mt={12}
+                                                                    allowDeselect={false}
+                                                                    clearable={false}
+                                                                    leftSection={<IconTextCaption size={18} />}
+                                                                    label="Font Family"
+                                                                    data={[
+                                                                        { value: "YurukaStd", label: 'YurukaStd' },
+                                                                        { value: "SSFangTangTi", label: 'SSFangTangTi' },
+                                                                        { value: "ChillRoundGothic_Bold", label: '(Chinese Fridenly) ChillRoundGothic_Bold' },
+                                                                    ]}
+                                                                    value={selectedShape.fontFamily}
+                                                                    onChange={(str) => {
+
+                                                                        if(str === null){
+                                                                            return
+                                                                        }
+                                                                        
+                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                                        stickerContentHandlers.setItemProp(ind, "fontFamily", str as any);
                                                                     }}
                                                                 />
 

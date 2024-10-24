@@ -7,8 +7,8 @@ export const CONFIGS = {
     initialStickerX: 12,
     initialStickerY: 28,
 
-    initialTextX: 20,
-    initialTextY: 20,
+    initialTextX: 40,
+    initialTextY: 26,
 };
 
 export interface StickerObject {
@@ -21,6 +21,10 @@ export interface StickerObject {
     width?: number;
     height?: number;
     strokeWidth?: number;
+
+    // General | Chinese wordings
+    fontFamily?: "YurukaStd" | "ChillRoundGothic_Bold";
+
     letterSpacing?: number;
     format: "text" | "image" | "externalImage";
     id: string;
@@ -34,13 +38,14 @@ export function createText(
     return {
         x: CONFIGS.initialTextX,
         y: CONFIGS.initialTextY,
-        fontSize: 38,
+        fontSize: 42,
         rotation: 20,
         fill: color,
         stroke: "#ffffff",
         letterSpacing: 0,
-        strokeWidth: 8,
+        strokeWidth: 12,
         format: "text",
+        fontFamily: "YurukaStd",
         id: uuid(),
         content: text,
     };

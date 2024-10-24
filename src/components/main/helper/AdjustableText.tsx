@@ -33,7 +33,16 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
                 text={content}
                 wrap={"none"}
                 
-                fontFamily="ChillRoundGothic_Bold"
+                // fontFamily="NotoSansTCBold"
+                // fontFamily="SSFangTangTi"
+                
+                // General
+                fontFamily={shapeProps.fontFamily || "YurukaStd"}
+
+                // fontFamily="YurukaStd"
+
+                // Chinese OK
+                // fontFamily="ChillRoundGothic_Bold"
                 
                 fillAfterStrokeEnabled={true}
                 draggable
