@@ -10,7 +10,7 @@ import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconCopyPlus, I
 import { CONFIGS, createExternalImages, createImages, createText, duplicateNewObject, StickerObject } from "../../utils/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
-import { dataURLToBlob, downloadFile } from "../../utils/downloadUtils";
+import { dataURLToBlob, downloadFile, timer } from "../../utils/downloadUtils";
 import { initialSticker } from "../../data/sticker";
 import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
@@ -197,7 +197,10 @@ function CanvasBoard() {
                                         <Tooltip label="Download PNG">
                                             <ActionIcon
                                                 variant="light"
-                                                onClick={() => {
+                                                onClick={async () => {
+                                                    setSelectedId(null);
+                                                    await timer(400);
+
                                                     const uri = stageRef.current!.toDataURL();
                                                     downloadFile(uri, `${new Date().getTime()}_stage.png`);
                                                 }}
@@ -213,6 +216,9 @@ function CanvasBoard() {
                                             <ActionIcon
                                                 variant="light"
                                                 onClick={async () => {
+                                                    setSelectedId(null);
+                                                    await timer(400);
+
                                                     const blobImage = await dataURLToBlob(
                                                         stageRef.current!.toDataURL()
                                                     )
@@ -282,7 +288,7 @@ function CanvasBoard() {
                             </Box>
                         </Group>
 
-                        <Group justify="center" mb={12} mt={36}>
+                        <Group justify="center" mb={12} mt={56}>
                             <Box style={{ width: 340 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
                                     <Group justify="space-between" >
