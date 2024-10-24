@@ -20,6 +20,7 @@ import LearnMore from "../about/LearnMore";
 import CreateExternalImages from "./helper/CreateExternalImages";
 import { notifications } from "@mantine/notifications";
 import CreateLocalImages from "./helper/CreateLocalImages";
+import SelectLayer from "./SelectLayer";
 
 function CanvasBoard() {
 
@@ -319,21 +320,21 @@ function CanvasBoard() {
                                         </Group>
 
                                         <Tooltip label="Deselect">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    color="blue"
-                                                    aria-label="Deselect"
-                                                    disabled={selectedShape === undefined}
-                                                    onClick={() => {
-                                                        setSelectedId(null)
-                                                    }}
-                                                >
-                                                    <IconDeselect
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
+                                            <ActionIcon
+                                                variant="light"
+                                                color="blue"
+                                                aria-label="Deselect"
+                                                disabled={selectedShape === undefined}
+                                                onClick={() => {
+                                                    setSelectedId(null)
+                                                }}
+                                            >
+                                                <IconDeselect
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
 
                                         <Group>
                                             <Tooltip label="Duplicate">
@@ -381,6 +382,13 @@ function CanvasBoard() {
                                     </Group>
                                 </Card>
                             </Box>
+                        </Group>
+
+                        <Group justify="center">
+                            <SelectLayer
+                                data={stickerContent}
+                                selectCb={(id) => setSelectedId(id)}
+                            />
                         </Group>
 
                         <Box>
