@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, Button, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
 import { useListState, useDisclosure } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconDeselect, IconImageInPicture, IconPictureInPictureOn, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
+import { IconArrowDown, IconArrowUp, IconChevronRight, IconCopy, IconCopyPlus, IconDeselect, IconDownload, IconPlus, IconSticker, IconTrash } from "@tabler/icons-react";
 import { CONFIGS, createExternalImages, createImages, createText, duplicateNewObject, StickerObject } from "../../utils/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
@@ -21,6 +21,8 @@ import CreateExternalImages from "./helper/CreateExternalImages";
 import { notifications } from "@mantine/notifications";
 import CreateLocalImages from "./helper/CreateLocalImages";
 import SelectLayer from "./SelectLayer";
+// import CopyPNG from "./utils/CopyPNG";
+// import DownloadPNG from "./utils/DownloadPNG";
 
 function CanvasBoard() {
 
@@ -181,42 +183,61 @@ function CanvasBoard() {
                             Generate your sticker in a better way!
                         </Text>
 
-                        <Group justify="center" mb={24}>
-                            <Button
-                                variant="light"
-                                leftSection={<IconImageInPicture size={16} />}
-                                onClick={() => {
-                                    const uri = stageRef.current!.toDataURL();
-                                    // console.log(uri);
-                                    downloadFile(uri, `${new Date().getTime()}_stage.png`);
-                                }}
-                            >
-                                Download PNG
-                            </Button>
-
-                            <Button
-                                variant="light"
-                                onClick={async () => {
-                                    const blobImage = await dataURLToBlob(
-                                        stageRef.current!.toDataURL()
-                                    )
-                                    copyImages(blobImage, "image/png")
-                                }}
-                                leftSection={<IconPictureInPictureOn size={16} />}
-                            >
-                                Copy PNG
-                            </Button>
+                        <Group justify="center" mb={18}>
+                            <SelectLayer
+                                data={stickerContent}
+                                selectCb={(id) => setSelectedId(id)}
+                            />
                         </Group>
 
                         <Group justify="center" mb={12}>
                             <Box style={{ height: 340, width: 340 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder>
+                                    <Group justify="flex-end" mb={16}>
+                                        <Tooltip label="Download PNG">
+                                            <ActionIcon
+                                                variant="light"
+                                                onClick={() => {
+                                                    const uri = stageRef.current!.toDataURL();
+                                                    downloadFile(uri, `${new Date().getTime()}_stage.png`);
+                                                }}
+                                            >
+                                                <IconDownload
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
+
+                                        <Tooltip label="Copy PNG to clipboard">
+                                            <ActionIcon
+                                                variant="light"
+                                                onClick={async () => {
+                                                    const blobImage = await dataURLToBlob(
+                                                        stageRef.current!.toDataURL()
+                                                    )
+                                                    copyImages(blobImage, "image/png")
+                                                }}
+                                            >
+                                                <IconCopyPlus
+                                                    style={{ width: '70%', height: '70%' }}
+                                                    stroke={1.5}
+                                                />
+                                            </ActionIcon>
+                                        </Tooltip>
+
+                                    </Group>
+
                                     <Stage
                                         ref={stageRef}
                                         width={CONFIGS.stageWidth}
                                         height={CONFIGS.stageHeight}
                                         onMouseDown={checkDeselect}
                                         onTouchStart={checkDeselect}
+                                        style={{ 
+                                            border: "1px solid #8ef765",
+                                            borderRadius: "12px"
+                                        }}
                                     >
                                         <Layer>
 
@@ -261,7 +282,7 @@ function CanvasBoard() {
                             </Box>
                         </Group>
 
-                        <Group justify="center" mb={12}>
+                        <Group justify="center" mb={12} mt={36}>
                             <Box style={{ width: 340 }} >
                                 <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
                                     <Group justify="space-between" >
@@ -382,13 +403,6 @@ function CanvasBoard() {
                                     </Group>
                                 </Card>
                             </Box>
-                        </Group>
-
-                        <Group justify="center">
-                            <SelectLayer
-                                data={stickerContent}
-                                selectCb={(id) => setSelectedId(id)}
-                            />
                         </Group>
 
                         <Box>

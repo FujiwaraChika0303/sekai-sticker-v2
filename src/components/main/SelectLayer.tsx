@@ -1,4 +1,4 @@
-import { Card, Box, Group } from '@mantine/core';
+import { Card, Box, Group, Tooltip } from '@mantine/core';
 import { StickerObject } from '../../utils/createSticker';
 import { Pagination } from '@mantine/core';
 
@@ -16,6 +16,7 @@ function SelectLayer({
             <Box style={{ width: 340 }} >
                 <Card shadow="sm" padding="lg" radius="md" withBorder>
                 <Group justify="center">
+                <Tooltip label="Select Layer">
                     <Pagination 
                         color="gray"
                         onChange={(ind) => {
@@ -24,6 +25,7 @@ function SelectLayer({
                         }} 
                         total={data.length}
                     />
+                </Tooltip>
                 </Group>
                 </Card>
             </Box>
