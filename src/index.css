@@ -7,3 +7,13 @@
     font-family: 'SSFangTangTi';
     src: local('SSFangTangTi'), url(./fonts/ShangShouFangTangTi.woff2) format('woff2');
 }
+
+@font-face {
+    font-family: 'ChillRoundGothic_Bold';
+    src: local('ChillRoundGothic_Bold'), url(./fonts/ChillRoundGothic_Bold.woff) format('woff');
+}
+
+/* @font-face {
+    font-family: 'NotoSansTCBold';
+    src: local('NotoSansTCBold'), url(./fonts/NotoSansTC-Bold.ttf) format('truetype');
+} */

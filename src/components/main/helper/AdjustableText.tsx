@@ -33,7 +33,7 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
                 text={content}
                 wrap={"none"}
                 
-                fontFamily="YurukaStd"
+                fontFamily="ChillRoundGothic_Bold"
                 
                 fillAfterStrokeEnabled={true}
                 draggable
