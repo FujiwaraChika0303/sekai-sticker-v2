@@ -489,8 +489,8 @@ function CanvasBoard() {
                                                             color="blue"
                                                             value={selectedShape.x}
                                                             step={1}
-                                                            max={250}
-                                                            min={-250}
+                                                            max={350}
+                                                            min={-350}
                                                             onChange={(value) => {
                                                                 const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                                 stickerContentHandlers.setItemProp(ind, "x", value);
@@ -505,8 +505,8 @@ function CanvasBoard() {
                                                             color="blue"
                                                             value={selectedShape.y}
                                                             step={1}
-                                                            max={250}
-                                                            min={-250}
+                                                            max={350}
+                                                            min={-350}
                                                             onChange={(value) => {
                                                                 const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                                 stickerContentHandlers.setItemProp(ind, "y", value);
@@ -556,7 +556,7 @@ function CanvasBoard() {
                                                                 </Text>
                                                                 <Slider
                                                                     step={1}
-                                                                    max={100}
+                                                                    max={200}
                                                                     min={0}
                                                                     value={selectedShape.fontSize}
                                                                     onChange={(value) => {
