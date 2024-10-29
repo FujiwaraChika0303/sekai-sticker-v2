@@ -19,6 +19,7 @@
     "@mantine/notifications": "^7.13.3",
     "@tabler/icons-react": "^3.19.0",
     "embla-carousel-react": "^7.1.0",
+    "emoji-picker-react": "^4.12.0",
     "konva": "^9.3.16",
     "mantine-form-zod-resolver": "^1.1.0",
     "markdown-to-jsx": "^7.5.0",

@@ -22,6 +22,7 @@ import { notifications } from "@mantine/notifications";
 import CreateLocalImages from "./helper/CreateLocalImages";
 import SelectLayer from "./SelectLayer";
 import DeselectLayer from "./utils/DeselectLayer";
+import SelectEmoji from "./SelectEmoji";
 
 function CanvasBoard() {
 
@@ -65,17 +66,31 @@ function CanvasBoard() {
     }
 
     // Delete current selected layer
-    function deleteSelectedLayer(){
+    function deleteSelectedLayer() {
         setSelectedId(null);
         stickerContentHandlers.remove(
             stickerContent.findIndex(v => v.id === selectedId)
         );
     }
 
+    // Duplicate current selected layer
+    function duplicateItems() {
+        if (selectedShape === undefined) {
+            return
+        }
+        const newSticker = duplicateNewObject(selectedShape);
+        stickerContentHandlers.append(newSticker)
+    }
+
     useHotkeys([
         ['delete', () => {
-            if(selectedId !== null){
+            if (selectedId !== null) {
                 deleteSelectedLayer()
+            }
+        }],
+        ['ctrl+d', () => {
+            if (selectedId !== null) {
+                duplicateItems()
             }
         }],
     ]);
@@ -136,6 +151,12 @@ function CanvasBoard() {
 
                                     stickerContentHandlers.append(createText(defaultText, textColor))
                                     close();
+                                }}
+                            />
+
+                            <SelectEmoji
+                                addEmojiCb={(emojiUrl: string) => {
+                                    callBackImageURL(emojiUrl)
                                 }}
                             />
 
@@ -378,11 +399,7 @@ function CanvasBoard() {
                                                             aria-label="Duplicate This"
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
-                                                                if (selectedShape === undefined) {
-                                                                    return
-                                                                }
-                                                                const newSticker = duplicateNewObject(selectedShape);
-                                                                stickerContentHandlers.append(newSticker)
+                                                                duplicateItems();
                                                             }}
                                                         >
                                                             <IconCopy
@@ -516,10 +533,10 @@ function CanvasBoard() {
                                                                     value={selectedShape.fontFamily}
                                                                     onChange={(str) => {
 
-                                                                        if(str === null){
+                                                                        if (str === null) {
                                                                             return
                                                                         }
-                                                                        
+
                                                                         const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                                         stickerContentHandlers.setItemProp(ind, "fontFamily", str as any);
                                                                     }}

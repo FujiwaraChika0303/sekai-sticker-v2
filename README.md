@@ -18,6 +18,7 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Copy Layer
 - ✅ Layer handle
 - ✅ Save and copy PNG
+- ✅ Emoji sticker
 - ✅ Respondsive UI
 - ✅ Night / Sky Theme
 - ✅ Traditional Chinese / Chinese display friendly 
@@ -25,6 +26,7 @@ URL: https://sekai-sticker.vercel.app/
 ## 📝 Todo
 - ✅ External image file input 
 - ✅ Internal (local) image file input 
+- ✅ Emoji sticker added
 - ⬜️ More input items 
 - ⬜️ More images adjustment 
 - ⬜️ Save creations 
