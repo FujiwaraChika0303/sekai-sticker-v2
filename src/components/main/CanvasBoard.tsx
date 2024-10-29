@@ -537,7 +537,7 @@ function CanvasBoard() {
                                                                     data={[
                                                                         { value: "YurukaStd", label: 'YurukaStd' },
                                                                         { value: "SSFangTangTi", label: 'SSFangTangTi' },
-                                                                        { value: "ChillRoundGothic_Bold", label: '(Chinese Fridenly) ChillRoundGothic_Bold' },
+                                                                        { value: "ChillRoundGothic_Bold", label: '(Chinese Friendly) ChillRoundGothic_Bold' },
                                                                     ]}
                                                                     value={selectedShape.fontFamily}
                                                                     onChange={(str) => {
