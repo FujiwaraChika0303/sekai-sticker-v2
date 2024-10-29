@@ -167,7 +167,6 @@ function CanvasBoard() {
                                     callBackImageURL(imageURL)
                                 }}
                             />
-
                         </Box>
                     </AppShell.Section>
 
