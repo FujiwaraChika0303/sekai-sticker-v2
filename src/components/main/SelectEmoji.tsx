@@ -5,7 +5,7 @@ import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 
 interface SelectEmojiProps {
     title?: string
-    addEmojiCb: (emojiURL: string) => void
+    addEmojiCb: (emoji: EmojiClickData) => void
 }
 
 function SelectEmoji({
@@ -16,7 +16,7 @@ function SelectEmoji({
     const [opened, { open, close }] = useDisclosure(false);
 
     function selectAndClose(emoji: EmojiClickData) {
-        addEmojiCb(emoji.imageUrl);
+        addEmojiCb(emoji);
         close();
     }
 

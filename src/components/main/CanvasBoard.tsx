@@ -23,6 +23,7 @@ import CreateLocalImages from "./helper/CreateLocalImages";
 import SelectLayer from "./SelectLayer";
 import DeselectLayer from "./utils/DeselectLayer";
 import SelectEmoji from "./SelectEmoji";
+import { EmojiClickData } from "emoji-picker-react";
 
 function CanvasBoard() {
 
@@ -155,8 +156,9 @@ function CanvasBoard() {
                             />
 
                             <SelectEmoji
-                                addEmojiCb={(emojiUrl: string) => {
-                                    callBackImageURL(emojiUrl)
+                                title="Add Emoji (Text)"
+                                addEmojiCb={(emoji: EmojiClickData) => {
+                                    stickerContentHandlers.append(createText(emoji.emoji))
                                 }}
                             />
 
@@ -172,6 +174,13 @@ function CanvasBoard() {
                                 addStickerCb={async (v) => {
                                     stickerContentHandlers.append(await createImages(v.img))
                                     close();
+                                }}
+                            />
+
+                            <SelectEmoji
+                                title="Add Emoji (Image)"
+                                addEmojiCb={(emoji: EmojiClickData) => {
+                                    callBackImageURL(emoji.imageUrl)
                                 }}
                             />
 
