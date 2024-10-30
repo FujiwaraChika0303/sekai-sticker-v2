@@ -4,6 +4,7 @@ import { uuid } from "./uuids";
 export const CONFIGS = {
     stageWidth: 300,
     stageHeight: 300,
+
     initialStickerX: 12,
     initialStickerY: 28,
 
@@ -20,6 +21,8 @@ export interface StickerObject {
     fontSize?: number;
     width?: number;
     height?: number;
+    
+    // Text outer stroke
     strokeWidth?: number;
 
     // General | Chinese wordings
@@ -27,8 +30,12 @@ export interface StickerObject {
 
     letterSpacing?: number;
     format: "text" | "image" | "externalImage";
-    id: string;
+
+    // Text content OR Images URL
     content: string;
+    
+    // UUID
+    id: string; 
 }
 
 export function createText(

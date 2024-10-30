@@ -114,7 +114,6 @@ function CanvasBoard() {
 
                     <AppShell.Section grow my="md" component={ScrollArea}>
 
-
                         <Group justify="space-between" >
                             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" mb={14} />
                         </Group>
@@ -177,12 +176,12 @@ function CanvasBoard() {
                                 }}
                             />
 
-                            <SelectEmoji
+                            {/* <SelectEmoji
                                 title="Add Emoji (Image)"
                                 addEmojiCb={(emoji: EmojiClickData) => {
                                     callBackImageURL(emoji.imageUrl)
                                 }}
-                            />
+                            /> */}
 
                             <CreateLocalImages
                                 title="Upload local Image"
