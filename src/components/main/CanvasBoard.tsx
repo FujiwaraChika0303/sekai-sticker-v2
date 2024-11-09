@@ -24,6 +24,7 @@ import SelectLayer from "./SelectLayer";
 import DeselectLayer from "./utils/DeselectLayer";
 import SelectEmoji from "./SelectEmoji";
 import { EmojiClickData } from "emoji-picker-react";
+import { getImagesWidthAndHeight } from "../../utils/imagesUtils";
 
 function CanvasBoard() {
 
@@ -466,9 +467,15 @@ function CanvasBoard() {
                                                                 <SelectCharactor
                                                                     openComp="Button"
                                                                     title="Change Charactor"
-                                                                    addStickerCb={(v) => {
+                                                                    addStickerCb={async (v) => {
                                                                         const ind = stickerContent.findIndex(v => v.id === selectedId);
+
+                                                                        const { w, h } = await getImagesWidthAndHeight(v.img)
+
                                                                         stickerContentHandlers.setItemProp(ind, "content", v.img);
+
+                                                                        stickerContentHandlers.setItemProp(ind, "width", w);
+                                                                        stickerContentHandlers.setItemProp(ind, "height", h);
 
                                                                         for (let i = 0; i < stickerContent.length; i++) {
                                                                             if (stickerContent[i].format === "text") {
@@ -514,41 +521,6 @@ function CanvasBoard() {
 
                                                         {selectedShape.format === "text" && (
                                                             <>
-                                                                <TextInput
-                                                                    mt={12}
-                                                                    leftSection={<IconTextCaption size={18} />}
-                                                                    label="Text content"
-                                                                    placeholder="Input placeholder"
-                                                                    value={selectedShape.content}
-                                                                    onChange={(event) => {
-                                                                        const newText = event.currentTarget.value;
-                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                                        stickerContentHandlers.setItemProp(ind, "content", newText);
-                                                                    }}
-                                                                />
-
-                                                                <Select
-                                                                    mt={12}
-                                                                    allowDeselect={false}
-                                                                    clearable={false}
-                                                                    leftSection={<IconTextCaption size={18} />}
-                                                                    label="Font Family"
-                                                                    data={[
-                                                                        { value: "YurukaStd", label: 'YurukaStd' },
-                                                                        { value: "SSFangTangTi", label: 'SSFangTangTi' },
-                                                                        { value: "ChillRoundGothic_Bold", label: '(Chinese Friendly) ChillRoundGothic_Bold' },
-                                                                    ]}
-                                                                    value={selectedShape.fontFamily}
-                                                                    onChange={(str) => {
-
-                                                                        if (str === null) {
-                                                                            return
-                                                                        }
-
-                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
-                                                                        stickerContentHandlers.setItemProp(ind, "fontFamily", str as any);
-                                                                    }}
-                                                                />
 
                                                                 <Text fw={500} fz={14} mt={20}>
                                                                     <IconDimensions size={14} /> Font Size
@@ -561,6 +533,19 @@ function CanvasBoard() {
                                                                     onChange={(value) => {
                                                                         const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                                         stickerContentHandlers.setItemProp(ind, "fontSize", +value);
+                                                                    }}
+                                                                />
+
+                                                                <TextInput
+                                                                    mt={12}
+                                                                    leftSection={<IconTextCaption size={18} />}
+                                                                    label="Text content"
+                                                                    placeholder="Input placeholder"
+                                                                    value={selectedShape.content}
+                                                                    onChange={(event) => {
+                                                                        const newText = event.currentTarget.value;
+                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                                        stickerContentHandlers.setItemProp(ind, "content", newText);
                                                                     }}
                                                                 />
 
@@ -604,6 +589,29 @@ function CanvasBoard() {
                                                                     onChange={(colorStr) => {
                                                                         const ind = stickerContent.findIndex(v => v.id === selectedId);
                                                                         stickerContentHandlers.setItemProp(ind, "fill", colorStr);
+                                                                    }}
+                                                                />
+
+                                                                <Select
+                                                                    mt={12}
+                                                                    allowDeselect={false}
+                                                                    clearable={false}
+                                                                    leftSection={<IconTextCaption size={18} />}
+                                                                    label="Font Family"
+                                                                    data={[
+                                                                        { value: "YurukaStd", label: 'YurukaStd' },
+                                                                        { value: "SSFangTangTi", label: 'SSFangTangTi' },
+                                                                        { value: "ChillRoundGothic_Bold", label: '(Chinese Friendly) ChillRoundGothic_Bold' },
+                                                                    ]}
+                                                                    value={selectedShape.fontFamily}
+                                                                    onChange={(str) => {
+
+                                                                        if (str === null) {
+                                                                            return
+                                                                        }
+
+                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
+                                                                        stickerContentHandlers.setItemProp(ind, "fontFamily", str as any);
                                                                     }}
                                                                 />
                                                             </>

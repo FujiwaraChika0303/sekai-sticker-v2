@@ -15,11 +15,11 @@ function SelectLayer({
     return (
         <>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
-                <Text ta="center">
-                    <IconLayersDifference size={16} /> Layer Select
-                </Text>
+                <Group justify="center">
+                    <Text ta="center">
+                        <IconLayersDifference size={16} /> Layer Select
+                    </Text>
 
-                <Group justify="center" mt={16}>
                     <Tooltip label="Select Layer">
                         <Pagination
                             color="gray"
