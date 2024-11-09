@@ -4,8 +4,7 @@ A Better Project Sekai sticker maker.
 
 URL: https://sekai-sticker.vercel.app/
 
-![https://sekai-sticker.vercel.app/](/assert/chrome_fqSH7Wf7Yj.png)
-
+![https://sekai-sticker.vercel.app/](/assert/homePage.png)
 
 
 ## 🔍 Features
