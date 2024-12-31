@@ -26,6 +26,7 @@ import SelectEmoji from "./SelectEmoji";
 import { EmojiClickData } from "emoji-picker-react";
 import { getImagesWidthAndHeight } from "../../utils/imagesUtils";
 import useCurrenStickerStore from "../../store/currenStickerStore";
+import DropZoneFullScreen from "./helper/DropZoneFullScreen";
 
 function CanvasBoard() {
 
@@ -41,7 +42,7 @@ function CanvasBoard() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
-    const clickOutsideref = useClickOutside(() => setSelectedId(null));
+    // const clickOutsideref = useClickOutside(() => setSelectedId(null));
 
     // Check deselect click
     function checkDeselect(e: Konva.KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent, any>) {
@@ -110,6 +111,12 @@ function CanvasBoard() {
 
     return (
         <>
+            <DropZoneFullScreen
+                callBackImageURL={(imageURL: string) => {
+                    callBackImageURL(imageURL)
+                }}
+            />
+
             <AppShell
                 layout="alt"
                 navbar={{ width: 230, breakpoint: 'sm', collapsed: { mobile: !opened } }}
@@ -293,7 +300,7 @@ function CanvasBoard() {
                                         </Group>
 
                                         <Group justify="center">
-                                            <Box style={{ minWidth: CONFIGS.stageWidth }} ref={clickOutsideref}>
+                                            <Box style={{ minWidth: CONFIGS.stageWidth }}>
                                                 <Stage
                                                     ref={stageRef}
                                                     width={CONFIGS.stageWidth}
@@ -423,7 +430,7 @@ function CanvasBoard() {
                                                             />
                                                         </ActionIcon>
                                                     </Tooltip>
-                                      
+
                                                     <Tooltip label="Duplicate This">
                                                         <ActionIcon
                                                             variant="light"
