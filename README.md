@@ -28,7 +28,7 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Emoji sticker added
 - ⬜️ More input items 
 - ⬜️ More images adjustment 
-- ⬜️ Save creations 
+- ✅ Auto Save creations in browser level
 
 ## ❤ Original Repo
 Special thanks for the sources  

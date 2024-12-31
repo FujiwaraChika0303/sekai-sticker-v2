@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid, Select } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
@@ -11,7 +11,7 @@ import { CONFIGS, createExternalImages, createImages, createText, duplicateNewOb
 import SelectCharactor from "./SelectCharactor";
 
 import { dataURLToBlob, downloadFile, timer } from "../../utils/downloadUtils";
-import { initialSticker } from "../../data/sticker";
+// import { initialSticker } from "../../data/sticker";
 import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
 import ColorToggleBtn from "../common/ColorToggleBtn";
@@ -25,13 +25,16 @@ import DeselectLayer from "./utils/DeselectLayer";
 import SelectEmoji from "./SelectEmoji";
 import { EmojiClickData } from "emoji-picker-react";
 import { getImagesWidthAndHeight } from "../../utils/imagesUtils";
+import useCurrenStickerStore from "../../store/currenStickerStore";
 
 function CanvasBoard() {
 
     const stageRef = useRef<any>(null);
     const [opened, { toggle, close }] = useDisclosure();
 
-    const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(initialSticker);
+    const stickerStore = useCurrenStickerStore( state => state )
+
+    const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(stickerStore.sticker.filter( v => !v.content.startsWith("blob:")));
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
@@ -96,6 +99,10 @@ function CanvasBoard() {
             }
         }],
     ]);
+
+    useEffect( () => {
+        stickerStore.modifySticker(stickerContent)
+    },[stickerContent]) 
 
     return (
         <>
