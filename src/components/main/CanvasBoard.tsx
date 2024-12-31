@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid, Select } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
-import { useListState, useDisclosure, useHotkeys } from '@mantine/hooks';
+import { useListState, useDisclosure, useHotkeys, useClickOutside } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
@@ -11,7 +11,7 @@ import { CONFIGS, createExternalImages, createImages, createText, duplicateNewOb
 import SelectCharactor from "./SelectCharactor";
 
 import { dataURLToBlob, downloadFile, timer } from "../../utils/downloadUtils";
-// import { initialSticker } from "../../data/sticker";
+
 import { KonvaEventObject } from "konva/lib/Node";
 import { chatactorList } from "../../data/characters";
 import ColorToggleBtn from "../common/ColorToggleBtn";
@@ -32,12 +32,16 @@ function CanvasBoard() {
     const stageRef = useRef<any>(null);
     const [opened, { toggle, close }] = useDisclosure();
 
-    const stickerStore = useCurrenStickerStore( state => state )
+    const stickerStore = useCurrenStickerStore(state => state);
 
-    const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(stickerStore.sticker.filter( v => !v.content.startsWith("blob:")));
+    const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(
+        stickerStore.sticker.filter(v => !v.content.startsWith("blob:"))
+    );
+
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const selectedShape = stickerContent.find(v => v.id === selectedId);
+    const clickOutsideref = useClickOutside(() => setSelectedId(null));
 
     // Check deselect click
     function checkDeselect(e: Konva.KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent, any>) {
@@ -100,9 +104,9 @@ function CanvasBoard() {
         }],
     ]);
 
-    useEffect( () => {
+    useEffect(() => {
         stickerStore.modifySticker(stickerContent)
-    },[stickerContent]) 
+    }, [stickerContent])
 
     return (
         <>
@@ -289,7 +293,7 @@ function CanvasBoard() {
                                         </Group>
 
                                         <Group justify="center">
-                                            <Box style={{ minWidth: CONFIGS.stageWidth }}>
+                                            <Box style={{ minWidth: CONFIGS.stageWidth }} ref={clickOutsideref}>
                                                 <Stage
                                                     ref={stageRef}
                                                     width={CONFIGS.stageWidth}
@@ -402,12 +406,24 @@ function CanvasBoard() {
                                                     </Tooltip>
                                                 </Group>
 
-                                                <DeselectLayer
-                                                    disabled={selectedShape === undefined}
-                                                    deselectFunc={() => setSelectedId(null)}
-                                                />
-
                                                 <Group>
+                                                    <Tooltip label="Delete This">
+                                                        <ActionIcon
+                                                            variant="light"
+                                                            color="red"
+                                                            aria-label="Trash"
+                                                            disabled={selectedShape === undefined}
+                                                            onClick={() => {
+                                                                deleteSelectedLayer()
+                                                            }}
+                                                        >
+                                                            <IconTrash
+                                                                style={{ width: '70%', height: '70%' }}
+                                                                stroke={1.5}
+                                                            />
+                                                        </ActionIcon>
+                                                    </Tooltip>
+                                      
                                                     <Tooltip label="Duplicate This">
                                                         <ActionIcon
                                                             variant="light"
@@ -425,22 +441,11 @@ function CanvasBoard() {
                                                         </ActionIcon>
                                                     </Tooltip>
 
-                                                    <Tooltip label="Delete This">
-                                                        <ActionIcon
-                                                            variant="light"
-                                                            color="red"
-                                                            aria-label="Trash"
-                                                            disabled={selectedShape === undefined}
-                                                            onClick={() => {
-                                                                deleteSelectedLayer()
-                                                            }}
-                                                        >
-                                                            <IconTrash
-                                                                style={{ width: '70%', height: '70%' }}
-                                                                stroke={1.5}
-                                                            />
-                                                        </ActionIcon>
-                                                    </Tooltip>
+                                                    <DeselectLayer
+                                                        disabled={selectedShape === undefined}
+                                                        deselectFunc={() => setSelectedId(null)}
+                                                    />
+
                                                 </Group>
 
                                             </Group>

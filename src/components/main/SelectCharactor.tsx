@@ -49,7 +49,7 @@ function SelectCharactor({
                 onClose={close}
                 title={title}
                 position="bottom"
-                size="60%"
+                size="65%"
             >
                 <TextInput
                     leftSection={<IconSearch size={16} />}
@@ -71,7 +71,7 @@ function SelectCharactor({
                 />
 
                 <Grid>
-                    <Grid.Col span={2}>
+                    <Grid.Col span={{ base: 2, md: 2, lg: 2 }}>
                         <ScrollArea h={440}>
                             {uniqueBy(chatactorList, prop("character")).map(v =>
                                 <Box key={v.img}>
@@ -91,7 +91,7 @@ function SelectCharactor({
                         </ScrollArea>
                     </Grid.Col>
 
-                    <Grid.Col span={10}>
+                    <Grid.Col span={{ base: 10, md: 10, lg: 10 }}>
                         <ScrollArea h={440}>
                             <Grid>
                                 {filledList.map(v =>
