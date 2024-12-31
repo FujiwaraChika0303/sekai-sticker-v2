@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid, Select } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
-import { useListState, useDisclosure, useHotkeys, useClickOutside } from '@mantine/hooks';
+import { useListState, useDisclosure, useHotkeys } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
