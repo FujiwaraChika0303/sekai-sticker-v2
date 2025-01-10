@@ -25,24 +25,26 @@ import DeselectLayer from "./utils/DeselectLayer";
 import SelectEmoji from "./SelectEmoji";
 import { EmojiClickData } from "emoji-picker-react";
 import { getImagesWidthAndHeight } from "../../utils/imagesUtils";
-import useCurrenStickerStore from "../../store/currenStickerStore";
+import useCurrentStickerStore from "../../store/currenStickerStore";
 import DropZoneFullScreen from "./helper/DropZoneFullScreen";
+import SaveToHistory from "./helper/SaveToHistory";
+import SelectHistorySticker from "./SelectHistorySticker";
 
 function CanvasBoard() {
 
     const stageRef = useRef<any>(null);
     const [opened, { toggle, close }] = useDisclosure();
 
-    const stickerStore = useCurrenStickerStore(state => state);
+    // History Sticker content
+    const stickerStore = useCurrentStickerStore(state => state);
 
+    // Current Sticker content
     const [stickerContent, stickerContentHandlers] = useListState<StickerObject>(
         stickerStore.sticker.filter(v => !v.content.startsWith("blob:"))
     );
 
     const [selectedId, setSelectedId] = useState<string | null>(null);
-
     const selectedShape = stickerContent.find(v => v.id === selectedId);
-    // const clickOutsideref = useClickOutside(() => setSelectedId(null));
 
     // Check deselect click
     function checkDeselect(e: Konva.KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent, any>) {
@@ -108,6 +110,12 @@ function CanvasBoard() {
     useEffect(() => {
         stickerStore.modifySticker(stickerContent)
     }, [stickerContent])
+
+    useEffect(() => {
+        if (stickerContent.length >= 1) {
+            setSelectedId(stickerContent[0].id)
+        }
+    }, [])
 
     return (
         <>
@@ -215,6 +223,20 @@ function CanvasBoard() {
                                     callBackImageURL(imageURL)
                                 }}
                             />
+
+                            <Text c="dimmed" fz={14} fw={400} mb={6} mt={12}>
+                                Utils
+                            </Text>
+
+                            <Divider my="md" />
+
+                            <SelectHistorySticker
+                                setStickerCb={(sticker) => {
+                                    stickerContentHandlers.setState(sticker)
+                                }}
+                            />
+
+
                         </Box>
                     </AppShell.Section>
 
@@ -258,44 +280,49 @@ function CanvasBoard() {
 
                                     <Card shadow="sm" padding="lg" radius="md" withBorder>
 
-                                        <Group justify="flex-end" mb={16}>
-                                            <Tooltip label="Download PNG">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    onClick={async () => {
-                                                        setSelectedId(null);
-                                                        await timer(400);
+                                        <Group justify="space-between" mb={16}>
 
-                                                        const uri = stageRef.current!.toDataURL();
-                                                        downloadFile(uri, `${new Date().getTime()}_stage.png`);
-                                                    }}
-                                                >
-                                                    <IconDownload
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
+                                            <SaveToHistory />
 
-                                            <Tooltip label="Copy PNG to clipboard">
-                                                <ActionIcon
-                                                    variant="light"
-                                                    onClick={async () => {
-                                                        setSelectedId(null);
-                                                        await timer(400);
+                                            <Group>
+                                                <Tooltip label="Download PNG">
+                                                    <ActionIcon
+                                                        variant="light"
+                                                        onClick={async () => {
+                                                            setSelectedId(null);
+                                                            await timer(400);
 
-                                                        const blobImage = await dataURLToBlob(
-                                                            stageRef.current!.toDataURL()
-                                                        )
-                                                        copyImages(blobImage, "image/png")
-                                                    }}
-                                                >
-                                                    <IconCopyPlus
-                                                        style={{ width: '70%', height: '70%' }}
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            </Tooltip>
+                                                            const uri = stageRef.current!.toDataURL();
+                                                            downloadFile(uri, `${new Date().getTime()}_stage.png`);
+                                                        }}
+                                                    >
+                                                        <IconDownload
+                                                            style={{ width: '70%', height: '70%' }}
+                                                            stroke={1.5}
+                                                        />
+                                                    </ActionIcon>
+                                                </Tooltip>
+
+                                                <Tooltip label="Copy PNG to clipboard">
+                                                    <ActionIcon
+                                                        variant="light"
+                                                        onClick={async () => {
+                                                            setSelectedId(null);
+                                                            await timer(400);
+
+                                                            const blobImage = await dataURLToBlob(
+                                                                stageRef.current!.toDataURL()
+                                                            )
+                                                            copyImages(blobImage, "image/png")
+                                                        }}
+                                                    >
+                                                        <IconCopyPlus
+                                                            style={{ width: '70%', height: '70%' }}
+                                                            stroke={1.5}
+                                                        />
+                                                    </ActionIcon>
+                                                </Tooltip>
+                                            </Group>
 
                                         </Group>
 

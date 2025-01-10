@@ -10,9 +10,11 @@ type AdjustableTextProps = {
     isSelected: boolean
     onSelect: Function
     onChange: Function
+
+    draggable?: boolean
 }
 
-function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = "Some text on canvas" }: AdjustableTextProps) {
+function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = "Some text on canvas", draggable = true }: AdjustableTextProps) {
 
     const textRef = useRef<Konva.Text>(null);
     const transformRef = useRef<Konva.Transformer>(null);
@@ -45,7 +47,7 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
                 // fontFamily="ChillRoundGothic_Bold"
                 
                 fillAfterStrokeEnabled={true}
-                draggable
+                draggable={draggable}
 
                 onClick={onSelect as any}
                 onTap={onSelect as any}

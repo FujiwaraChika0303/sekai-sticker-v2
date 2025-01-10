@@ -10,9 +10,11 @@ type CanvasTransImageProps = {
     isSelected: boolean
     onSelect: Function
     onChange: Function
+
+    draggable?: boolean
 }
 
-function CanvasTransImage({ url, shapeProps, isSelected, onSelect, onChange }: CanvasTransImageProps){
+function CanvasTransImage({ url, shapeProps, isSelected, onSelect, onChange, draggable = true }: CanvasTransImageProps){
 
     const [ image ] = useImage(url);
 
@@ -31,7 +33,7 @@ function CanvasTransImage({ url, shapeProps, isSelected, onSelect, onChange }: C
         <>
             <Image
                 image={image}
-                draggable
+                draggable={draggable}
                 onClick={onSelect as any}
                 onTap={onSelect as any}
                 ref={imageRef}

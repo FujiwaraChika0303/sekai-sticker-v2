@@ -6,6 +6,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Suspense, lazy } from "react";
 
 import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
 import {
@@ -28,8 +29,10 @@ function App() {
     return (
         <MantineProvider>
             <Suspense fallback={<LoadingPage />}>
-                <Notifications />
-                <RouterProvider router={router} />
+                <ModalsProvider>
+                    <Notifications />
+                    <RouterProvider router={router} />
+                </ModalsProvider>
             </Suspense>
         </MantineProvider>
     )

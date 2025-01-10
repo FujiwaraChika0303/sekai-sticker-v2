@@ -4,12 +4,12 @@ import { devtools, persist } from 'zustand/middleware'
 import { StickerObject } from '../utils/createSticker';
 import { initialSticker } from '../data/sticker';
 
-interface CurrenStickerState {
+interface CurrentStickerState {
     sticker: StickerObject[]
     modifySticker: (val: StickerObject[]) => void 
 }
 
-const useCurrenStickerStore = create<CurrenStickerState>()(
+const useCurrentStickerStore = create<CurrentStickerState>()(
     devtools(
         persist((set) => ({
             sticker: initialSticker,
@@ -29,4 +29,4 @@ const useCurrenStickerStore = create<CurrenStickerState>()(
 );
 
 
-export default useCurrenStickerStore
+export default useCurrentStickerStore
