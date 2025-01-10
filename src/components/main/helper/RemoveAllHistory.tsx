@@ -4,36 +4,32 @@ import { modals } from '@mantine/modals';
 import { IconTrash } from '@tabler/icons-react';
 import useHistoryStickerStore from '../../../store/historyStickerStore';
 
-type RemoveOneToHistoryProps = {
-    ind: number;
-}
+function RemoveAllHistory() {
 
-function RemoveOneToHistory({ ind }: RemoveOneToHistoryProps) {
+    const clearAllStickerHistFunc = useHistoryStickerStore(state => state.clearAllStickerHist);
 
-    const clearOneStickerHistFunc = useHistoryStickerStore(state => state.clearOneStickerHist);
-
-    const openRemoveStickerModal = () => modals.openConfirmModal({
+    const openRemoveAllStickerModal = () => modals.openConfirmModal({
         title: 'Confirm delete message',
         children: (
             <Text size="sm">
-                Are you sure to delete this sticker?
+                Are you sure to delete all the saved sticker? This action can not be reverse.
             </Text>
         ),
         labels: { confirm: 'Confirm', cancel: 'Cancel' },
         onCancel: () => {},
         onConfirm: () => {
-            clearOneStickerHistFunc(ind);
+            clearAllStickerHistFunc();
         },
     });
 
 
     return (
-        <Tooltip label="Remove Sticker">
+        <Tooltip label="Remove All saved sticker">
             <ActionIcon
                 variant="light"
                 color="red"
-                aria-label="Remove Sticker"
-                onClick={() => openRemoveStickerModal()}
+                aria-label="Remove All saved sticker"
+                onClick={() => openRemoveAllStickerModal()}
             >
                 <IconTrash
                     style={{ width: '70%', height: '70%' }}
@@ -44,4 +40,4 @@ function RemoveOneToHistory({ ind }: RemoveOneToHistoryProps) {
     )
 }
 
-export default RemoveOneToHistory
+export default RemoveAllHistory

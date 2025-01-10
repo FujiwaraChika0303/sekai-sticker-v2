@@ -14,7 +14,6 @@ function CopyPNG({ dataURL }: CopyPNGProps) {
                 variant="light"
                 onClick={async () => {
                     const blobImage = await dataURLToBlob(
-                        // stageRef.current!.toDataURL()
                         dataURL
                     )
                     copyImages(blobImage, "image/png")

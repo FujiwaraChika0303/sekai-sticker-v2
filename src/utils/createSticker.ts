@@ -16,24 +16,25 @@ export interface StickerObject {
     x: number;
     y: number;
     rotation?: number;
-    fill?: string; // color
-    stroke?: string; // color
+    fill?: string;     // Color code string
+    stroke?: string;   // Color code string
     fontSize?: number;
     width?: number;
     height?: number;
-    
-    // Text outer stroke
-    strokeWidth?: number;
-
-    // General | Chinese wordings
-    fontFamily?: "YurukaStd" | "ChillRoundGothic_Bold";
-
     letterSpacing?: number;
+
+    // Is a text, image or the external image
     format: "text" | "image" | "externalImage";
 
     // Text content OR Images URL
     content: string;
     
+    // Text outer stroke
+    strokeWidth?: number;
+
+    // Default font | Chinese word font
+    fontFamily?: "YurukaStd" | "ChillRoundGothic_Bold";
+
     // UUID
     id: string; 
 }

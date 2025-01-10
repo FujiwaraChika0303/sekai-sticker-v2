@@ -1,13 +1,12 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, ScrollArea, Button, Box, UnstyledButton, Group, Text } from '@mantine/core';
+import { Drawer, Grid, NavLink, Button, Box, Group, Text } from '@mantine/core';
 import { IconAdjustments, IconChevronRight, IconSticker } from '@tabler/icons-react';
 import useHistoryStickerStore from '../../store/historyStickerStore';
-import { Stage, Layer } from 'react-konva';
 import { CONFIGS, StickerObject } from '../../utils/createSticker';
-import AdjustableText from './helper/AdjustableText';
-import CanvasTransImage from './helper/CanvasTransImage';
 import { notifications } from '@mantine/notifications';
 import RemoveOneToHistory from './helper/RemoveOneToHistory';
+import ViewCanvasComp from './utils/ViewCanvasComp';
+import RemoveAllHistory from './helper/RemoveAllHistory';
 
 interface SelectHistoryStickerProps {
     title?: string
@@ -42,77 +41,41 @@ function SelectHistorySticker({
                 radius="md"
                 opened={opened}
                 onClose={close}
-                title={title}
+                title={
+                    <Group>
+                        <Text>
+                            View Saved Stickers
+                        </Text>
+                        {histStickerArray.length >= 1 && <RemoveAllHistory />}
+                    </Group>
+                }
                 position="bottom"
                 size="65%"
             >
+                {histStickerArray.length <= 0 && (
+                    <Box>
+                        <Text c="dimmed" ta="center" mt={160}>
+                            You have no saved sticker in history
+                        </Text>
+                    </Box>
+                )}
 
-                <ScrollArea h={440} >
-                    {histStickerArray.length <= 0 && (
-                        <Box>
-                            <Text c="dimmed" ta="center" mt={160}>
-                                You have no saved sticker in history
-                            </Text>
-                        </Box>
-                    )}
-
-                    <Grid>
-                        {histStickerArray.map((stickerContent, ind) => (
-                            <Box style={{ minWidth: CONFIGS.stageWidth, minHeight: CONFIGS.stageHeight + 60 }} key={ind}>
-
+                <Grid>
+                    {histStickerArray.map((stickerContent, ind) => (
+                        <Grid.Col span={{ base: 12, md: 6, lg: 3 }} key={ind}>
+                            <Box style={{ minWidth: CONFIGS.stageWidth, minHeight: CONFIGS.stageHeight + 60 }} >
                                 <Group justify='flex-end' mt={12}>
                                     <RemoveOneToHistory ind={ind} />
                                 </Group>
 
-                                <UnstyledButton onClick={() => selectAndClose(ind)} >
-                                    <Stage
-                                        width={CONFIGS.stageWidth}
-                                        height={CONFIGS.stageHeight}
-                                    >
-                                        <Layer>
-                                            {stickerContent.map((sticker) => {
-                                                if (
-                                                    sticker.format === "image"
-                                                    || sticker.format === "externalImage"
-                                                ) {
-                                                    return (
-                                                        <CanvasTransImage
-                                                            key={sticker.id}
-                                                            shapeProps={sticker}
-                                                            isSelected={false}
-                                                            onSelect={() => { }}
-                                                            onChange={() => { }}
-                                                            url={sticker.content}
-                                                            draggable={false}
-                                                        />
-                                                    )
-                                                }
-
-                                                return (
-                                                    <AdjustableText
-                                                        key={sticker.id}
-                                                        shapeProps={sticker}
-                                                        isSelected={false}
-                                                        onSelect={() => {
-
-                                                        }}
-                                                        onChange={() => { }}
-                                                        content={sticker.content}
-                                                        draggable={false}
-                                                    />
-                                                )
-                                            })}
-
-                                        </Layer>
-
-                                    </Stage>
-                                </UnstyledButton>
+                                <ViewCanvasComp
+                                    stickerContent={stickerContent}
+                                    clickCb={() => selectAndClose(ind)}
+                                />
                             </Box>
-
-                        ))}
-                    </Grid>
-                </ScrollArea>
-
+                        </Grid.Col>
+                    ))}
+                </Grid>
             </Drawer>
 
             {openComp === "NavLink" && (
@@ -131,7 +94,7 @@ function SelectHistorySticker({
 
             {openComp === "Button" && (
                 <Button leftSection={<IconAdjustments />} variant="light" onClick={() => open()}>
-                    View Saved
+                    View Saved Stickers
                 </Button>
             )}
         </>

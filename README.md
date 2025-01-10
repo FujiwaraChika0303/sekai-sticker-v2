@@ -21,6 +21,8 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Respondsive UI
 - ✅ Night / Sky Theme
 - ✅ Traditional Chinese / Chinese display friendly 
+- ✅ Allow to save and re-use sticker in your devices
+
 
 ## 📝 Todo
 - ✅ External image file input 

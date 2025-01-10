@@ -5,7 +5,7 @@ import useCurrentStickerStore from "../../../store/currenStickerStore";
 import { notifications } from "@mantine/notifications";
 
 function SaveToHistory() {
-    
+
     const currentSticker = useCurrentStickerStore(state => state.sticker)
     const saveStickerFunc = useHistoryStickerStore(state => state.addStickerHist);
 
@@ -20,11 +20,11 @@ function SaveToHistory() {
     }
 
     return (
-        <Tooltip label="Save To History">
+        <Tooltip label="Save To History (External / Internal images will not be saved)">
             <ActionIcon
                 variant="light"
                 color="blue"
-                aria-label="Save To History"
+                aria-label="Save To History (External / Internal images will not be saved)"
                 onClick={() => addStickerToHist()}
             >
                 <IconDeviceFloppy
