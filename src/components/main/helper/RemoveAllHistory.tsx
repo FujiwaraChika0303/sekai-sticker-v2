@@ -22,7 +22,6 @@ function RemoveAllHistory() {
         },
     });
 
-
     return (
         <Tooltip label="Remove All saved sticker">
             <ActionIcon

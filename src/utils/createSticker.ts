@@ -37,6 +37,12 @@ export interface StickerObject {
 
     // UUID
     id: string; 
+
+    // The object to be created at, newly added on 16/01/2025, may not exist in the old version
+    createdDate?: Date
+
+    // The object to be created at, newly added on 16/01/2025, may not exist in the old version
+    updatedDate?: Date
 }
 
 export function createText(
@@ -56,6 +62,9 @@ export function createText(
         fontFamily: "YurukaStd",
         id: uuid(),
         content: text,
+
+        createdDate: new Date(),
+        updatedDate: new Date()
     };
 }
 
@@ -81,6 +90,9 @@ export async function createExternalImages(
         format: "externalImage",
         content: src,
         id: uuid(),
+
+        createdDate: new Date(),
+        updatedDate: new Date()
     };
 }
 
@@ -99,6 +111,9 @@ export async function createImages(
         format: "image",
         content: src,
         id: uuid(),
+
+        createdDate: new Date(),
+        updatedDate: new Date()
     };
 }
 
@@ -117,6 +132,9 @@ export function createImagesInit(
         format: "image",
         content: src,
         id: uuid(),
+
+        createdDate: new Date(),
+        updatedDate: new Date()
     };
 }
 
@@ -128,5 +146,7 @@ export function duplicateNewObject(
         x: sticker.x - 15,
         y: sticker.y - 15,
         id: uuid(),
+
+        updatedDate: new Date()
     };
 }

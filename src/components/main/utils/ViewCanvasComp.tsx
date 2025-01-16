@@ -3,7 +3,7 @@ import { CONFIGS, StickerObject } from "../../../utils/createSticker";
 import AdjustableText from "../helper/AdjustableText";
 import CanvasTransImage from "../helper/CanvasTransImage";
 import { useRef } from "react";
-import { Tooltip, ActionIcon, Container, UnstyledButton, Space, Group } from "@mantine/core";
+import { Tooltip, ActionIcon, Container, UnstyledButton, Space, Group, Text } from "@mantine/core";
 import { IconDownload, IconCopyPlus } from "@tabler/icons-react";
 import { copyImages } from "../../../utils/copyUtils";
 import { timer, downloadFile, dataURLToBlob } from "../../../utils/downloadUtils";
@@ -103,6 +103,13 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                             />
                         </ActionIcon>
                     </Tooltip>
+
+                    <Text c="dimmed" ta="center" fz={12}>
+                        Last Update:  {stickerContent.map(v => v.updatedDate ? v.updatedDate : new Date())
+                            .sort((a, b) => b.getTime() - a.getTime())[0]
+                            .toUTCString()
+                        }
+                    </Text>
                 </Group>
 
             </Container>
