@@ -16,6 +16,9 @@ type ViewCanvasCompProps = {
 function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
     const stageRef = useRef<any>(null);
 
+    const maxX = Math.max(...stickerContent.map( v => v.x + (v.width  || 0) ))
+    const maxY = Math.max(...stickerContent.map( v => v.y + (v.height || 0) ))
+
     return (
         <>
             <Container>
@@ -24,8 +27,8 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                 }}>
                     <Stage
                         ref={stageRef}
-                        width={CONFIGS.stageWidth}
-                        height={CONFIGS.stageHeight}
+                        width={maxX || CONFIGS.stageWidth}
+                        height={maxY || CONFIGS.stageHeight}
                     >
                         <Layer>
                             {stickerContent.map((sticker) => {
