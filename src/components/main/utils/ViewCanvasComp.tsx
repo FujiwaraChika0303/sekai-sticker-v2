@@ -77,7 +77,11 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                             onClick={async () => {
                                 await timer(200);
 
-                                const uri = stageRef.current!.toDataURL();
+                                const uri = stageRef.current!.toDataURL({
+                                    width:  Math.max(...stickerContent.map( v => v.x + (v.width  || 0) )) || CONFIGS.stageWidth,
+                                    height: Math.max(...stickerContent.map( v => v.y + (v.height || 0) )) || CONFIGS.stageHeight,
+                                    pixelRatio: 1.1
+                                });
                                 downloadFile(uri, `${new Date().getTime()}_stage.png`);
                             }}
                         >
@@ -95,7 +99,11 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                                 await timer(200);
 
                                 const blobImage = await dataURLToBlob(
-                                    stageRef.current!.toDataURL()
+                                    stageRef.current!.toDataURL({
+                                        width:  Math.max(...stickerContent.map( v => v.x + (v.width  || 0) )) || CONFIGS.stageWidth,
+                                        height: Math.max(...stickerContent.map( v => v.y + (v.height || 0) )) || CONFIGS.stageHeight,
+                                        pixelRatio: 1.1
+                                    })
                                 )
                                 copyImages(blobImage, "image/png")
                             }}
