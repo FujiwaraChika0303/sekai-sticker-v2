@@ -1,4 +1,3 @@
-
 import { useWindowScroll } from '@mantine/hooks';
 import { Affix, Button, Transition } from '@mantine/core';
 import { IconArrowUp } from '@tabler/icons-react';

@@ -196,7 +196,7 @@ function CanvasBoard() {
 
                             <SelectCharactor
                                 openComp="NavLink"
-                                title="Add Sticker"
+                                title="Add New Sticker"
                                 addStickerCb={async (v) => {
                                     stickerContentHandlers.append(await createImages(v.img))
                                     close();
@@ -236,7 +236,6 @@ function CanvasBoard() {
                                 }}
                             />
 
-
                         </Box>
                     </AppShell.Section>
 
@@ -246,7 +245,7 @@ function CanvasBoard() {
 
                             <Group>
                                 <Text c="dimmed" fz={12}>
-                                    📊 v0.1.0
+                                    📊 v1.0.1
                                 </Text>
 
                                 <LearnMore />
@@ -395,11 +394,11 @@ function CanvasBoard() {
                                         <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
                                             <Group justify="space-between" >
                                                 <Group>
-                                                    <Tooltip label="Up Layer">
+                                                    <Tooltip label="Up Layer Level">
                                                         <ActionIcon
                                                             variant="light"
                                                             color="blue"
-                                                            aria-label="Up Layer"
+                                                            aria-label="Up Layer Level"
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 const ind = stickerContent.findIndex(v => v.id === selectedId);
@@ -421,11 +420,11 @@ function CanvasBoard() {
                                                         </ActionIcon>
                                                     </Tooltip>
 
-                                                    <Tooltip label="Down Layer">
+                                                    <Tooltip label="Down Layer Level">
                                                         <ActionIcon
                                                             variant="light"
                                                             color="blue"
-                                                            aria-label="Down Layer"
+                                                            aria-label="Down Layer Level"
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 const ind = stickerContent.findIndex(v => v.id === selectedId);
@@ -449,7 +448,7 @@ function CanvasBoard() {
                                                 </Group>
 
                                                 <Group>
-                                                    <Tooltip label="Delete This">
+                                                    <Tooltip label="Delete Selected Layer">
                                                         <ActionIcon
                                                             variant="light"
                                                             color="red"
@@ -466,11 +465,11 @@ function CanvasBoard() {
                                                         </ActionIcon>
                                                     </Tooltip>
 
-                                                    <Tooltip label="Duplicate This">
+                                                    <Tooltip label="Duplicate Selected Layer">
                                                         <ActionIcon
                                                             variant="light"
                                                             color="blue"
-                                                            aria-label="Duplicate This"
+                                                            aria-label="Duplicate Selected Layer"
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 duplicateItems();

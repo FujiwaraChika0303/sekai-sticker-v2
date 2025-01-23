@@ -9,11 +9,11 @@ type DeselectLayerProps = {
 function DeselectLayer({ disabled, deselectFunc }: DeselectLayerProps) {
     return (
         <>
-            <Tooltip label="Deselect">
+            <Tooltip label="Deselect Layer">
                 <ActionIcon
                     variant="light"
                     color="blue"
-                    aria-label="Deselect"
+                    aria-label="Deselect Layer"
                     disabled={disabled}
                     onClick={() => deselectFunc()}
                 >

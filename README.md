@@ -28,9 +28,9 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ External image file input 
 - ✅ Internal (local) image file input 
 - ✅ Emoji sticker added
+- ✅ Auto Save creations in browser level
 - ⬜️ More input items 
 - ⬜️ More images adjustment 
-- ✅ Auto Save creations in browser level
 
 ## ❤ Original Repo
 Special thanks for the sources  
@@ -39,3 +39,12 @@ https://github.com/TheOriginalAyaka/sekai-stickers
 
 ## 🚗 License
 MIT
+
+## 🪵 Logs
+
+### v1.0.1
+- Adjust wordings and UI enhancement
+
+### v1.0.0 (Beta)
+- Allow to save, load and delete sticker in local devices
+- View and export stickers
