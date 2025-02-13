@@ -15,14 +15,22 @@ import {
 } from "react-router-dom";
 
 import LoadingPage from './components/common/LoadingPage';
+import Layout from './components/common/Layout';
 
 const MainPage = lazy(() => import('./pages/MainPage'));
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <MainPage />,
-    },
+        element: <Layout />,
+        children: [
+            {
+                path: "/",
+                element: <MainPage />,
+            },
+        ]
+    }
+
 ]);
 
 function App() {

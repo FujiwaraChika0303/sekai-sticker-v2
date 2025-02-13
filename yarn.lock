@@ -3961,6 +3961,11 @@ vite-plugin-pwa@^0.20.5:
     workbox-build "^7.1.0"
     workbox-window "^7.1.0"
 
+vite-plugin-sitemap@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-sitemap/-/vite-plugin-sitemap-0.7.1.tgz#3b3cf6d2e067ec835f810e5eaaacf05485c819fe"
+  integrity sha512-4NRTkiWytLuAmcikckrLcLl9iYA20+5v6l8XshcOrzxH1WR8H0O3S6sTQYfjMrE8su/LG6Y0cTodvOdcOIxaLw==
+
 vite@^5.4.8:
   version "5.4.9"
   resolved "https://registry.yarnpkg.com/vite/-/vite-5.4.9.tgz#215c80cbebfd09ccbb9ceb8c0621391c9abdc19c"
