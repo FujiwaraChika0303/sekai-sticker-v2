@@ -1,11 +1,12 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, TextInput, UnstyledButton, ScrollArea, Button, Box, ActionIcon, Tooltip, Text } from '@mantine/core';
+import { Drawer, Grid, NavLink, UnstyledButton, ScrollArea, Button, Box, Tooltip, Text, MultiSelect } from '@mantine/core';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { IconAdjustments, IconChevronRight, IconX, IconSearch, IconSticker } from '@tabler/icons-react';
+import { IconAdjustments, IconChevronRight, IconSticker } from '@tabler/icons-react';
 import { StickerChatactor, chatactorList } from '../../data/characters';
 import { useEffect, useState } from 'react';
 
 import { uniqueBy, prop } from "remeda"
+import { capitalizeFirstLetter } from '../../utils/createSticker';
 
 interface SelectCharactorProps {
     title?: string
@@ -19,20 +20,25 @@ function SelectCharactor({
     addStickerCb
 }: SelectCharactorProps) {
 
-    const [filledList, setFilledList] = useState<StickerChatactor[]>(chatactorList);
-    const [searchString, setSearchString] = useState<string>("");
+    const [filledList, setFilledList] = useState<StickerChatactor[]>([]);
+    const [searchString, setSearchString] = useState<string[]>([]);
     const [opened, { open, close }] = useDisclosure(false);
 
     useEffect(() => {
 
-        if (searchString === "") {
-            setFilledList(chatactorList);
+        if (searchString.length <= 0) {
+            setFilledList([]);
             return
         }
 
-        const searchResult = chatactorList.filter(v => v.name.toLowerCase().includes(searchString.toLowerCase()));
-        setFilledList(searchResult)
+        const searchLs = []
+        for (let target of searchString) {
+            searchLs.push(
+                ...chatactorList.filter(v => v.character.toLowerCase() === target.toLowerCase())
+            )
+        }
 
+        setFilledList(searchLs.reverse())
     }, [searchString])
 
     function selectAndClose(sticker: StickerChatactor) {
@@ -51,23 +57,15 @@ function SelectCharactor({
                 position="bottom"
                 size="65%"
             >
-                <TextInput
-                    leftSection={<IconSearch size={16} />}
-                    rightSection={
-                        <Tooltip label="Clear Search">
-                        <ActionIcon
-                            variant="subtle"
-                            aria-label="Clear Search"
-                            onClick={() => setSearchString("")}
-                        >
-                            <IconX style={{ width: '70%', height: '70%' }} stroke={1.5} />
-                        </ActionIcon>
-                        </Tooltip>
-                    }
-                    placeholder="Search Charactor"
+                <MultiSelect
                     value={searchString}
-                    onChange={(event) => setSearchString(event.currentTarget.value)}
-                    mb={12}
+                    onChange={setSearchString}
+                    placeholder="Select Chatactors"
+                    mb={6}
+                    data={uniqueBy(chatactorList, prop("character")).map(v => ({
+                        value: v.character,
+                        label: capitalizeFirstLetter(v.character)
+                    }))}
                 />
 
                 <Grid>
@@ -75,9 +73,22 @@ function SelectCharactor({
                         <ScrollArea h={440}>
                             {uniqueBy(chatactorList, prop("character")).map(v =>
                                 <Box key={v.img}>
-                                    <UnstyledButton onClick={() => setSearchString(v.character)} mb={14}>
+                                    <UnstyledButton
+                                        onClick={() => 
+                                            setSearchString(currentLs => {
+                                                // Remove Sticker from search
+                                                if(currentLs.includes(v.character)){
+                                                    return currentLs.filter( key => key !== v.character)
+                                                }
+
+                                                // Add Sticker to search
+                                                return [...currentLs, v.character]
+                                            })
+                                        }
+                                        mb={14}
+                                    >
                                         <Text c="dimmed" fz={14}>
-                                            {v.character}
+                                            {capitalizeFirstLetter(v.character)}
                                         </Text>
                                         <LazyLoadImage
                                             src={`${v.img}`}
@@ -93,17 +104,23 @@ function SelectCharactor({
 
                     <Grid.Col span={{ base: 10, md: 10, lg: 10 }}>
                         <ScrollArea h={440}>
+                            {filledList.length <= 0 && (
+                                <Text c="dimmed" ta="center" mt={180}>
+                                    Select Your Sticker Character
+                                </Text>
+                            )}
+
                             <Grid>
                                 {filledList.map(v =>
                                     <Grid.Col span={{ base: 3, md: 2, lg: 1 }} key={v.img}>
                                         <Tooltip label={v.name}>
-                                        <UnstyledButton onClick={() => selectAndClose(v)}>
-                                            <LazyLoadImage
-                                                src={`${v.img}`}
-                                                width="100%"
-                                                effect="blur"
-                                            />
-                                        </UnstyledButton>
+                                            <UnstyledButton onClick={() => selectAndClose(v)}>
+                                                <LazyLoadImage
+                                                    src={`${v.img}`}
+                                                    width="100%"
+                                                    effect="blur"
+                                                />
+                                            </UnstyledButton>
                                         </Tooltip>
                                     </Grid.Col>
                                 )}
