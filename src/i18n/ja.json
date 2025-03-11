@@ -51,5 +51,11 @@
     "Failed to Import": "インポートに失敗しました",
     "Drag images here or click to select files" : "ここに画像をドラッグするか、クリックしてファイルを選択してください",
     "Attach as many files as you like, each file should not exceed" : "好きなだけファイルを添付できますが、各ファイルのサイズは超えないようにしてください",
+    
+    "Remove All saved sticker": "すべての保存されたステッカーを削除",
+    "Are you sure to delete all the saved sticker? This action can not be reverse": "すべての保存されたステッカーを削除してもよろしいですか？この操作は元に戻せません",
+    
+    "Last Update": "最終更新",
+    
     "End": "終了"
 }

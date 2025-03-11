@@ -52,5 +52,10 @@
     "Drag images here or click to select files" : "将图片拖到这里或点击选择文件",
     "Attach as many files as you like, each file should not exceed" : "随意附加文件，每个文件不应超过",
 
+    "Remove All saved sticker": "删除所有已保存的贴纸",
+    "Are you sure to delete all the saved sticker? This action can not be reverse": "您确定要删除所有已保存的贴纸吗？此操作无法撤销",
+
+    "Last Update": "最后更新",
+    
     "End": "结束"
 }

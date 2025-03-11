@@ -149,7 +149,7 @@ function SelectCharactor({
 
             {openComp === "Button" && (
                 <Button leftSection={<IconAdjustments />} variant="light" onClick={() => open()}>
-                    Change Charactor
+                    {t("Change Charactor")}
                 </Button>
             )}
         </>

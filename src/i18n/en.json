@@ -51,5 +51,10 @@
     "Drag images here or click to select files" : "Drag images here or click to select files",
     "Attach as many files as you like, each file should not exceed" : "Attach as many files as you like, each file should not exceed",
 
+    "Remove All saved sticker": "Remove All saved sticker",
+    "Are you sure to delete all the saved sticker? This action can not be reverse": "Are you sure to delete all the saved sticker? This action can not be reverse",
+
+    "Last Update": "Last Update",
+
     "End": "End"
 }

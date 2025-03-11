@@ -8,6 +8,7 @@ import { IconDownload, IconCopyPlus } from "@tabler/icons-react";
 import { copyImages } from "../../../utils/copyUtils";
 import { timer, downloadFile, dataURLToBlob } from "../../../utils/downloadUtils";
 import { useTranslation } from "react-i18next";
+import { notifications } from "@mantine/notifications";
 
 type ViewCanvasCompProps = {
     stickerContent: StickerObject[];
@@ -18,8 +19,8 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
     const { t } = useTranslation();
     const stageRef = useRef<any>(null);
 
-    const maxX = Math.max(...stickerContent.map( v => v.x + (v.width  || 0) ))
-    const maxY = Math.max(...stickerContent.map( v => v.y + (v.height || 0) ))
+    const maxX = Math.max(...stickerContent.map(v => v.x + (v.width || 0)))
+    const maxY = Math.max(...stickerContent.map(v => v.y + (v.height || 0)))
 
     return (
         <>
@@ -80,8 +81,8 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                                 await timer(200);
 
                                 const uri = stageRef.current!.toDataURL({
-                                    width:  Math.max(...stickerContent.map( v => v.x + (v.width  || 0) )) || CONFIGS.stageWidth,
-                                    height: Math.max(...stickerContent.map( v => v.y + (v.height || 0) )) || CONFIGS.stageHeight,
+                                    width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+                                    height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
                                     pixelRatio: 1.1
                                 });
                                 downloadFile(uri, `${new Date().getTime()}_stage.png`);
@@ -98,16 +99,30 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                         <ActionIcon
                             variant="light"
                             onClick={async () => {
-                                await timer(200);
+                                try {
+                                    await timer(200);
 
-                                const blobImage = await dataURLToBlob(
-                                    stageRef.current!.toDataURL({
-                                        width:  Math.max(...stickerContent.map( v => v.x + (v.width  || 0) )) || CONFIGS.stageWidth,
-                                        height: Math.max(...stickerContent.map( v => v.y + (v.height || 0) )) || CONFIGS.stageHeight,
-                                        pixelRatio: 1.1
-                                    })
-                                )
-                                copyImages(blobImage, "image/png")
+                                    const blobImage = await dataURLToBlob(
+                                        stageRef.current!.toDataURL({
+                                            width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+                                            height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
+                                            pixelRatio: 1.1
+                                        })
+                                    )
+
+                                    copyImages(blobImage, "image/png");
+
+                                    notifications.show({
+                                        title: t("Success"),
+                                        message: "Image copied to your clipboard.",
+                                    });
+                                } catch (error) {
+                                    console.error(error);
+                                    notifications.show({
+                                        title: "Error",
+                                        message: (error as Error).message
+                                    });
+                                }
                             }}
                         >
                             <IconCopyPlus
@@ -118,7 +133,7 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                     </Tooltip>
 
                     <Text c="dimmed" ta="center" fz={12}>
-                        Last Update: {stickerContent.map(v => v.updatedDate ? v.updatedDate : new Date())
+                        {t("Last Update")}: {stickerContent.map(v => v.updatedDate ? v.updatedDate : new Date())
                             .sort((a, b) => b.getTime() - a.getTime())[0]
                             .toUTCString()
                         }

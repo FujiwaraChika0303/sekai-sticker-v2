@@ -252,6 +252,7 @@ function CanvasBoard() {
                         <Group justify="space-between">
                             <ColorToggleBtn />
                             <LearnMore />
+                            <ChangeLanguage />
                         </Group>
                     </AppShell.Section>
 
@@ -259,12 +260,7 @@ function CanvasBoard() {
 
                 <AppShell.Main>
                     <Container fluid>
-
-                        <Group mt={12} justify="flex-end">
-                            <ChangeLanguage />
-                        </Group>
-
-                        <Text fw={600} fz={32} ta="center" >
+                        <Text fw={600} fz={32} ta="center" mt={16}>
                             <IconSticker /> {t('Sekai Sticker V2')}
                         </Text>
 
@@ -316,17 +312,31 @@ function CanvasBoard() {
                                                     <ActionIcon
                                                         variant="light"
                                                         onClick={async () => {
-                                                            setSelectedId(null);
-                                                            await timer(400);
+                                                            try {
+                                                                setSelectedId(null);
+                                                                await timer(400);
 
-                                                            const blobImage = await dataURLToBlob(
-                                                                stageRef.current!.toDataURL({
-                                                                    width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
-                                                                    height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
-                                                                    pixelRatio: 1.1
-                                                                })
-                                                            )
-                                                            copyImages(blobImage, "image/png")
+                                                                const blobImage = await dataURLToBlob(
+                                                                    stageRef.current!.toDataURL({
+                                                                        width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+                                                                        height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
+                                                                        pixelRatio: 1.1
+                                                                    })
+                                                                )
+
+                                                                copyImages(blobImage, "image/png")
+
+                                                                notifications.show({
+                                                                    title: t("Success"),
+                                                                    message: "Image copied to your clipboard.",
+                                                                });
+                                                            } catch (error) {
+                                                                console.error(error);
+                                                                notifications.show({
+                                                                    title: "Error",
+                                                                    message: (error as Error).message
+                                                                });
+                                                            }
                                                         }}
                                                     >
                                                         <IconCopyPlus
@@ -515,7 +525,7 @@ function CanvasBoard() {
 
                                                 {selectedShape === undefined && (
                                                     <Text c="dimmed" ta="center" mt={12}>
-                                                        Select item to modify
+                                                        {t("Select item to modify")}
                                                     </Text>
                                                 )}
 
@@ -526,7 +536,7 @@ function CanvasBoard() {
                                                                 <Space h="md" />
                                                                 <SelectCharactor
                                                                     openComp="Button"
-                                                                    title="Change Charactor"
+                                                                    title={t("Change Charactor")}
                                                                     addStickerCb={async (v) => {
                                                                         const ind = stickerContent.findIndex(v => v.id === selectedId);
 

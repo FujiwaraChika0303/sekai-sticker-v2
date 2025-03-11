@@ -2,16 +2,16 @@ import { Grid, NavLink } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { useState } from "react";
 import GeneralInformations from "./content/GeneralInformations";
-import Shotcuts from "./content/Shotcuts";
+import Shortcuts from "./content/Shortcuts";
 
 const howToUseNav = [
     "General Informations",
-    "Shotcuts"
+    "Shortcuts"
 ] as const
 type HowToUseNavType = typeof howToUseNav[number]
 
 function LearnMoreContent() {
-    const [guideLink, setGuideLink] = useState<HowToUseNavType>("Shotcuts");
+    const [guideLink, setGuideLink] = useState<HowToUseNavType>("Shortcuts");
 
     return (
         <>
@@ -33,7 +33,7 @@ function LearnMoreContent() {
                 </Grid.Col>
 
                 <Grid.Col span={{ base: 12, md: 8, lg: 9 }}>
-                    {guideLink === "Shotcuts" && <Shotcuts />}
+                    {guideLink === "Shortcuts" && <Shortcuts />}
                     {guideLink === "General Informations" && <GeneralInformations />}
                 </Grid.Col>
             </Grid>

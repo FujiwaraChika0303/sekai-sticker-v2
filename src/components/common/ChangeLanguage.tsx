@@ -1,5 +1,5 @@
 import { Menu, ActionIcon, Tooltip } from '@mantine/core';
-import { IconLanguage } from '@tabler/icons-react';
+import { IconLanguage, IconStar, IconStarFilled } from '@tabler/icons-react';
 import { useTranslation } from "react-i18next";
 import { useLocalStorage } from '@mantine/hooks';
 import { useEffect } from 'react';
@@ -11,9 +11,9 @@ function ChangeLanguage() {
         defaultValue: 'en',
     });
 
-    useEffect( () => {
+    useEffect(() => {
         i18n.changeLanguage(language)
-    },[language])
+    }, [language])
 
     return (
         <Menu shadow="md" width={200}>
@@ -29,18 +29,22 @@ function ChangeLanguage() {
                 <Menu.Label>
                     Languages
                 </Menu.Label>
-                <Menu.Item onClick={() => setLanguage('en')}>
-                    English
-                </Menu.Item>
-                <Menu.Item onClick={() => setLanguage('zh-CN')}>
-                    中文 (简体)
-                </Menu.Item>
-                <Menu.Item onClick={() => setLanguage('zh-TW')}>
-                    中文 (繁體)
-                </Menu.Item>
-                <Menu.Item onClick={() => setLanguage('ja')}>
-                    日本語
-                </Menu.Item>
+                {
+                    [
+                        { lang: "en", label: "English" },
+                        { lang: "zh-CN", label: "中文 (简体)" },
+                        { lang: "zh-TW", label: "中文 (繁體)" },
+                        { lang: "ja", label: "日本語" },
+                    ].map(v => (
+                        <Menu.Item 
+                            key={v.lang}
+                            onClick={() => setLanguage(v.lang)}
+                            leftSection={language === v.lang ? <IconStarFilled size={12} /> : <IconStar size={12} />}
+                        >
+                            {v.label}
+                        </Menu.Item>
+                    ))
+                }
             </Menu.Dropdown>
         </Menu>
     );

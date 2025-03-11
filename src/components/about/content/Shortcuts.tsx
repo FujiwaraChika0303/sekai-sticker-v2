@@ -13,11 +13,11 @@ Copy and paster current layer
 
 `
 
-function Shotcuts() {
+function Shortcuts() {
     return (
         <>
             <Text fz={32} fw={600} ta="left" mb={8}>
-                <IconTableShortcut /> Shotcuts
+                <IconTableShortcut /> Shortcuts
             </Text>
 
             <Divider my="md" />
@@ -29,4 +29,4 @@ function Shotcuts() {
     )
 }
 
-export default Shotcuts
+export default Shortcuts
