@@ -7,6 +7,7 @@ const contentOne = `
 
 - **Delete**:   
 Delete current layer
+
 - **Ctrl + D**:   
 Copy and paster current layer
 
