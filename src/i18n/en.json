@@ -22,5 +22,27 @@
     "Select Charactor": "Select Charactor",
     "Select Your Sticker Character": "Select Your Sticker Character",
 
+    "Select item to modify": "Select item to modify",
+    "Font Size": "Font Size",
+    "Text Content": "Text Content",
+    "Letter Spacing": "Letter Spacing",
+    "Stroke Width": "Stroke Width",
+    "Color": "Color",
+    "Font Family": "Font Family",
+
+    "Save To History (External / Internal images will not be saved)": "Save To History (External / Internal images will not be saved)",
+    "Download PNG" : "Download PNG",
+    "Copy PNG to clipboard" : "Copy PNG to clipboard",
+    "Up Layer Level" : "Up Layer Level",
+    "Down Layer Level" : "Down Layer Level",
+
+    "Delete Selected Layer" : "Delete Selected Layer",
+    "Duplicate Selected Layer" : "Duplicate Selected Layer",
+    "Deselect Layer" : "Deselect Layer",
+
+    
+    "Image URL" : "Image URL",
+
+
     "End": "End"
 }

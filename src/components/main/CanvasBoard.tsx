@@ -264,10 +264,12 @@ function CanvasBoard() {
                 <AppShell.Main>
                     <Container fluid>
 
-                    <ChangeLanguage />
+                        <Group mt={12} justify="flex-end">
+                            <ChangeLanguage />
+                        </Group>
 
-                        <Text fw={600} fz={32} ta="center" mt={48}>
-                            <IconSticker /> {t('Sekai Sticker V2')}                            
+                        <Text fw={600} fz={32} ta="center" >
+                            <IconSticker /> {t('Sekai Sticker V2')}
                         </Text>
 
                         <Text c="dimmed" mb={16} ta="center">
@@ -292,7 +294,7 @@ function CanvasBoard() {
                                             <SaveToHistory />
 
                                             <Group>
-                                                <Tooltip label="Download PNG">
+                                                <Tooltip label={t("Download PNG")}>
                                                     <ActionIcon
                                                         variant="light"
                                                         onClick={async () => {
@@ -300,8 +302,8 @@ function CanvasBoard() {
                                                             await timer(400);
 
                                                             const uri = stageRef.current!.toDataURL({
-                                                                width:  Math.max(...stickerContent.map( v => v.x + (v.width  || 0) )) || CONFIGS.stageWidth,
-                                                                height: Math.max(...stickerContent.map( v => v.y + (v.height || 0) )) || CONFIGS.stageHeight,
+                                                                width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+                                                                height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
                                                                 pixelRatio: 1.1
                                                             });
                                                             downloadFile(uri, `${new Date().getTime()}_stage.png`);
@@ -314,7 +316,7 @@ function CanvasBoard() {
                                                     </ActionIcon>
                                                 </Tooltip>
 
-                                                <Tooltip label="Copy PNG to clipboard">
+                                                <Tooltip label={t("Copy PNG to clipboard")}>
                                                     <ActionIcon
                                                         variant="light"
                                                         onClick={async () => {
@@ -323,8 +325,8 @@ function CanvasBoard() {
 
                                                             const blobImage = await dataURLToBlob(
                                                                 stageRef.current!.toDataURL({
-                                                                    width:  Math.max(...stickerContent.map( v => v.x + (v.width  || 0) )) || CONFIGS.stageWidth,
-                                                                    height: Math.max(...stickerContent.map( v => v.y + (v.height || 0) )) || CONFIGS.stageHeight,
+                                                                    width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+                                                                    height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
                                                                     pixelRatio: 1.1
                                                                 })
                                                             )
@@ -402,11 +404,11 @@ function CanvasBoard() {
                                         <Card shadow="sm" padding="lg" radius="md" withBorder mt={12}>
                                             <Group justify="space-between" >
                                                 <Group>
-                                                    <Tooltip label="Up Layer Level">
+                                                    <Tooltip label={t("Up Layer Level")}>
                                                         <ActionIcon
                                                             variant="light"
                                                             color="blue"
-                                                            aria-label="Up Layer Level"
+                                                            aria-label={t("Up Layer Level")}
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 const ind = stickerContent.findIndex(v => v.id === selectedId);
@@ -428,11 +430,11 @@ function CanvasBoard() {
                                                         </ActionIcon>
                                                     </Tooltip>
 
-                                                    <Tooltip label="Down Layer Level">
+                                                    <Tooltip label={t("Down Layer Level")}>
                                                         <ActionIcon
                                                             variant="light"
                                                             color="blue"
-                                                            aria-label="Down Layer Level"
+                                                            aria-label={t("Down Layer Level")}
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 const ind = stickerContent.findIndex(v => v.id === selectedId);
@@ -456,11 +458,11 @@ function CanvasBoard() {
                                                 </Group>
 
                                                 <Group>
-                                                    <Tooltip label="Delete Selected Layer">
+                                                    <Tooltip label={t("Delete Selected Layer")}>
                                                         <ActionIcon
                                                             variant="light"
                                                             color="red"
-                                                            aria-label="Trash"
+                                                            aria-label={t("Delete Selected Layer")}
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 deleteSelectedLayer()
@@ -473,11 +475,11 @@ function CanvasBoard() {
                                                         </ActionIcon>
                                                     </Tooltip>
 
-                                                    <Tooltip label="Duplicate Selected Layer">
+                                                    <Tooltip label={t("Duplicate Selected Layer")}>
                                                         <ActionIcon
                                                             variant="light"
                                                             color="blue"
-                                                            aria-label="Duplicate Selected Layer"
+                                                            aria-label={t("Duplicate Selected Layer")}
                                                             disabled={selectedShape === undefined}
                                                             onClick={() => {
                                                                 duplicateItems();
@@ -491,6 +493,7 @@ function CanvasBoard() {
                                                     </Tooltip>
 
                                                     <DeselectLayer
+                                                        title={t("Deselect Layer")}
                                                         disabled={selectedShape === undefined}
                                                         deselectFunc={() => setSelectedId(null)}
                                                     />
@@ -511,7 +514,7 @@ function CanvasBoard() {
                                             <Card shadow="sm" padding="lg" radius="md" withBorder>
 
                                                 <Text ta="center">
-                                                    <IconBox size={16} /> Modify Elements
+                                                    <IconBox size={16} /> {t("Modify Elements")}
                                                 </Text>
 
                                                 {selectedShape === undefined && (
@@ -549,7 +552,7 @@ function CanvasBoard() {
                                                         )}
 
                                                         <Text fw={500} fz={14} mt={20}>
-                                                            <IconArrowsHorizontal size={12} /> Position X
+                                                            <IconArrowsHorizontal size={12} /> {t("Position")} X
                                                         </Text>
                                                         <Slider
                                                             mt={2}
@@ -565,7 +568,7 @@ function CanvasBoard() {
                                                         />
 
                                                         <Text fw={500} fz={14} mt={20}>
-                                                            <IconArrowsVertical size={12} /> Position Y
+                                                            <IconArrowsVertical size={12} /> {t("Position")} Y
                                                         </Text>
                                                         <Slider
                                                             mt={2}
@@ -584,7 +587,7 @@ function CanvasBoard() {
                                                             <>
 
                                                                 <Text fw={500} fz={14} mt={20}>
-                                                                    <IconDimensions size={14} /> Font Size
+                                                                    <IconDimensions size={14} /> {t("Font Size")}
                                                                 </Text>
                                                                 <Slider
                                                                     step={1}
@@ -600,7 +603,7 @@ function CanvasBoard() {
                                                                 <TextInput
                                                                     mt={12}
                                                                     leftSection={<IconTextCaption size={18} />}
-                                                                    label="Text content"
+                                                                    label={t("Text Content")}
                                                                     placeholder="Input placeholder"
                                                                     value={selectedShape.content}
                                                                     onChange={(event) => {
@@ -611,7 +614,7 @@ function CanvasBoard() {
                                                                 />
 
                                                                 <Text fw={500} fz={14} mt={20}>
-                                                                    <IconRulerMeasure size={14} />  Letter Spacing
+                                                                    <IconRulerMeasure size={14} />  {t("Letter Spacing")}
                                                                 </Text>
                                                                 <Slider
                                                                     mt={2}
@@ -627,7 +630,7 @@ function CanvasBoard() {
                                                                 />
 
                                                                 <Text fw={500} fz={14} mt={20}>
-                                                                    <IconLetterCaseUpper size={14} /> Stroke Width
+                                                                    <IconLetterCaseUpper size={14} /> {t("Stroke Width")}
                                                                 </Text>
                                                                 <Slider
                                                                     mt={2}
@@ -644,7 +647,7 @@ function CanvasBoard() {
 
                                                                 <ColorInput
                                                                     mt={12}
-                                                                    label="Color"
+                                                                    label={t("Color")}
                                                                     placeholder="Input placeholder"
                                                                     value={selectedShape.fill}
                                                                     onChange={(colorStr) => {
@@ -658,7 +661,7 @@ function CanvasBoard() {
                                                                     allowDeselect={false}
                                                                     clearable={false}
                                                                     leftSection={<IconTextCaption size={18} />}
-                                                                    label="Font Family"
+                                                                    label={t("Font Family")}
                                                                     data={[
                                                                         { value: "YurukaStd", label: 'YurukaStd' },
                                                                         { value: "SSFangTangTi", label: 'SSFangTangTi' },

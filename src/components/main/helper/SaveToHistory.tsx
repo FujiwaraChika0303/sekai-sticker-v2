@@ -3,8 +3,11 @@ import { IconDeviceFloppy } from "@tabler/icons-react";
 import useHistoryStickerStore from "../../../store/historyStickerStore";
 import useCurrentStickerStore from "../../../store/currenStickerStore";
 import { notifications } from "@mantine/notifications";
+import { useTranslation } from "react-i18next";
 
 function SaveToHistory() {
+
+    const { t } = useTranslation();
 
     const currentSticker = useCurrentStickerStore(state => state.sticker)
     const saveStickerFunc = useHistoryStickerStore(state => state.addStickerHist);
@@ -20,11 +23,11 @@ function SaveToHistory() {
     }
 
     return (
-        <Tooltip label="Save To History (External / Internal images will not be saved)">
+        <Tooltip label={t("Save To History (External / Internal images will not be saved)")}>
             <ActionIcon
                 variant="light"
                 color="blue"
-                aria-label="Save To History (External / Internal images will not be saved)"
+                aria-label={t("Save To History (External / Internal images will not be saved)")}
                 onClick={() => addStickerToHist()}
             >
                 <IconDeviceFloppy

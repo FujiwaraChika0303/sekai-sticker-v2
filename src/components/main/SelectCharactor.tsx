@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { uniqueBy, prop } from "remeda"
 import { capitalizeFirstLetter } from '../../utils/createSticker';
+import { useTranslation } from 'react-i18next';
 
 interface SelectCharactorProps {
     title?: string
@@ -19,6 +20,8 @@ function SelectCharactor({
     openComp = "NavLink",
     addStickerCb
 }: SelectCharactorProps) {
+
+    const { t } = useTranslation();
 
     const [filledList, setFilledList] = useState<StickerChatactor[]>([]);
     const [searchString, setSearchString] = useState<string[]>([]);
@@ -60,7 +63,7 @@ function SelectCharactor({
                 <MultiSelect
                     value={searchString}
                     onChange={setSearchString}
-                    placeholder="Select Chatactors"
+                    placeholder={t("Select Charactor")}
                     mb={6}
                     data={uniqueBy(chatactorList, prop("character")).map(v => ({
                         value: v.character,
@@ -106,7 +109,7 @@ function SelectCharactor({
                         <ScrollArea h={440}>
                             {filledList.length <= 0 && (
                                 <Text c="dimmed" ta="center" mt={180}>
-                                    Select Your Sticker Character
+                                    {t("Select Your Sticker Character")}
                                 </Text>
                             )}
 

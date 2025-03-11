@@ -43,17 +43,19 @@ function CreateExternalImages({
 
                     <TextInput
                         withAsterisk
-                        label="Image URL"
+                        label="URL"
                         key={form.key('url')}
                         {...form.getInputProps('url')}
                     />
 
                     <Group justify="flex-end" mt="md">
                         <Button
+                            disabled={form.values.url === ""}
                             type="submit"
                             variant="light"
-                            leftSection={<IconSend size={16} />}>
-                            Submit
+                            leftSection={<IconSend size={16} />}
+                        >
+                            Upload
                         </Button>
                     </Group>
 

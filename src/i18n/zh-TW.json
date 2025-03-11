@@ -1,26 +1,44 @@
 {
-    "Sekai Sticker V2": "Sekai貼圖V2",
-    "Generate your sticker in a better way!": "以更好的方式生成您的貼圖！",
-    "Layer Select": "圖層選擇",
+    "Sekai Sticker V2": "世界貼紙 V2",
+    "Generate your sticker in a better way!": "用更好的方式生成你的貼紙！",
+    "Layer Select": "選擇圖層",
     "Modify Elements": "修改元素",
 
     "Functions": "功能",
     "Text": "文字",
 
-    "Add Text": "添加文字",
-    "Add Emoji (Text)": "添加表情符號（文字）",
+    "Add Text": "新增文字",
+    "Add Emoji (Text)": "新增表情符號（文字）",
     "Images": "圖片",
-    "Add New Sticker": "添加新貼圖",
+    "Add New Sticker": "新增貼紙",
     "Upload local Image": "上傳本地圖片",
     "Upload URL Image": "上傳網址圖片",
     "Utils": "工具",
-    "View Saved Stickers": "查看已儲存的貼圖",
+    "View Saved Stickers": "查看保存的貼紙",
 
     "Position": "位置",
 
     "Change Charactor": "更換角色",
     "Select Charactor": "選擇角色",
-    "Select Your Sticker Character": "選擇您的貼圖角色",
+    "Select Your Sticker Character": "選擇你的貼紙角色",
+
+    "Select item to modify": "選擇要修改的項目",
+    "Font Size": "字體大小",
+    "Text Content": "文字內容",
+    "Letter Spacing": "字距",
+    "Stroke Width": "描邊寬度",
+    "Color": "顏色",
+    "Font Family": "字體",
+
+    "Save To History (External / Internal images will not be saved)": "保存到歷史紀錄（外部/內部圖片將不會被保存）",
+    "Download PNG": "下載 PNG",
+    "Copy PNG to clipboard": "複製 PNG 到剪貼板",
+    "Up Layer Level": "提升圖層層級",
+    "Down Layer Level": "降低圖層層級",
+
+    "Delete Selected Layer": "刪除選擇的圖層",
+    "Duplicate Selected Layer": "複製選擇的圖層",
+    "Deselect Layer": "取消選擇圖層",
 
     "End": "結束"
 }

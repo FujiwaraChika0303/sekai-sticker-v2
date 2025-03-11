@@ -2,18 +2,19 @@ import { Tooltip, ActionIcon } from "@mantine/core";
 import { IconDeselect } from "@tabler/icons-react";
 
 type DeselectLayerProps = {
+    title?: string
     disabled: boolean;
     deselectFunc: Function
 }
 
-function DeselectLayer({ disabled, deselectFunc }: DeselectLayerProps) {
+function DeselectLayer({ disabled, deselectFunc, title = "Deselect Layer" }: DeselectLayerProps) {
     return (
         <>
-            <Tooltip label="Deselect Layer">
+            <Tooltip label={title}>
                 <ActionIcon
                     variant="light"
                     color="blue"
-                    aria-label="Deselect Layer"
+                    aria-label={title}
                     disabled={disabled}
                     onClick={() => deselectFunc()}
                 >
