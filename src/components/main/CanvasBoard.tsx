@@ -30,7 +30,7 @@ import DropZoneFullScreen from "./helper/DropZoneFullScreen";
 import SaveToHistory from "./helper/SaveToHistory";
 import SelectHistorySticker from "./SelectHistorySticker";
 
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import ChangeLanguage from "../common/ChangeLanguage";
 
 function CanvasBoard() {
@@ -156,13 +156,13 @@ function CanvasBoard() {
 
                         <Box>
                             <Text c="dimmed" fz={14} fw={400} mb={6}>
-                                Text
+                                {t('Text')}
                             </Text>
 
                             <Divider my="md" />
 
                             <NavLink
-                                label={"Add Text"}
+                                label={t('Add Text')}
                                 leftSection={<IconPlus size="1rem" />}
                                 rightSection={
                                     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
@@ -187,21 +187,21 @@ function CanvasBoard() {
                             />
 
                             <SelectEmoji
-                                title="Add Emoji (Text)"
+                                title={t('Add Emoji (Text)')}
                                 addEmojiCb={(emoji: EmojiClickData) => {
                                     stickerContentHandlers.append(createText(emoji.emoji))
                                 }}
                             />
 
                             <Text c="dimmed" fz={14} fw={400} mb={6} mt={12}>
-                                Images
+                                {t('Images')}
                             </Text>
 
                             <Divider my="md" />
 
                             <SelectCharactor
                                 openComp="NavLink"
-                                title="Add New Sticker"
+                                title={t('Add New Sticker')}
                                 addStickerCb={async (v) => {
                                     stickerContentHandlers.append(await createImages(v.img))
                                     close();
@@ -216,26 +216,27 @@ function CanvasBoard() {
                             /> */}
 
                             <CreateLocalImages
-                                title="Upload local Image"
+                                title={t('Upload local Image')}
                                 callBackImageURL={(imageURL: string) => {
                                     callBackImageURL(imageURL)
                                 }}
                             />
 
                             <CreateExternalImages
-                                title="Upload URL Image"
+                                title={t('Upload URL Image')}
                                 callBackImageURL={(imageURL: string) => {
                                     callBackImageURL(imageURL)
                                 }}
                             />
 
                             <Text c="dimmed" fz={14} fw={400} mb={6} mt={12}>
-                                Utils
+                                {t('Utils')}
                             </Text>
 
                             <Divider my="md" />
 
                             <SelectHistorySticker
+                                title={t('View Saved Stickers')}
                                 setStickerCb={(sticker) => {
                                     stickerContentHandlers.setState(sticker)
                                 }}
@@ -263,11 +264,11 @@ function CanvasBoard() {
                 <AppShell.Main>
                     <Container fluid>
 
+                    <ChangeLanguage />
+
                         <Text fw={600} fz={32} ta="center" mt={48}>
                             <IconSticker /> {t('Sekai Sticker V2')}                            
                         </Text>
-
-                        <ChangeLanguage />
 
                         <Text c="dimmed" mb={16} ta="center">
                             {t('Generate your sticker in a better way!')}
