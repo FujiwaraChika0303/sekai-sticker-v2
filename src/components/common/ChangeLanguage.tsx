@@ -33,10 +33,10 @@ function ChangeLanguage() {
                     English
                 </Menu.Item>
                 <Menu.Item onClick={() => setLanguage('zh-TW')}>
-                    Chinese
+                    中文 (繁體)
                 </Menu.Item>
                 <Menu.Item onClick={() => setLanguage('ja')}>
-                    Japanese
+                    日本語
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>

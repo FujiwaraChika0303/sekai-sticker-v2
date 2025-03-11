@@ -25,7 +25,6 @@ function SelectHistorySticker({
 
     const [opened, { open, close }] = useDisclosure(false);
     const histStickerArray = useHistoryStickerStore(state => state.histStickerArray);
-    // const clearOneStickerHistFunc = useHistoryStickerStore(state => state.clearOneStickerHist);
 
     function selectAndClose(ind: number) {
         setStickerCb(histStickerArray[ind]);
