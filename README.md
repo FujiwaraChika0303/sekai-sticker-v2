@@ -29,6 +29,7 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Internal (local) image file input 
 - ✅ Emoji sticker added
 - ✅ Auto Save creations in browser level
+- ⬜️ i18n Support (English / Japanese / Chinese and more...)
 - ⬜️ More input items 
 - ⬜️ More images adjustment 
 
