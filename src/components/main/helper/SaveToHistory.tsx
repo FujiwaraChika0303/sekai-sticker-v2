@@ -16,9 +16,9 @@ function SaveToHistory() {
         saveStickerFunc(currentSticker);
 
         notifications.show({
-            title: "Success",
+            title: t("Success"),
             color: "green",
-            message: "Current Sticker saved to history",
+            message: t("Current Sticker saved to history"),
         });
     }
 

@@ -1,8 +1,10 @@
 import { notifications } from "@mantine/notifications";
 
-export function copyImages(blobImage: Blob, format: string = "image/png") {
+export function copyImages(
+    blobImage: Blob,
+    format: string = "image/png"
+) {
     try {
- 
         navigator.clipboard.write([
             new ClipboardItem({
                 [format]: blobImage,
@@ -16,5 +18,9 @@ export function copyImages(blobImage: Blob, format: string = "image/png") {
     } 
     catch (error) {
         console.error(error);
+        notifications.show({
+            title: "Error",
+            message: (error as Error).message
+        });
     }
 }

@@ -69,11 +69,11 @@ function CanvasBoard() {
             stickerContentHandlers.append(
                 await createExternalImages(imageURL)
             );
-            
+
             close();
             notifications.show({
-                title: "Success",
-                message: "Success to import images"
+                title: t("Success"),
+                message: t("Success to import images")
             })
         }
         catch (error: any) {
