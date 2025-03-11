@@ -1,8 +1,11 @@
+import './i18n';
+
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/dropzone/styles.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+
 import { Suspense, lazy } from "react";
 
 import { MantineProvider } from '@mantine/core';

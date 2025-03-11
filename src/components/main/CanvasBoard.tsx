@@ -30,7 +30,12 @@ import DropZoneFullScreen from "./helper/DropZoneFullScreen";
 import SaveToHistory from "./helper/SaveToHistory";
 import SelectHistorySticker from "./SelectHistorySticker";
 
+import { Trans, useTranslation } from 'react-i18next';
+import ChangeLanguage from "../common/ChangeLanguage";
+
 function CanvasBoard() {
+
+    const { t } = useTranslation();
 
     const stageRef = useRef<any>(null);
     const [opened, { toggle, close }] = useDisclosure();
@@ -259,8 +264,15 @@ function CanvasBoard() {
                     <Container fluid>
 
                         <Text fw={600} fz={32} ta="center" mt={48}>
-                            <IconSticker /> Sekai Sticker V2
+                            <IconSticker /> Sekai Sticker V2 
+                                
+                            <Trans i18nKey="sekaiTranslations"><Text>Welcome to React</Text></Trans>
+                            
                         </Text>
+
+                        <Text>{t('Welcome to React')}</Text>
+
+                        <ChangeLanguage />
 
                         <Text c="dimmed" mb={16} ta="center">
                             Generate your sticker in a better way!
