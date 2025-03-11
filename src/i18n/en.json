@@ -1,3 +1,26 @@
 {
-    "Welcome to React": "Welcome to React and react-i18next"
+    "Sekai Sticker V2": "Sekai Sticker V2",
+    "Generate your sticker in a better way!": "Generate your sticker in a better way!",
+    "Layer Select": "Layer Select",
+    "Modify Elements": "Modify Elements",
+
+    "Functions": "Functions",
+    "Text": "Text",
+
+    "Add Text": "Add Text",
+    "Add Emoji (Text)": "Add Emoji (Text)",
+    "Images": "Images",
+    "Add New Sticker": "Add New Sticker",
+    "Upload local Image": "Upload local Image",
+    "Upload URL Image": "Upload URL Image",
+    "Utils": "Utils",
+    "View Saved Stickers": "View Saved Stickers",
+
+    "Position": "Position",
+
+    "Change Charactor": "Change Charactor",
+    "Select Charactor": "Select Charactor",
+    "Select Your Sticker Character": "Select Your Sticker Character",
+
+    "End": "End"
 }

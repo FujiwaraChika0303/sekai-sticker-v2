@@ -8,11 +8,11 @@ function ChangeLanguage(){
     return (
         <>
         <Button onClick={() => i18n.changeLanguage('en')}>
-            Change Stuff En
+            Change Stuff EN
         </Button>
 
-        <Button onClick={() => i18n.changeLanguage('fr')}>
-            Change Stuff FR
+        <Button onClick={() => i18n.changeLanguage('zh-TW')}>
+            Change Stuff TW
         </Button>
         </>
     )

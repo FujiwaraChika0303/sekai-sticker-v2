@@ -151,7 +151,7 @@ function CanvasBoard() {
                         </Group>
 
                         <Text fz={14} fw={600} mb={12} ta="center">
-                            🔧 Functions
+                            🔧 {t('Functions')}
                         </Text>
 
                         <Box>
@@ -264,18 +264,13 @@ function CanvasBoard() {
                     <Container fluid>
 
                         <Text fw={600} fz={32} ta="center" mt={48}>
-                            <IconSticker /> Sekai Sticker V2 
-                                
-                            <Trans i18nKey="sekaiTranslations"><Text>Welcome to React</Text></Trans>
-                            
+                            <IconSticker /> {t('Sekai Sticker V2')}                            
                         </Text>
-
-                        <Text>{t('Welcome to React')}</Text>
 
                         <ChangeLanguage />
 
                         <Text c="dimmed" mb={16} ta="center">
-                            Generate your sticker in a better way!
+                            {t('Generate your sticker in a better way!')}
                         </Text>
 
                         <Grid mt={18}>

@@ -1,3 +1,26 @@
 {
-    "Welcome to React": "Welcome to React and react-i18next"
+    "Sekai Sticker V2": "Sekai貼圖V2",
+    "Generate your sticker in a better way!": "以更好的方式生成您的貼圖！",
+    "Layer Select": "圖層選擇",
+    "Modify Elements": "修改元素",
+
+    "Functions": "功能",
+    "Text": "文字",
+
+    "Add Text": "添加文字",
+    "Add Emoji (Text)": "添加表情符號（文字）",
+    "Images": "圖片",
+    "Add New Sticker": "添加新貼圖",
+    "Upload local Image": "上傳本地圖片",
+    "Upload URL Image": "上傳網址圖片",
+    "Utils": "工具",
+    "View Saved Stickers": "查看已儲存的貼圖",
+
+    "Position": "位置",
+
+    "Change Charactor": "更換角色",
+    "Select Charactor": "選擇角色",
+    "Select Your Sticker Character": "選擇您的貼圖角色",
+
+    "End": "結束"
 }
