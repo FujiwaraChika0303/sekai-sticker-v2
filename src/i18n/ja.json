@@ -1,3 +1,46 @@
 {
-    "Welcome to React": "Welcome to React and react-i18next"
+    "Sekai Sticker V2": "セカイステッカー V2",
+    "Generate your sticker in a better way!": "より良い方法でステッカーを作成しましょう！",
+    "Layer Select": "レイヤー選択",
+    "Modify Elements": "要素を変更",
+
+    "Functions": "機能",
+    "Text": "テキスト",
+
+    "Add Text": "テキストを追加",
+    "Add Emoji (Text)": "絵文字を追加（テキスト）",
+    "Images": "画像",
+    "Add New Sticker": "新しいステッカーを追加",
+    "Upload local Image": "ローカル画像をアップロード",
+    "Upload URL Image": "URL画像をアップロード",
+    "Utils": "ユーティリティ",
+    "View Saved Stickers": "保存されたステッカーを表示",
+
+    "Position": "位置",
+
+    "Change Charactor": "キャラクターを変更",
+    "Select Charactor": "キャラクターを選択",
+    "Select Your Sticker Character": "ステッカーのキャラクターを選択",
+
+    "Select item to modify": "変更する項目を選択",
+    "Font Size": "フォントサイズ",
+    "Text Content": "テキスト内容",
+    "Letter Spacing": "文字間隔",
+    "Stroke Width": "ストローク幅",
+    "Color": "色",
+    "Font Family": "フォントファミリー",
+
+    "Save To History (External / Internal images will not be saved)": "履歴に保存（外部/内部画像は保存されません）",
+    "Download PNG": "PNGをダウンロード",
+    "Copy PNG to clipboard": "PNGをクリップボードにコピー",
+    "Up Layer Level": "レイヤーレベルを上げる",
+    "Down Layer Level": "レイヤーレベルを下げる",
+
+    "Delete Selected Layer": "選択したレイヤーを削除",
+    "Duplicate Selected Layer": "選択したレイヤーを複製",
+    "Deselect Layer": "レイヤーの選択を解除",
+
+    "You have no saved sticker in history": "履歴に保存されたステッカーはありません",
+
+    "End": "終了"
 }

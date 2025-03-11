@@ -7,6 +7,7 @@ import { notifications } from '@mantine/notifications';
 import RemoveOneToHistory from './helper/RemoveOneToHistory';
 import ViewCanvasComp from './utils/ViewCanvasComp';
 import RemoveAllHistory from './helper/RemoveAllHistory';
+import { useTranslation } from 'react-i18next';
 
 interface SelectHistoryStickerProps {
     title?: string
@@ -19,6 +20,8 @@ function SelectHistorySticker({
     openComp = "NavLink",
     setStickerCb
 }: SelectHistoryStickerProps) {
+
+    const { t } = useTranslation();
 
     const [opened, { open, close }] = useDisclosure(false);
     const histStickerArray = useHistoryStickerStore(state => state.histStickerArray);
@@ -44,7 +47,7 @@ function SelectHistorySticker({
                 title={
                     <Group>
                         <Text>
-                            View Saved Stickers
+                            {t("View Saved Stickers")}
                         </Text>
                         {histStickerArray.length >= 1 && <RemoveAllHistory />}
                     </Group>
@@ -55,7 +58,7 @@ function SelectHistorySticker({
                 {histStickerArray.length <= 0 && (
                     <Box>
                         <Text c="dimmed" ta="center" mt={160}>
-                            You have no saved sticker in history
+                            {t("You have no saved sticker in history")}
                         </Text>
                     </Box>
                 )}
@@ -94,7 +97,7 @@ function SelectHistorySticker({
 
             {openComp === "Button" && (
                 <Button leftSection={<IconAdjustments />} variant="light" onClick={() => open()}>
-                    View Saved Stickers
+                    {t("View Saved Stickers")}
                 </Button>
             )}
         </>

@@ -1,9 +1,19 @@
 import { Menu, ActionIcon, Tooltip } from '@mantine/core';
 import { IconLanguage } from '@tabler/icons-react';
 import { useTranslation } from "react-i18next";
+import { useLocalStorage } from '@mantine/hooks';
+import { useEffect } from 'react';
 
 function ChangeLanguage() {
     const { i18n } = useTranslation();
+    const [language, setLanguage] = useLocalStorage({
+        key: 'languages-sekai',
+        defaultValue: 'en',
+    });
+
+    useEffect( () => {
+        i18n.changeLanguage(language)
+    },[language])
 
     return (
         <Menu shadow="md" width={200}>
@@ -19,13 +29,13 @@ function ChangeLanguage() {
                 <Menu.Label>
                     Languages
                 </Menu.Label>
-                <Menu.Item onClick={() => i18n.changeLanguage('en')}>
+                <Menu.Item onClick={() => setLanguage('en')}>
                     English
                 </Menu.Item>
-                <Menu.Item onClick={() => i18n.changeLanguage('zh-TW')}>
+                <Menu.Item onClick={() => setLanguage('zh-TW')}>
                     Chinese
                 </Menu.Item>
-                <Menu.Item onClick={() => i18n.changeLanguage('jp')}>
+                <Menu.Item onClick={() => setLanguage('ja')}>
                     Japanese
                 </Menu.Item>
             </Menu.Dropdown>
