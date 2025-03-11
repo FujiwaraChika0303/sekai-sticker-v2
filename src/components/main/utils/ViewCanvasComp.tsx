@@ -7,6 +7,7 @@ import { Tooltip, ActionIcon, Container, UnstyledButton, Space, Group, Text } fr
 import { IconDownload, IconCopyPlus } from "@tabler/icons-react";
 import { copyImages } from "../../../utils/copyUtils";
 import { timer, downloadFile, dataURLToBlob } from "../../../utils/downloadUtils";
+import { useTranslation } from "react-i18next";
 
 type ViewCanvasCompProps = {
     stickerContent: StickerObject[];
@@ -14,6 +15,7 @@ type ViewCanvasCompProps = {
 }
 
 function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
+    const { t } = useTranslation();
     const stageRef = useRef<any>(null);
 
     const maxX = Math.max(...stickerContent.map( v => v.x + (v.width  || 0) ))
@@ -71,7 +73,7 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                 <Space h="sm" />
 
                 <Group>
-                    <Tooltip label="Download PNG">
+                    <Tooltip label={t("Download PNG")}>
                         <ActionIcon
                             variant="light"
                             onClick={async () => {
@@ -92,7 +94,7 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                         </ActionIcon>
                     </Tooltip>
 
-                    <Tooltip label="Copy PNG to clipboard">
+                    <Tooltip label={t("Copy PNG to clipboard")}>
                         <ActionIcon
                             variant="light"
                             onClick={async () => {

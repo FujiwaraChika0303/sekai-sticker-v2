@@ -32,6 +32,9 @@ function ChangeLanguage() {
                 <Menu.Item onClick={() => setLanguage('en')}>
                     English
                 </Menu.Item>
+                <Menu.Item onClick={() => setLanguage('zh-CN')}>
+                    中文 (简体)
+                </Menu.Item>
                 <Menu.Item onClick={() => setLanguage('zh-TW')}>
                     中文 (繁體)
                 </Menu.Item>
