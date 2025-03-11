@@ -14,7 +14,14 @@ type AdjustableTextProps = {
     draggable?: boolean
 }
 
-function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = "Some text on canvas", draggable = true }: AdjustableTextProps) {
+function AdjustableText({ 
+    shapeProps,
+    isSelected,
+    onSelect,
+    onChange,
+    content = "Some text on canvas",
+    draggable = true
+}: AdjustableTextProps) {
 
     const textRef = useRef<Konva.Text>(null);
     const transformRef = useRef<Konva.Transformer>(null);

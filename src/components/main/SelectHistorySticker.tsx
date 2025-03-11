@@ -48,6 +48,7 @@ function SelectHistorySticker({
                         <Text>
                             {t("View Saved Stickers")}
                         </Text>
+                        
                         {histStickerArray.length >= 1 && <RemoveAllHistory />}
                     </Group>
                 }
@@ -65,7 +66,12 @@ function SelectHistorySticker({
                 <Grid>
                     {histStickerArray.map((stickerContent, ind) => (
                         <Grid.Col span={{ base: 12, md: 6, lg: 3 }} key={ind}>
-                            <Box style={{ minWidth: CONFIGS.stageWidth, minHeight: CONFIGS.stageHeight + 60 }} >
+                            <Box
+                                style={{
+                                    minWidth: CONFIGS.stageWidth,
+                                    minHeight: CONFIGS.stageHeight + 60
+                                }}
+                            >
                                 <Group justify='flex-end' mt={12}>
                                     <RemoveOneToHistory ind={ind} />
                                 </Group>

@@ -118,7 +118,7 @@ function ViewCanvasComp({ stickerContent, clickCb }: ViewCanvasCompProps) {
                     </Tooltip>
 
                     <Text c="dimmed" ta="center" fz={12}>
-                        Last Update:  {stickerContent.map(v => v.updatedDate ? v.updatedDate : new Date())
+                        Last Update: {stickerContent.map(v => v.updatedDate ? v.updatedDate : new Date())
                             .sort((a, b) => b.getTime() - a.getTime())[0]
                             .toUTCString()
                         }

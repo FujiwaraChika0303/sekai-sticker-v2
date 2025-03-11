@@ -28,7 +28,6 @@ function SelectCharactor({
     const [opened, { open, close }] = useDisclosure(false);
 
     useEffect(() => {
-
         if (searchString.length <= 0) {
             setFilledList([]);
             return

@@ -31,7 +31,10 @@ function SelectEmoji({
                 position="bottom"
                 size="50%"
             >
-                <EmojiPicker width="100%" onEmojiClick={(emoji) => selectAndClose(emoji)}/>
+                <EmojiPicker
+                    width="100%"
+                    onEmojiClick={(emoji) => selectAndClose(emoji)}
+                />
             </Drawer>
 
             <NavLink
