@@ -25,7 +25,6 @@ function RemoveOneToHistory({ ind }: RemoveOneToHistoryProps) {
         },
     });
 
-
     return (
         <Tooltip label="Remove Sticker">
             <ActionIcon

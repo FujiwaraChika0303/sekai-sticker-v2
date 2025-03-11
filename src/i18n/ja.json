@@ -42,5 +42,14 @@
 
     "You have no saved sticker in history": "履歴に保存されたステッカーはありません",
 
+    "Success" : "成功",    
+    "Success to import images": "画像のインポートに成功",
+    "Current Sticker saved to history": "現在のステッカーを履歴に保存しました",
+    "Confirm delete message": "削除確認メッセージ",
+    "Are you sure to delete this sticker": "このステッカーを削除してもよろしいですか",
+    "Image copied to your clipboard": "画像がクリップボードにコピーされました",
+    "Failed to Import": "インポートに失敗しました",
+    "Drag images here or click to select files" : "ここに画像をドラッグするか、クリックしてファイルを選択してください",
+    "Attach as many files as you like, each file should not exceed" : "好きなだけファイルを添付できますが、各ファイルのサイズは超えないようにしてください",
     "End": "終了"
 }

@@ -42,5 +42,15 @@
 
     "You have no saved sticker in history": "你在历史记录中没有已保存的贴纸",
 
+    "Success" : "成功",
+    "Success to import images": "导入图片成功",
+    "Current Sticker saved to history": "当前贴纸已保存到历史记录",
+    "Confirm delete message": "确认删除信息",
+    "Are you sure to delete this sticker": "确定要删除此贴纸吗",
+    "Image copied to your clipboard": "图片已复制到剪贴板",
+    "Failed to Import": "导入失败",
+    "Drag images here or click to select files" : "将图片拖到这里或点击选择文件",
+    "Attach as many files as you like, each file should not exceed" : "随意附加文件，每个文件不应超过",
+
     "End": "结束"
 }

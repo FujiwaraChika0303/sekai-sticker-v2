@@ -17,6 +17,7 @@ export function uuid(): string {
 		"8",
 		"9",
 	];
+
 	let uuid = [];
 	for (let i = 0; i < 20; i++) {
 		if (i === 8 || i === 13 || i === 18 || i === 23) {
@@ -25,5 +26,6 @@ export function uuid(): string {
 			uuid[i] = hashTable[Math.ceil(Math.random() * hashTable.length - 1)];
 		}
 	}
+	
 	return uuid.join("");
 }

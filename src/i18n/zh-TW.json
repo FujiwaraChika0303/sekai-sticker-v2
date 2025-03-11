@@ -40,5 +40,15 @@
     "Duplicate Selected Layer": "複製選擇的圖層",
     "Deselect Layer": "取消選擇圖層",
 
+    "Success" : "成功",
+    "Success to import images": "成功匯入圖片",
+    "Current Sticker saved to history": "當前貼紙已儲存到歷史記錄",
+    "Confirm delete message": "確認刪除訊息",
+    "Are you sure to delete this sticker": "您確定要刪除此貼紙嗎",
+    "Image copied to your clipboard": "圖片已複製到您的剪貼簿",
+    "Failed to Import": "匯入失敗",
+    "Drag images here or click to select files" : "將圖片拖到這裡或點擊以選擇文件",
+    "Attach as many files as you like, each file should not exceed" : "隨意附加文件，每個文件不應超過",
+
     "End": "結束"
 }

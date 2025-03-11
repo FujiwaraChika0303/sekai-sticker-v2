@@ -1,6 +1,7 @@
 import { Group, Text, rem } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { useTranslation } from 'react-i18next';
 
 type DropZoneFullScreenProps = {
     callBackImageURL: (imageURL: string) => void
@@ -8,6 +9,8 @@ type DropZoneFullScreenProps = {
 
 function DropZoneFullScreen({ callBackImageURL }: DropZoneFullScreenProps) {
 
+    const { t } = useTranslation();
+    
     async function submitForm(imageFile: File) {
         const arrayBuffer = await imageFile!.arrayBuffer()
         const fileUrl = URL.createObjectURL(new Blob([arrayBuffer]));
@@ -48,10 +51,10 @@ function DropZoneFullScreen({ callBackImageURL }: DropZoneFullScreenProps) {
 
                     <div>
                         <Text size="xl" inline>
-                            Drag images here or click to select files
+                            {t("Drag images here or click to select files")}
                         </Text>
                         <Text size="sm" c="dimmed" inline mt={7}>
-                            Attach as many files as you like, each file should not exceed 5mb
+                            {t("Attach as many files as you like, each file should not exceed")} 5mb
                         </Text>
                     </div>
                 </Group>

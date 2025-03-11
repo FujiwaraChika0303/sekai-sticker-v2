@@ -27,7 +27,6 @@ function AdjustableText({ shapeProps, isSelected, onSelect, onChange, content = 
         }
     }, [isSelected]);
 
-
     return (
         <>
             <Text

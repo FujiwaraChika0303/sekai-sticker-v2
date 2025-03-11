@@ -79,7 +79,7 @@ function CanvasBoard() {
         catch (error: any) {
             console.log(error);
             notifications.show({
-                title: "Failed to Import",
+                title: t("Failed to Import"),
                 message: error.message
             })
         }

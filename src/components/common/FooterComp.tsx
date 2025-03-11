@@ -5,7 +5,6 @@ import { IconSticker } from '@tabler/icons-react';
 import classes from '../../style/FooterSimple.module.css';
 import ColorToggleBtn from './ColorToggleBtn';
 
-
 const links = [
     { link: '/', label: 'Home', format: "internal" },
 ];
