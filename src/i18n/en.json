@@ -39,10 +39,17 @@
     "Delete Selected Layer" : "Delete Selected Layer",
     "Duplicate Selected Layer" : "Duplicate Selected Layer",
     "Deselect Layer" : "Deselect Layer",
-
-    
     "You have no saved sticker in history" : "You have no saved sticker in history",
 
+    "Success" : "Success",    
+    "Success to import images": "Success to import images",
+    "Current Sticker saved to history": "Current Sticker saved to history",
+    "Confirm delete message": "Confirm delete message",
+    "Are you sure to delete this sticker": "Are you sure to delete this sticker",
+    "Image copied to your clipboard": "Image copied to your clipboard",
+    "Failed to Import": "Failed to Import",
+    "Drag images here or click to select files" : "Drag images here or click to select files",
+    "Attach as many files as you like, each file should not exceed" : "Attach as many files as you like, each file should not exceed",
 
     "End": "End"
 }

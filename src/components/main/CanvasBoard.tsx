@@ -66,7 +66,10 @@ function CanvasBoard() {
 
     async function callBackImageURL(imageURL: string) {
         try {
-            stickerContentHandlers.append(await createExternalImages(imageURL))
+            stickerContentHandlers.append(
+                await createExternalImages(imageURL)
+            );
+            
             close();
             notifications.show({
                 title: "Success",

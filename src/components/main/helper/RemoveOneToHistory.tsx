@@ -1,4 +1,3 @@
-
 import { Tooltip, ActionIcon,Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconTrash } from '@tabler/icons-react';

@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import FooterComp from "./FooterComp";
-// import FooterComp from './FooterComp';
 
 function Layout() {
     return (
