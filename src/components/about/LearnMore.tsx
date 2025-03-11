@@ -1,5 +1,5 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, ActionIcon, Tooltip } from '@mantine/core';
+import { Modal, ActionIcon, Tooltip, Group, Text } from '@mantine/core';
 import { IconNotebook } from '@tabler/icons-react';
 import LearnMoreContent from './LearnMoreContent';
 
@@ -12,11 +12,18 @@ function LearnMore() {
                 <LearnMoreContent />
             </Modal>
 
-            <Tooltip label="General Informations">
-                <ActionIcon variant="light" aria-label="General Informations" onClick={open}>
-                    <IconNotebook style={{ width: '70%', height: '70%' }} stroke={1.5} />
-                </ActionIcon>
-            </Tooltip>
+            <Group>
+                <Text c="dimmed" fz={12}>
+                    📊 v1.1.0
+                </Text>
+
+                <Tooltip label="General Informations">
+                    <ActionIcon variant="light" aria-label="General Informations" onClick={open}>
+                        <IconNotebook style={{ width: '70%', height: '70%' }} stroke={1.5} />
+                    </ActionIcon>
+                </Tooltip>
+
+            </Group>
         </>
     );
 }

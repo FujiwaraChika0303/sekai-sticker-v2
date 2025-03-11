@@ -42,6 +42,9 @@ MIT
 
 ## 🪵 Logs
 
+### v1.1.0
+- Added languages support (Chinese / English / Japanese)
+
 ### v1.0.1
 - Adjust wordings and UI enhancement
 

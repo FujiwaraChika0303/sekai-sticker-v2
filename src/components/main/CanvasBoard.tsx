@@ -251,14 +251,7 @@ function CanvasBoard() {
                     <AppShell.Section>
                         <Group justify="space-between">
                             <ColorToggleBtn />
-
-                            <Group>
-                                <Text c="dimmed" fz={12}>
-                                    📊 v1.0.1
-                                </Text>
-
-                                <LearnMore />
-                            </Group>
+                            <LearnMore />
                         </Group>
                     </AppShell.Section>
 
