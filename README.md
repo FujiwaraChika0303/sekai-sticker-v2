@@ -8,6 +8,7 @@ URL: https://sekai-sticker.vercel.app/
 
 
 ## 🔍 Features
+- ✅ Free Forever
 - ✅ Adjustable color, stroke and spacing
 - ✅ Drag Sticker and Text
 - ✅ Import Local Images
@@ -18,7 +19,7 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Layer handle
 - ✅ Save and copy PNG
 - ✅ Emoji sticker
-- ✅ Respondsive UI
+- ✅ Responsive UI
 - ✅ Night / Sky Theme
 - ✅ Traditional Chinese / Chinese display friendly 
 - ✅ Allow to save and re-use sticker in your devices
@@ -30,7 +31,6 @@ URL: https://sekai-sticker.vercel.app/
 - ✅ Emoji sticker added
 - ✅ Auto Save creations in browser level
 - ⬜️ More input items 
-- ⬜️ More images adjustment 
 
 ## ❤ Original Repo
 Special thanks for the sources  
