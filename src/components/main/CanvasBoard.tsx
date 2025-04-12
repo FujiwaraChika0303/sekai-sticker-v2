@@ -102,6 +102,48 @@ function CanvasBoard() {
         stickerContentHandlers.append(newSticker)
     }
 
+    // Download current selected sticker to PNG
+    async function downloadCurrentPng() {
+        setSelectedId(null);
+        await timer(400);
+
+        const uri = stageRef.current!.toDataURL({
+            width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+            height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
+            pixelRatio: 1.1
+        });
+        downloadFile(uri, `${new Date().getTime()}_stage.png`);
+    }
+
+    // Download current selected sticker to PNG
+    async function copyCurrentPng() {
+        try {
+            setSelectedId(null);
+            await timer(400);
+
+            const blobImage = await dataURLToBlob(
+                stageRef.current!.toDataURL({
+                    width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
+                    height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
+                    pixelRatio: 1.1
+                })
+            )
+
+            copyImages(blobImage, "image/png")
+
+            notifications.show({
+                title: t("Success"),
+                message: "Image copied to your clipboard.",
+            });
+        } catch (error) {
+            console.error(error);
+            notifications.show({
+                title: "Error",
+                message: (error as Error).message
+            });
+        }
+    }
+
     useHotkeys([
         ['delete', () => {
             if (selectedId !== null) {
@@ -159,6 +201,30 @@ function CanvasBoard() {
 
                         <Box>
                             <Text c="dimmed" fz={14} fw={400} mb={6}>
+                                {t('Export')}
+                            </Text>
+
+                            <Divider my="md" />
+
+                            <NavLink
+                                label={t('Download PNG')}
+                                leftSection={<IconDownload size="1rem" />}
+                                rightSection={
+                                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                }
+                                onClick={() => downloadCurrentPng()}
+                            />
+
+                            <NavLink
+                                label={t("Copy PNG to clipboard")}
+                                leftSection={<IconCopyPlus size="1rem" />}
+                                rightSection={
+                                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                }
+                                onClick={() => copyCurrentPng()}
+                            />
+
+                            <Text c="dimmed" fz={14} fw={400} mb={6} mt={12}>
                                 {t('Text')}
                             </Text>
 
@@ -188,6 +254,7 @@ function CanvasBoard() {
                                     close();
                                 }}
                             />
+
 
                             <SelectEmoji
                                 title={t('Add Emoji (Text)')}
@@ -269,15 +336,15 @@ function CanvasBoard() {
                         </Text>
 
                         <Grid mt={18}>
-                            <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 6, lg: 8 }}>
                                 <Box>
-
+{/* 
                                     <Box mb={18}>
                                         <SelectLayer
                                             data={stickerContent}
                                             selectCb={(id) => setSelectedId(id)}
                                         />
-                                    </Box>
+                                    </Box> */}
 
                                     <Card shadow="sm" padding="lg" radius="md" withBorder>
 
@@ -289,17 +356,7 @@ function CanvasBoard() {
                                                 <Tooltip label={t("Download PNG")}>
                                                     <ActionIcon
                                                         variant="light"
-                                                        onClick={async () => {
-                                                            setSelectedId(null);
-                                                            await timer(400);
-
-                                                            const uri = stageRef.current!.toDataURL({
-                                                                width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
-                                                                height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
-                                                                pixelRatio: 1.1
-                                                            });
-                                                            downloadFile(uri, `${new Date().getTime()}_stage.png`);
-                                                        }}
+                                                        onClick={() => downloadCurrentPng()}
                                                     >
                                                         <IconDownload
                                                             style={{ width: '70%', height: '70%' }}
@@ -311,33 +368,7 @@ function CanvasBoard() {
                                                 <Tooltip label={t("Copy PNG to clipboard")}>
                                                     <ActionIcon
                                                         variant="light"
-                                                        onClick={async () => {
-                                                            try {
-                                                                setSelectedId(null);
-                                                                await timer(400);
-
-                                                                const blobImage = await dataURLToBlob(
-                                                                    stageRef.current!.toDataURL({
-                                                                        width: Math.max(...stickerContent.map(v => v.x + (v.width || 0))) || CONFIGS.stageWidth,
-                                                                        height: Math.max(...stickerContent.map(v => v.y + (v.height || 0))) || CONFIGS.stageHeight,
-                                                                        pixelRatio: 1.1
-                                                                    })
-                                                                )
-
-                                                                copyImages(blobImage, "image/png")
-
-                                                                notifications.show({
-                                                                    title: t("Success"),
-                                                                    message: "Image copied to your clipboard.",
-                                                                });
-                                                            } catch (error) {
-                                                                console.error(error);
-                                                                notifications.show({
-                                                                    title: "Error",
-                                                                    message: (error as Error).message
-                                                                });
-                                                            }
-                                                        }}
+                                                        onClick={() => copyCurrentPng()}
                                                     >
                                                         <IconCopyPlus
                                                             style={{ width: '70%', height: '70%' }}
@@ -358,8 +389,8 @@ function CanvasBoard() {
                                                     onMouseDown={checkDeselect}
                                                     onTouchStart={checkDeselect}
                                                     style={{
-                                                        border: "2px solid #4966eb",
-                                                        borderRadius: "4px"
+                                                        border: "3px solid #228ae5",
+                                                        borderRadius: "8px"
                                                     }}
                                                 >
                                                     <Layer>
@@ -402,6 +433,13 @@ function CanvasBoard() {
                                                 </Stage>
                                             </Box>
                                         </Group>
+
+                                        <Box mt={16}>
+                                            <SelectLayer
+                                                data={stickerContent}
+                                                selectCb={(id) => setSelectedId(id)}
+                                            />
+                                        </Box>
                                     </Card>
 
 
@@ -513,10 +551,10 @@ function CanvasBoard() {
                                 </Box>
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
                                 <Box>
                                     <Group justify="center" >
-                                        <Box style={{ width: "95%" }} >
+                                        <Box style={{ width: "105%" }} >
                                             <Card shadow="sm" padding="lg" radius="md" withBorder>
 
                                                 <Text ta="center">
