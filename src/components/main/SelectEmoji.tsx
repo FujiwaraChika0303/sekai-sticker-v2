@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, NavLink } from '@mantine/core';
-import { IconChevronRight, IconFileSmile, } from '@tabler/icons-react';
+import { Drawer, NavLink, ThemeIcon } from '@mantine/core';
+import { IconFileSmile, } from '@tabler/icons-react';
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 
 interface SelectEmojiProps {
@@ -39,10 +39,14 @@ function SelectEmoji({
 
             <NavLink
                 label={title}
-                leftSection={<IconFileSmile size="1rem" />}
-                rightSection={
-                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                leftSection={
+                    <ThemeIcon variant="light">
+                        <IconFileSmile size="1rem" />
+                    </ThemeIcon>
                 }
+                // rightSection={
+                //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                // }
                 onClick={(e) => {
                     e.preventDefault()
                     open()

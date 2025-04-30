@@ -1,5 +1,5 @@
-import { IconLink, IconChevronRight, IconSend } from "@tabler/icons-react"
-import { NavLink, TextInput, Button, Modal, Group } from '@mantine/core';
+import { IconLink, IconSend } from "@tabler/icons-react"
+import { NavLink, TextInput, Button, Modal, Group, ThemeIcon } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from "@mantine/form";
 import { zodResolver } from 'mantine-form-zod-resolver';
@@ -65,10 +65,14 @@ function CreateExternalImages({
             {openComp === "NavLink" && (
                 <NavLink
                     label={title}
-                    leftSection={<IconLink size="1rem" />}
-                    rightSection={
-                        <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    leftSection={
+                        <ThemeIcon variant="light">
+                            <IconLink size="1rem" />
+                        </ThemeIcon>
                     }
+                    // rightSection={
+                    //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    // }
                     onClick={(e) => {
                         e.preventDefault()
                         open()

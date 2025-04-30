@@ -59,6 +59,8 @@ function AdjustableText({
                 onTap={onSelect as any}
                 ref={textRef}
 
+                textDecoration={"line-through"}
+
                 {...shapeProps}
 
                 onDragEnd={(e) => {

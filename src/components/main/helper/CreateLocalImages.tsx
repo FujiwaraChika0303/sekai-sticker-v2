@@ -1,5 +1,5 @@
-import { IconChevronRight, IconImageInPicture } from "@tabler/icons-react"
-import { NavLink, FileButton } from '@mantine/core';
+import { IconImageInPicture } from "@tabler/icons-react"
+import { NavLink, FileButton, ThemeIcon } from '@mantine/core';
 
 import { useEffect, useRef, useState } from "react";
 
@@ -15,25 +15,25 @@ function CreateLocalImages({
     callBackImageURL
 }: CreateLocalImagesProps) {
 
-    const [files, setFiles] = useState<File[] >([]);
+    const [files, setFiles] = useState<File[]>([]);
     const resetRef = useRef<() => void>(null);
 
-    useEffect( () => {
-        ( async () => {
-            if(files.length >= 1){
-                for(let f of files){
+    useEffect(() => {
+        (async () => {
+            if (files.length >= 1) {
+                for (let f of files) {
                     try {
                         await submitForm(f)
                     } catch (error) {
                         console.log(error);
                     }
                 }
-    
+
                 setFiles([]);
                 resetRef.current?.();
             }
         })()
-    },[files])
+    }, [files])
 
     async function submitForm(imageFile: File) {
         const arrayBuffer = await imageFile!.arrayBuffer()
@@ -48,11 +48,14 @@ function CreateLocalImages({
                     {(props) =>
                         <NavLink
                             label={title}
-                            leftSection={<IconImageInPicture size="1rem" />}
-                            rightSection={
-                                <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                            leftSection={
+                                <ThemeIcon variant="light">
+                                    <IconImageInPicture size="1rem" />
+                                </ThemeIcon>
                             }
-
+                            // rightSection={
+                            //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                            // }
                             {...props}
                         />
                     }

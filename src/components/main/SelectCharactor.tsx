@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, UnstyledButton, ScrollArea, Button, Box, Tooltip, Text, MultiSelect } from '@mantine/core';
+import { Drawer, Grid, NavLink, UnstyledButton, ScrollArea, Button, Box, Tooltip, Text, MultiSelect, ThemeIcon } from '@mantine/core';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { IconAdjustments, IconChevronRight, IconSticker } from '@tabler/icons-react';
+import { IconAdjustments, IconSticker } from '@tabler/icons-react';
 import { StickerChatactor, chatactorList } from '../../data/characters';
 import { useEffect, useState } from 'react';
 
@@ -72,15 +72,15 @@ function SelectCharactor({
 
                 <Grid>
                     <Grid.Col span={{ base: 2, md: 2, lg: 2 }}>
-                        <ScrollArea h={440}>
+                        <ScrollArea h={"55vh"}>
                             {uniqueBy(chatactorList, prop("character")).map(v =>
                                 <Box key={v.img}>
                                     <UnstyledButton
-                                        onClick={() => 
+                                        onClick={() =>
                                             setSearchString(currentLs => {
                                                 // Remove Sticker from search
-                                                if(currentLs.includes(v.character)){
-                                                    return currentLs.filter( key => key !== v.character)
+                                                if (currentLs.includes(v.character)) {
+                                                    return currentLs.filter(key => key !== v.character)
                                                 }
 
                                                 // Add Sticker to search
@@ -136,10 +136,14 @@ function SelectCharactor({
             {openComp === "NavLink" && (
                 <NavLink
                     label={title}
-                    leftSection={<IconSticker size="1rem" />}
-                    rightSection={
-                        <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    leftSection={
+                        <ThemeIcon variant="light">
+                            <IconSticker size="1rem" />
+                        </ThemeIcon>
                     }
+                    // rightSection={
+                    //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    // }
                     onClick={(e) => {
                         e.preventDefault()
                         open()
@@ -148,7 +152,11 @@ function SelectCharactor({
             )}
 
             {openComp === "Button" && (
-                <Button leftSection={<IconAdjustments />} variant="light" onClick={() => open()}>
+                <Button
+                    leftSection={<IconAdjustments />}
+                    variant="light"
+                    onClick={() => open()}
+                >
                     {t("Change Charactor")}
                 </Button>
             )}

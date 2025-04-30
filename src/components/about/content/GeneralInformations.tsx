@@ -3,6 +3,7 @@ import { IconClipboard } from "@tabler/icons-react";
 import Markdown from 'markdown-to-jsx'
 
 const contentOne = `
+*(English Only)*
 
 # 🐙 Github
 https://github.com/r48n34/sekai-sticker-v2    

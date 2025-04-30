@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Grid, NavLink, Button, Box, Group, Text } from '@mantine/core';
-import { IconAdjustments, IconChevronRight, IconSticker } from '@tabler/icons-react';
+import { Drawer, Grid, NavLink, Button, Box, Group, Text, ThemeIcon } from '@mantine/core';
+import { IconAdjustments, IconSticker } from '@tabler/icons-react';
 import useHistoryStickerStore from '../../store/historyStickerStore';
 import { CONFIGS, StickerObject } from '../../utils/createSticker';
 import { notifications } from '@mantine/notifications';
@@ -48,7 +48,7 @@ function SelectHistorySticker({
                         <Text>
                             {t("View Saved Stickers")}
                         </Text>
-                        
+
                         {histStickerArray.length >= 1 && <RemoveAllHistory />}
                     </Group>
                 }
@@ -89,10 +89,14 @@ function SelectHistorySticker({
             {openComp === "NavLink" && (
                 <NavLink
                     label={title}
-                    leftSection={<IconSticker size="1rem" />}
-                    rightSection={
-                        <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    leftSection={
+                        <ThemeIcon variant="light">
+                            <IconSticker size="1rem" />
+                        </ThemeIcon>
                     }
+                    // rightSection={
+                    //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                    // }
                     onClick={(e) => {
                         e.preventDefault()
                         open()

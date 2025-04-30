@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid, Select } from "@mantine/core";
+import { AppShell, Burger, Box, Card, Container, Group, Text, NavLink, TextInput, ColorInput, ActionIcon, Tooltip, Space, Slider, Divider, ScrollArea, Grid, Select, ThemeIcon, Badge } from "@mantine/core";
 import { Stage, Layer } from 'react-konva';
 import Konva from "konva";
 import { useListState, useDisclosure, useHotkeys } from '@mantine/hooks';
 
 import AdjustableText from "./helper/AdjustableText";
 import CanvasTransImage from "./helper/CanvasTransImage";
-import { IconArrowDown, IconArrowUp, IconArrowsHorizontal, IconArrowsVertical, IconBox, IconChevronRight, IconCopy, IconCopyPlus, IconDimensions, IconDownload, IconLetterCaseUpper, IconPlus, IconRulerMeasure, IconSticker, IconTextCaption, IconTrash } from "@tabler/icons-react";
+import { IconArrowDown, IconArrowUp, IconArrowsHorizontal, IconArrowsVertical, IconBox, IconCopy, IconCopyPlus, IconDimensions, IconDownload, IconLetterCaseUpper, IconPlus, IconRulerMeasure, IconSticker, IconTextCaption, IconTrash } from "@tabler/icons-react";
 import { CONFIGS, createExternalImages, createImages, createText, duplicateNewObject, StickerObject } from "../../utils/createSticker";
 import SelectCharactor from "./SelectCharactor";
 
@@ -155,6 +155,9 @@ function CanvasBoard() {
                 duplicateItems()
             }
         }],
+        ['mod+s', () => {
+            copyCurrentPng()
+        }],
     ]);
 
     useEffect(() => {
@@ -176,8 +179,13 @@ function CanvasBoard() {
             />
 
             <AppShell
+                // withBorder={false}
                 layout="alt"
-                navbar={{ width: 230, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+                navbar={{ 
+                    width: 230,
+                    breakpoint: 'sm',
+                    collapsed: { mobile: !opened }
+                }}
                 // aside={{ width: 150, breakpoint: '1', collapsed: { desktop: false, mobile: true } }}
                 padding="md"
             >
@@ -187,7 +195,7 @@ function CanvasBoard() {
                     </Group>
                 </AppShell.Header>
 
-                <AppShell.Navbar p="md">
+                <AppShell.Navbar p="md" style={{ borderRadius: "0px 26px 26px 0"}}>
 
                     <AppShell.Section grow my="md" component={ScrollArea}>
 
@@ -195,9 +203,11 @@ function CanvasBoard() {
                             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" mb={14} />
                         </Group>
 
-                        <Text fz={14} fw={600} mb={12} ta="center">
-                            🔧 {t('Functions')}
-                        </Text>
+                        <Group justify="center" mb={12} mt={16}>
+                            <Badge tt="none" variant="light" radius="md">
+                                🔧 {t('Functions')}
+                            </Badge>
+                        </Group>
 
                         <Box>
                             <Text c="dimmed" fz={14} fw={400} mb={6}>
@@ -208,19 +218,27 @@ function CanvasBoard() {
 
                             <NavLink
                                 label={t('Download PNG')}
-                                leftSection={<IconDownload size="1rem" />}
-                                rightSection={
-                                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                leftSection={
+                                    <ThemeIcon variant="light">
+                                        <IconDownload size="1rem" />
+                                    </ThemeIcon>
                                 }
+                                // rightSection={
+                                //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                // }
                                 onClick={() => downloadCurrentPng()}
                             />
 
                             <NavLink
                                 label={t("Copy PNG to clipboard")}
-                                leftSection={<IconCopyPlus size="1rem" />}
-                                rightSection={
-                                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                leftSection={
+                                    <ThemeIcon variant="light">
+                                        <IconCopyPlus size="1rem" />
+                                    </ThemeIcon>
                                 }
+                                // rightSection={
+                                //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                // }
                                 onClick={() => copyCurrentPng()}
                             />
 
@@ -232,10 +250,14 @@ function CanvasBoard() {
 
                             <NavLink
                                 label={t('Add Text')}
-                                leftSection={<IconPlus size="1rem" />}
-                                rightSection={
-                                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                leftSection={
+                                    <ThemeIcon variant="light">
+                                        <IconPlus size="1rem" />
+                                    </ThemeIcon>
                                 }
+                                // rightSection={
+                                //     <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                                // }
                                 onClick={(e) => {
                                     e.preventDefault();
 
@@ -338,7 +360,7 @@ function CanvasBoard() {
                         <Grid mt={18}>
                             <Grid.Col span={{ base: 12, md: 6, lg: 8 }}>
                                 <Box>
-{/* 
+                                    {/* 
                                     <Box mb={18}>
                                         <SelectLayer
                                             data={stickerContent}
@@ -379,6 +401,8 @@ function CanvasBoard() {
                                             </Group>
 
                                         </Group>
+
+                                        <Divider mb={24}/>
 
                                         <Group justify="center">
                                             <Box style={{ minWidth: CONFIGS.stageWidth }}>

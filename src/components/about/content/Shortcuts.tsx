@@ -3,6 +3,8 @@ import { IconTableShortcut } from "@tabler/icons-react";
 import Markdown from 'markdown-to-jsx'
 
 const contentOne = `
+*(English Only)*
+
 # 🔍 When a layer is selected
 
 - **Delete**:   
@@ -11,6 +13,8 @@ Delete current layer
 - **Ctrl + D**:   
 Copy and paster current layer
 
+- **⌘+S (macOS) OR Ctrl+S (Windows)**:   
+Save Sticker to clipboard
 `
 
 function Shortcuts() {
