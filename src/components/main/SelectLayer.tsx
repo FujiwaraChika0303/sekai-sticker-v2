@@ -1,4 +1,4 @@
-import { Card, Group, Tooltip, Text, Box } from '@mantine/core';
+import { Group, Tooltip, Text, Box } from '@mantine/core';
 import { StickerObject } from '../../utils/createSticker';
 import { Pagination } from '@mantine/core';
 import { IconLayersDifference } from '@tabler/icons-react';
@@ -18,9 +18,9 @@ function SelectLayer({
 
     return (
         <Box>
-            <Card padding="lg" radius="md" withBorder>
+            {/* <Card padding="lg" radius="md" withBorder> */}
                 <Group justify="center">
-                    <Text ta="center">
+                    <Text ta="center" c="dimmed" fz={12}>
                         <IconLayersDifference size={16} /> {t("Layer Select")}
                     </Text>
 
@@ -32,10 +32,11 @@ function SelectLayer({
                                 selectCb(targetId!.id)
                             }}
                             total={data.length}
+                            size={"xs"}
                         />
                     </Tooltip>
                 </Group>
-            </Card>
+            {/* </Card> */}
         </Box>
     )
 }

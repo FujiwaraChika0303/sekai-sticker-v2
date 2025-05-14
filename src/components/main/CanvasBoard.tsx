@@ -181,7 +181,7 @@ function CanvasBoard() {
             <AppShell
                 // withBorder={false}
                 layout="alt"
-                navbar={{ 
+                navbar={{
                     width: 230,
                     breakpoint: 'sm',
                     collapsed: { mobile: !opened }
@@ -195,7 +195,7 @@ function CanvasBoard() {
                     </Group>
                 </AppShell.Header>
 
-                <AppShell.Navbar p="md" style={{ borderRadius: "0px 26px 26px 0"}}>
+                <AppShell.Navbar p="md" style={{ borderRadius: "0px 26px 26px 0" }}>
 
                     <AppShell.Section grow my="md" component={ScrollArea}>
 
@@ -349,7 +349,7 @@ function CanvasBoard() {
 
                 <AppShell.Main>
                     <Container fluid>
-                        <Text fw={600} fz={32} ta="center" mt={16}>
+                        <Text fw={600} fz={32} ta="center" mt={60}>
                             <IconSticker /> {t('Sekai Sticker V2')}
                         </Text>
 
@@ -360,14 +360,6 @@ function CanvasBoard() {
                         <Grid mt={18}>
                             <Grid.Col span={{ base: 12, md: 6, lg: 8 }}>
                                 <Box>
-                                    {/* 
-                                    <Box mb={18}>
-                                        <SelectLayer
-                                            data={stickerContent}
-                                            selectCb={(id) => setSelectedId(id)}
-                                        />
-                                    </Box> */}
-
                                     <Card shadow="sm" padding="lg" radius="md" withBorder>
 
                                         <Group justify="space-between" mb={16}>
@@ -402,7 +394,7 @@ function CanvasBoard() {
 
                                         </Group>
 
-                                        <Divider mb={24}/>
+                                        <Divider mb={24} />
 
                                         <Group justify="center">
                                             <Box style={{ minWidth: CONFIGS.stageWidth }}>
@@ -413,7 +405,7 @@ function CanvasBoard() {
                                                     onMouseDown={checkDeselect}
                                                     onTouchStart={checkDeselect}
                                                     style={{
-                                                        border: "3px solid #228ae5",
+                                                        border: "3px solid rgb(34,138,229, .26)",
                                                         borderRadius: "8px"
                                                     }}
                                                 >
@@ -581,8 +573,8 @@ function CanvasBoard() {
                                         <Box style={{ width: "105%" }} >
                                             <Card shadow="sm" padding="lg" radius="md" withBorder>
 
-                                                <Text ta="center">
-                                                    <IconBox size={16} /> {t("Modify Elements")}
+                                                <Text ta="center" fz={12} c="dimmed">
+                                                    <IconBox size={12} /> {t("Modify Elements")}
                                                 </Text>
 
                                                 {selectedShape === undefined && (
@@ -593,32 +585,6 @@ function CanvasBoard() {
 
                                                 {selectedShape !== undefined && (
                                                     <>
-                                                        {selectedShape.format === "image" && (
-                                                            <>
-                                                                <Space h="md" />
-                                                                <SelectCharactor
-                                                                    openComp="Button"
-                                                                    title={t("Change Charactor")}
-                                                                    addStickerCb={async (v) => {
-                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
-
-                                                                        const { w, h } = await getImagesWidthAndHeight(v.img)
-
-                                                                        stickerContentHandlers.setItemProp(ind, "content", v.img);
-
-                                                                        stickerContentHandlers.setItemProp(ind, "width", w);
-                                                                        stickerContentHandlers.setItemProp(ind, "height", h);
-
-                                                                        for (let i = 0; i < stickerContent.length; i++) {
-                                                                            if (stickerContent[i].format === "text") {
-                                                                                stickerContentHandlers.setItemProp(i, "fill", v.color);
-                                                                            }
-                                                                        }
-                                                                    }}
-                                                                />
-                                                            </>
-                                                        )}
-
                                                         <Text fw={500} fz={14} mt={20}>
                                                             <IconArrowsHorizontal size={12} /> {t("Position")} X
                                                         </Text>
@@ -748,6 +714,33 @@ function CanvasBoard() {
                                                                 />
                                                             </>
                                                         )}
+
+                                                        {selectedShape.format === "image" && (
+                                                            <>
+                                                                <Space h="md" />
+                                                                <SelectCharactor
+                                                                    openComp="Button"
+                                                                    title={t("Change Charactor")}
+                                                                    addStickerCb={async (v) => {
+                                                                        const ind = stickerContent.findIndex(v => v.id === selectedId);
+
+                                                                        const { w, h } = await getImagesWidthAndHeight(v.img)
+
+                                                                        stickerContentHandlers.setItemProp(ind, "content", v.img);
+
+                                                                        stickerContentHandlers.setItemProp(ind, "width", w);
+                                                                        stickerContentHandlers.setItemProp(ind, "height", h);
+
+                                                                        for (let i = 0; i < stickerContent.length; i++) {
+                                                                            if (stickerContent[i].format === "text") {
+                                                                                stickerContentHandlers.setItemProp(i, "fill", v.color);
+                                                                            }
+                                                                        }
+                                                                    }}
+                                                                />
+                                                            </>
+                                                        )}
+
                                                     </>
                                                 )}
                                             </Card>
